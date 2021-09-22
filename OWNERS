@@ -3,3 +3,16 @@ per-file build*=set noparent
 per-file build*=saravanak@google.com,elavila@google.com,willmcvicker@google.com
 per-file vendor_{boot,dlkm}*=*
 
+<<<<<<< HEAD   (a3d00d Revert "ANDROID: GKI: Revert "drm/fourcc: Remove struct drm_)
+=======
+# The following OWNERS are defined at the top level to improve the OWNERS
+# suggestions through any user interface. Consider those people the ones that
+# can help with finding the best person to review.
+adelva@google.com
+gregkh@google.com
+maennich@google.com
+saravanak@google.com
+surenb@google.com
+tkjos@google.com
+willmcvicker@google.com
+>>>>>>> BRANCH (83bf84 Merge aosp/android-mainline at v5.14 in android-mainline-p21)

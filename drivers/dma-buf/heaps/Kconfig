@@ -1,9 +1,12 @@
+<<<<<<< HEAD   (a3d00d Revert "ANDROID: GKI: Revert "drm/fourcc: Remove struct drm_)
 config DMABUF_HEAPS_DEFERRED_FREE
 	tristate
 
 config DMABUF_HEAPS_PAGE_POOL
 	tristate
 
+=======
+>>>>>>> BRANCH (83bf84 Merge aosp/android-mainline at v5.14 in android-mainline-p21)
 config DMABUF_HEAPS_SYSTEM
 	tristate "DMA-BUF System Heap"
 	depends on DMABUF_HEAPS
