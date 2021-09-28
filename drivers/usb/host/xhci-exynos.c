@@ -169,12 +169,14 @@ static int xhci_exynos_check_port(struct xhci_hcd_exynos *exynos, struct usb_dev
 {
 	struct usb_device *hdev;
 	struct usb_device *udev = dev;
+	struct usb_host_config *config;
+	struct usb_interface_descriptor *desc;
 	struct device *ddev = &udev->dev;
 	struct xhci_hcd_exynos	*xhci_exynos = exynos;
 	enum usb_port_state pre_state;
 	int usb3_hub_detect = 0;
 	int usb2_detect = 0;
-	int port;
+	int port, i;
 	int bInterfaceClass = 0;
 
 	if (udev->bus->root_hub == udev) {
@@ -207,17 +209,21 @@ static int xhci_exynos_check_port(struct xhci_hcd_exynos *exynos, struct usb_dev
 			bInterfaceClass	= udev->config->interface[0]
 					->cur_altsetting->desc.bInterfaceClass;
 			if (on) {
-				if (bInterfaceClass == USB_CLASS_HID ||
-				    bInterfaceClass == USB_CLASS_AUDIO) {
-					udev->do_remote_wakeup =
-						(udev->config->desc.bmAttributes &
-							USB_CONFIG_ATT_WAKEUP) ? 1 : 0;
-					if (udev->do_remote_wakeup == 1) {
-						device_init_wakeup(ddev, 1);
-						usb_enable_autosuspend(dev);
+				config = udev->config;
+				for (i = 0; i < config->desc.bNumInterfaces; i++) {
+					desc = &config->intf_cache[i]->altsetting->desc;
+					if (desc->bInterfaceClass == USB_CLASS_AUDIO) {
+						udev->do_remote_wakeup =
+							(udev->config->desc.bmAttributes &
+								USB_CONFIG_ATT_WAKEUP) ? 1 : 0;
+						if (udev->do_remote_wakeup == 1) {
+							device_init_wakeup(ddev, 1);
+							usb_enable_autosuspend(dev);
+						}
+						dev_dbg(ddev, "%s, remote_wakeup = %d\n",
+							__func__, udev->do_remote_wakeup);
+						break;
 					}
-					dev_dbg(ddev, "%s, remote_wakeup = %d\n",
-						__func__, udev->do_remote_wakeup);
 				}
 			}
 			if (bInterfaceClass == USB_CLASS_HUB) {
@@ -411,6 +417,93 @@ static void xhci_exynos_pm_runtime_init(struct device *dev)
 	init_waitqueue_head(&dev->power.wait_queue);
 }
 
+<<<<<<< HEAD   (ba09a3 Revert "ANDROID: GKI: Revert "Revert "ANDROID: drivers: gpu:)
+=======
+static struct xhci_plat_priv_overwrite xhci_plat_vendor_overwrite;
+
+int xhci_exynos_register_vendor_ops(struct xhci_vendor_ops *vendor_ops)
+{
+	if (vendor_ops == NULL)
+		return -EINVAL;
+
+	xhci_plat_vendor_overwrite.vendor_ops = vendor_ops;
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(xhci_exynos_register_vendor_ops);
+
+static int xhci_vendor_init(struct xhci_hcd *xhci)
+{
+	struct xhci_vendor_ops *ops = NULL;
+
+	if (xhci_plat_vendor_overwrite.vendor_ops)
+		ops = xhci->vendor_ops = xhci_plat_vendor_overwrite.vendor_ops;
+
+	if (ops && ops->vendor_init)
+		return ops->vendor_init(xhci);
+
+	return 0;
+}
+
+static int xhci_vendor_cleanup(struct xhci_hcd *xhci)
+{
+	struct xhci_vendor_ops *ops = xhci_vendor_get_ops(xhci);
+	int ret = 0;
+
+	if (ops && ops->vendor_cleanup)
+		ops->vendor_cleanup(xhci);
+	else
+		ret = -EOPNOTSUPP;
+
+	xhci->vendor_ops = NULL;
+	return ret;
+}
+
+int xhci_exynos_wake_lock(struct xhci_hcd_exynos *xhci_exynos,
+				   int is_main_hcd, int is_lock)
+{
+	struct usb_hcd	*hcd = xhci_exynos->hcd;
+	int idle_ip_index;
+	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
+
+	dev_dbg(xhci_exynos->dev, "%s\n", __func__);
+
+	if (xhci->xhc_state & XHCI_STATE_REMOVING) {
+		dev_info(xhci_exynos->dev, "%s - Host removing return!\n",
+				__func__);
+		return -ESHUTDOWN;
+	}
+
+	if (is_lock) {
+		if (is_main_hcd) {
+			dev_info(xhci_exynos->dev, "%s: Main HCD WAKE LOCK\n", __func__);
+			__pm_stay_awake(xhci_exynos->main_wakelock);
+		} else {
+			dev_info(xhci_exynos->dev, "%s: Shared HCD WAKE LOCK\n", __func__);
+			__pm_stay_awake(xhci_exynos->shared_wakelock);
+		}
+		/* Add a routine for disable IDLEIP (IP idle) */
+		dev_info(xhci_exynos->dev, "IDLEIP(SICD) disable.\n");
+		idle_ip_index = dwc3_otg_get_idle_ip_index();
+		exynos_update_ip_idle_status(idle_ip_index, 0);
+	} else {
+		if (is_main_hcd) {
+			dev_info(xhci_exynos->dev, "%s: Main HCD WAKE UNLOCK\n", __func__);
+			__pm_relax(xhci_exynos->main_wakelock);
+		} else {
+			dev_info(xhci_exynos->dev, "%s: Shared HCD WAKE UNLOCK\n", __func__);
+			__pm_relax(xhci_exynos->shared_wakelock);
+		}
+
+		/* Add a routine for enable IDLEIP (IP idle) */
+		idle_ip_index = dwc3_otg_get_idle_ip_index();
+		exynos_update_ip_idle_status(idle_ip_index, 1);
+	}
+
+	return 0;
+}
+
+>>>>>>> BRANCH (12f392 build_slider: Remove obsolete merge point check)
 static int xhci_exynos_probe(struct platform_device *pdev)
 {
 	struct device		*parent = pdev->dev.parent;

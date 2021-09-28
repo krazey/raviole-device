@@ -444,8 +444,14 @@ static int rx_multi_pdp(struct sk_buff *skb)
 					ld->name, iod->name, iod->mc->name);
 	} else {
 		ret = napi_gro_receive(napi, skb);
+<<<<<<< HEAD   (ba09a3 Revert "ANDROID: GKI: Revert "Revert "ANDROID: drivers: gpu:)
 
 		ld->gro_flush(ld, napi);
+=======
+		if (ret == GRO_DROP)
+			mif_err_limited("%s: %s<-%s: ERR! napi_gro_receive\n",
+					ld->name, iod->name, iod->mc->name);
+>>>>>>> BRANCH (12f392 build_slider: Remove obsolete merge point check)
 	}
 	return len;
 }

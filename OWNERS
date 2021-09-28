@@ -2,3 +2,7 @@ file:/OWNERS_core
 per-file build*=set noparent
 per-file build*=saravanak@google.com,elavila@google.com,willmcvicker@google.com
 per-file vendor_{boot,dlkm}*=*
+<<<<<<< HEAD   (ba09a3 Revert "ANDROID: GKI: Revert "Revert "ANDROID: drivers: gpu:)
+=======
+
+>>>>>>> BRANCH (12f392 build_slider: Remove obsolete merge point check)
