@@ -47,7 +47,11 @@ obj-$(CONFIG_PINCTRL_OCELOT)	+= pinctrl-ocelot.o
 obj-$(CONFIG_PINCTRL_MICROCHIP_SGPIO)	+= pinctrl-microchip-sgpio.o
 obj-$(CONFIG_PINCTRL_EQUILIBRIUM)   += pinctrl-equilibrium.o
 obj-$(CONFIG_PINCTRL_K210)	+= pinctrl-k210.o
+<<<<<<< HEAD   (681cf0 GKI: delay_init: add a new driver to delay init)
 obj-$(CONFIG_PINCTRL_SLG51000) += pinctrl-slg51000.o
+=======
+obj-$(CONFIG_PINCTRL_KEEMBAY)	+= pinctrl-keembay.o
+>>>>>>> BRANCH (f50959 Merge tag 'v5.15-rc6' into android-mainline)
 
 obj-y				+= actions/
 obj-$(CONFIG_ARCH_ASPEED)	+= aspeed/

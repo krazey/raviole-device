@@ -71,6 +71,28 @@ enum exynos_ufs_param_id {
 struct exynos_ufs {
 	struct device *dev;
 	struct ufs_hba *hba;
+<<<<<<< HEAD   (681cf0 GKI: delay_init: add a new driver to delay init)
+=======
+	struct phy *phy;
+	void __iomem *reg_hci;
+	void __iomem *reg_unipro;
+	void __iomem *reg_ufsp;
+	struct clk *clk_hci_core;
+	struct clk *clk_unipro_main;
+	struct clk *clk_apb;
+	u32 pclk_rate;
+	u32 pclk_div;
+	u32 pclk_avail_min;
+	u32 pclk_avail_max;
+	unsigned long mclk_rate;
+	int avail_ln_rx;
+	int avail_ln_tx;
+	int rx_sel_idx;
+	struct ufs_pa_layer_attr dev_req_params;
+	struct ufs_phy_time_cfg t_cfg;
+	ktime_t entry_hibern8_t;
+	struct exynos_ufs_drv_data *drv_data;
+>>>>>>> BRANCH (f50959 Merge tag 'v5.15-rc6' into android-mainline)
 
 	/*
 	 * Do not change the order of iomem variables.

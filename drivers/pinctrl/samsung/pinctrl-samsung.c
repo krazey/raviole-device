@@ -1445,8 +1445,13 @@ static const struct of_device_id samsung_pinctrl_dt_match[] = {
 		.data = &exynos5433_of_data },
 	{ .compatible = "samsung,exynos7-pinctrl",
 		.data = &exynos7_of_data },
+<<<<<<< HEAD   (681cf0 GKI: delay_init: add a new driver to delay init)
 	{ .compatible = "google,gs101-pinctrl",
 		.data = &gs101_of_data },
+=======
+	{ .compatible = "samsung,exynos850-pinctrl",
+		.data = &exynos850_of_data },
+>>>>>>> BRANCH (f50959 Merge tag 'v5.15-rc6' into android-mainline)
 #endif
 #ifdef CONFIG_PINCTRL_S3C64XX
 	{ .compatible = "samsung,s3c64xx-pinctrl",
