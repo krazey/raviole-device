@@ -527,6 +527,9 @@
 				i2c-bus = <&hsi2c_2>;
 				i2c-addr = <0x51>;
 
+				/* Access mode property*/
+				lwis,read-only;
+
 				/* Registers */
 				reg-addr-bitwidth = <16>;
 				reg-value-bitwidth = <8>;
@@ -569,6 +572,9 @@
 				/* Registers */
 				reg-addr-bitwidth = <16>;
 				reg-value-bitwidth = <8>;
+
+				/* Access mode property*/
+				lwis,read-only;
 
 				/* Power sequence */
 				regulators =
