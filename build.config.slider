@@ -1,4 +1,6 @@
-. ${ROOT_DIR}/${KERNEL_DIR}/build.config.gs101
+KERNEL_DIR=gs/kernel
+
+. ${ROOT_DIR}/${KERNEL_DIR}/device-modules/build.config.gs101
 
 MAKE_GOALS="$MAKE_GOALS
 modules
@@ -25,7 +27,7 @@ $DEVICE_KERNEL_FILES
 "
 fi
 
-MODULES_LIST=${KERNEL_DIR}/vendor_boot_modules.slider
+MODULES_LIST=${KERNEL_DIR}/device-modules/vendor_boot_modules.slider
 
 VENDOR_RAMDISK_CMDS="modify_vendor_ramdisk"
 function modify_vendor_ramdisk() {

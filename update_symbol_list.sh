@@ -115,14 +115,14 @@ function update_aosp_abi {
   # Note: we are purposefully not using `--additions-only` in order to avoid
   # adding symbols in the pixel tree during development that later get removed.
   # To retain symbols in the same way as `--additions-only` does, we are
-  # cat'ing the private/gs-google/ and ToT aosp/ symbol lists together when
+  # cat'ing the gs/kernel/ and ToT aosp/ symbol lists together when
   # preparing for the AOSP ABI update. This retains all symbols in the aosp
   # version of the pixel symbol list.
   git -C aosp show aosp/android12-5.10:"${pixel_symbol_list}" \
     > aosp/android/abi_gki_aarch64_generic
-  extract_pixel_symbols 0 "private/gs-google/${pixel_symbol_list}"
+  extract_pixel_symbols 0 "gs/kernel/${pixel_symbol_list}"
   merge_and_sort_symbol_lists "aosp/${pixel_symbol_list}" \
-    "private/gs-google/${pixel_symbol_list}"
+    "gs/kernel/${pixel_symbol_list}"
 
   # Check if the added symbols are included in another symbol list
   verify_new_symbols_require_abi_update "${pixel_symbol_list}"
@@ -205,7 +205,7 @@ function update_aosp_abi {
 function extract_pixel_symbols {
   echo "========================================================"
   echo " Extracting symbols and updating the symbol list"
-  local clang_prebuilt_bin=$(. private/gs-google/build.config.common && \
+  local clang_prebuilt_bin=$(. gs/kernel/build.config.common && \
     echo $CLANG_PREBUILT_BIN)
   local additions_only=$1
   local pixel_symbol_list=$2
@@ -331,12 +331,12 @@ fi
 if [ "${PREPARE_AOSP_ABI}" != "0" ]; then
   update_aosp_abi "$@"
 else
-  extract_pixel_symbols 1 "private/gs-google/android/abi_gki_aarch64_generic"
+  extract_pixel_symbols 1 "gs/kernel/android/abi_gki_aarch64_generic"
   merge_and_sort_symbol_lists "aosp/android/abi_gki_aarch64_generic" \
-    "private/gs-google/android/abi_gki_aarch64_generic"
+    "gs/kernel/android/abi_gki_aarch64_generic"
 
   echo "========================================================"
-  echo " The symbol list has been updated locally in aosp/ and private/gs-google."
+  echo " The symbol list has been updated locally in aosp/ and gs/kernel."
   echo " Compiling with BUILD_KERNEL=1 is now required until the new symbol(s)"
   echo " are merged. Re-compile using the below command:"
   echo
