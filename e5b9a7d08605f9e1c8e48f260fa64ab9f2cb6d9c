@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0b436122_5ca4117b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-04T22:17:39Z",
+      "side": 1,
+      "message": "Removed in parent change I0cfbd8d7b446fff094c83a79c48d9d13ec0e9840",
+      "parentUuid": "a4b217a3_0c749a6e",
+      "range": {
+        "startLine": 10,
+        "startChar": 24,
+        "endLine": 10,
+        "endChar": 67
+      },
+      "revId": "e5b9a7d08605f9e1c8e48f260fa64ab9f2cb6d9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "92739d5b_e22135f5",
@@ -37,6 +61,24 @@
       "writtenOn": "2021-11-04T20:19:22Z",
       "side": 1,
       "message": "Have you condownload_gki.sh",
+      "revId": "e5b9a7d08605f9e1c8e48f260fa64ab9f2cb6d9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "451764e3_02b5b51f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-04T22:17:39Z",
+      "side": 1,
+      "message": "Disregard this comment",
+      "parentUuid": "92739d5b_e22135f5",
       "revId": "e5b9a7d08605f9e1c8e48f260fa64ab9f2cb6d9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
