@@ -52,6 +52,24 @@
       "parentUuid": "b2aca5ae_1ae8a86a",
       "revId": "160e248426d683216c81701ba7be5193e9151937",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6130a99_8e1990c9",
+        "filename": "build.config.slider",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-04T23:21:08Z",
+      "side": 1,
+      "message": "Ah I missed the two dots in the first comment. Yeah I can do that.",
+      "parentUuid": "b39783d4_12609a74",
+      "revId": "160e248426d683216c81701ba7be5193e9151937",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
