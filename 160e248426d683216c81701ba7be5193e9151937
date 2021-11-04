@@ -34,6 +34,24 @@
       "parentUuid": "fd174460_d31c4384",
       "revId": "160e248426d683216c81701ba7be5193e9151937",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b39783d4_12609a74",
+        "filename": "build.config.slider",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-04T23:11:58Z",
+      "side": 1,
+      "message": "What I meant is something like this\n\nDEVICE_MODULES_DIR\u003d${KERNEL_DIR}\nKERNEL_DIR\u003d\"${KERNEL_DIR}/..\" # Note the two dots \"..\"\n\nand then somehow canonicalize ${KERNEL_DIR}\n\nOn line 3, we could then say\n\n. ${ROOT_DIR}/${DEVICE_MODULES_DIR}/build.config.gs101\n\nAnyway, just a suggestion. I\u0027m fine either way.",
+      "parentUuid": "b2aca5ae_1ae8a86a",
+      "revId": "160e248426d683216c81701ba7be5193e9151937",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
