@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8609bea2_6abf0efc",
+        "filename": "arch/arm64/configs/slider_gki.fragment",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-04T19:29:15Z",
+      "side": 1,
+      "message": "Wondering if we should move this to line 1 to make it more prominent, but I\u0027m fine either way.",
+      "revId": "c98300bc4c33a41d165c3f723cff2a7fcc075b14",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
