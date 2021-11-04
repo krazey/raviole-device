@@ -16,6 +16,24 @@
       "message": "_setup_env.sh sets KERNEL_DIR to gs/kernel/device-modules. I\u0027m wondering if we should capture that in a different variable and then set KERNEL_DIR to \"gs/kernel/device-modules/..\"",
       "revId": "160e248426d683216c81701ba7be5193e9151937",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2aca5ae_1ae8a86a",
+        "filename": "build.config.slider",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-04T23:03:36Z",
+      "side": 1,
+      "message": "I believe we need KERNEL_DIR to be `gs/kernel` though because build.sh runs make from ${KERNEL_DIR}.",
+      "parentUuid": "fd174460_d31c4384",
+      "revId": "160e248426d683216c81701ba7be5193e9151937",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
