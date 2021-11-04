@@ -70,6 +70,24 @@
       "parentUuid": "b39783d4_12609a74",
       "revId": "160e248426d683216c81701ba7be5193e9151937",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "50cddbac_dc7464c5",
+        "filename": "build.config.slider",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-04T23:40:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6130a99_8e1990c9",
+      "revId": "160e248426d683216c81701ba7be5193e9151937",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
