@@ -34,6 +34,24 @@
       "parentUuid": "773eede6_98053f9b",
       "revId": "1b3a611312cf9655e53a2d24cbda29f0bdc1b238",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6289d402_382dc7e7",
+        "filename": "arch/arm64/configs/slider_gki.fragment",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-04T19:12:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed16a02e_94bf6401",
+      "revId": "1b3a611312cf9655e53a2d24cbda29f0bdc1b238",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
