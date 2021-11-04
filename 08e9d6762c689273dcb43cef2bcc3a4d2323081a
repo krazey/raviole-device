@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d00ff973_4ce3136b",
+        "filename": "build.config.gs101",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2021-11-04T23:18:25Z",
+      "side": 1,
+      "message": "Is it worth factoring out this as $RAMDISK_DIR? I\u0027m just trying to shorten these lines.",
+      "range": {
+        "startLine": 41,
+        "startChar": 59,
+        "endLine": 41,
+        "endChar": 105
+      },
+      "revId": "08e9d6762c689273dcb43cef2bcc3a4d2323081a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
