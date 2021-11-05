@@ -8,5 +8,6 @@ menuconfig DEVICE_MODULES
 if DEVICE_MODULES
 
 source "device-modules/drivers/scsi/ufs/Kconfig"
+source "device-modules/drivers/pci/controller/dwc/Kconfig"
 
 endif # DEVICE_MODULES
