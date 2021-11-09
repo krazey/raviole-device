@@ -7,4 +7,6 @@ menuconfig DEVICE_MODULES
 
 if DEVICE_MODULES
 
+source "device-modules/drivers/i2c/busses/Kconfig"
+
 endif # DEVICE_MODULES
