@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dd6ed431_47960514",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2021-11-10T14:49:09Z",
+      "side": 1,
+      "message": "is there any interest on keeping upstream configs separated from OOT configs here?",
+      "revId": "047da1c9c0acb0b57d8c706d068450488835c01d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
