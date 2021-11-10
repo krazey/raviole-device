@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cbf09428_05808861",
+        "filename": "drivers/i2c/busses/Kconfig",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-10T17:42:55Z",
+      "side": 1,
+      "message": "nit: Consider using just GS instead of GS101 since this driver may be used for future GS chipsets. For example, you could say \"Exynos high-speed I2C driver for GS SoCs\".",
+      "range": {
+        "startLine": 5,
+        "startChar": 11,
+        "endLine": 5,
+        "endChar": 16
+      },
+      "revId": "a94d10bffc12a1beb7e8b588d7b236bab71b901a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
