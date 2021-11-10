@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f17178da_83a33a6f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2021-11-10T14:52:18Z",
+      "side": 1,
+      "message": "why wasn\u0027t the +2 carried over for a trivial rebase?",
+      "revId": "d6df078a57c91ba3f7d09a01a8917e5136bc250e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
