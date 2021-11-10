@@ -16,6 +16,24 @@
       "message": "why wasn\u0027t the +2 carried over for a trivial rebase?",
       "revId": "d6df078a57c91ba3f7d09a01a8917e5136bc250e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8567f76f_ab8d4fa6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-10T16:54:12Z",
+      "side": 1,
+      "message": "I believe you voted CR+2 on Patchset 1, and there were significant changes between Patchset 1 and 2. Patchset 3 appears to be a rebase.",
+      "parentUuid": "f17178da_83a33a6f",
+      "revId": "d6df078a57c91ba3f7d09a01a8917e5136bc250e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
