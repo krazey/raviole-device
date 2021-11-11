@@ -28,7 +28,7 @@
 #include <linux/of_address.h>
 #include <asm/unaligned.h>
 
-#include "dmaengine.h"
+#include "../../../drivers/dma/dmaengine.h"
 
 #define PL330_MAX_CHAN		8
 #define PL330_MAX_IRQS		32
