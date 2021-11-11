@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ab6ffd8c_0f28cf3a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1625880
+      },
+      "writtenOn": "2021-11-11T12:31:31Z",
+      "side": 1,
+      "message": "Nothing changed between PS 5 and 8.",
+      "revId": "00aabedcb5c4bacd2cfdb229560747f63afca5f3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
