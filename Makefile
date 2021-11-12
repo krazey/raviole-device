@@ -11,3 +11,5 @@ obj-y += drivers/scsi/ufs/
 obj-y += drivers/spi/
 
 obj-y += drivers/i2c/busses/
+
+obj-y += drivers/clocksource/
