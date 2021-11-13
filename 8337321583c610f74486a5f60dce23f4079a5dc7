@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c2a1ff62_5cce66e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-13T00:16:12Z",
+      "side": 1,
+      "message": "nit: This line might be too long.",
+      "range": {
+        "startLine": 12,
+        "startChar": 66,
+        "endLine": 12,
+        "endChar": 73
+      },
+      "revId": "8337321583c610f74486a5f60dce23f4079a5dc7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
