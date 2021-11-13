@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a64b9a93_92d84d33",
+        "filename": "Kconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-13T00:14:14Z",
+      "side": 1,
+      "message": "I try to maintain the order defined by drivers/Kconfig in upstream. Staging would need to go before devfreq.",
+      "revId": "910a2f4a8d715db8c1cedc52c62470c9b76d8065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ef7a245_7eb5589c",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-13T00:14:14Z",
+      "side": 1,
+      "message": "I typically try to maintain the order that is defined by drivers/Makefile in upstream. In this case, drivers/staging would need to go after cpufreq (line 19) but before devfreq (line 21)",
+      "revId": "910a2f4a8d715db8c1cedc52c62470c9b76d8065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd218d2c_063b7ab8",
+        "filename": "drivers/staging/android/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-13T00:14:14Z",
+      "side": 1,
+      "message": "Nit: Your original version used a tab here.",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "910a2f4a8d715db8c1cedc52c62470c9b76d8065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
