@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "afc1abf6_246fa7de",
+        "filename": "Kconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-13T00:39:14Z",
+      "side": 1,
+      "message": "same comment here as in Makefile.",
+      "parentUuid": "a64b9a93_92d84d33",
+      "revId": "910a2f4a8d715db8c1cedc52c62470c9b76d8065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3ef7a245_7eb5589c",
@@ -35,6 +53,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b333f10a_0e636611",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-13T00:39:14Z",
+      "side": 1,
+      "message": "For the DELAY_INIT driver we actually want it loaded as late in first_stage_init as possible. The reason is because we don\u0027t want to delay init before any drivers that dwc3 depends on are loaded. So I\u0027d like to put this here at the end.\n\nAnd just to note, there aren\u0027t any other pixel drivers under drivers/staging/android. Also, this driver will be removed once we can get a public build released with the userspace fix.",
+      "parentUuid": "3ef7a245_7eb5589c",
+      "revId": "910a2f4a8d715db8c1cedc52c62470c9b76d8065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd218d2c_063b7ab8",
@@ -48,6 +84,30 @@
       "writtenOn": "2021-11-13T00:14:14Z",
       "side": 1,
       "message": "Nit: Your original version used a tab here.",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "910a2f4a8d715db8c1cedc52c62470c9b76d8065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14c308bb_516f4cd3",
+        "filename": "drivers/staging/android/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-13T00:39:14Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ll update this.",
+      "parentUuid": "bd218d2c_063b7ab8",
       "range": {
         "startLine": 3,
         "startChar": 24,
