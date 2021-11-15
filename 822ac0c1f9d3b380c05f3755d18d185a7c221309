@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c72676d6_bd890b22",
+        "filename": "drivers/dma/pl330.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-15T17:37:51Z",
+      "side": 1,
+      "message": "Instead of \"../../..\", can you just do this in the Makefile:\n\nccflags-y +\u003d -I $(srctree)/drivers/dma",
+      "range": {
+        "startLine": 31,
+        "startChar": 10,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "822ac0c1f9d3b380c05f3755d18d185a7c221309",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
