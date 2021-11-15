@@ -16,6 +16,47 @@
       "message": "You need to add the base Kconfig and Makefile support to compile this.",
       "revId": "16d123d12b15ff62fc9540d9d9802a8ce88a02bb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0e345141_c941d097",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-15T17:43:27Z",
+      "side": 1,
+      "message": "making unresolved",
+      "parentUuid": "c66f3770_976bfcb8",
+      "revId": "16d123d12b15ff62fc9540d9d9802a8ce88a02bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c14aaa20_962df182",
+        "filename": "drivers/watchdog/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-15T17:43:27Z",
+      "side": 1,
+      "message": "I think we need to rename this .ko as well since upstream already has this module name.",
+      "range": {
+        "startLine": 4,
+        "startChar": 37,
+        "endLine": 4,
+        "endChar": 48
+      },
+      "revId": "16d123d12b15ff62fc9540d9d9802a8ce88a02bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
