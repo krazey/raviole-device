@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "039749ff_701a1d34",
+        "filename": "drivers/devfreq/google/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-15T22:55:21Z",
+      "side": 1,
+      "message": "Other makefiles don\u0027t have a space character here.",
+      "range": {
+        "startLine": 3,
+        "startChar": 38,
+        "endLine": 3,
+        "endChar": 39
+      },
+      "revId": "6eb8c364f16e9e59daec4d20640dbbed27afa99c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e5b63f4c_3f31fd9b",
+        "filename": "drivers/devfreq/google/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-15T22:55:21Z",
+      "side": 1,
+      "message": "What if we use\n#include \"../../../drivers/thermal/thermal_core.h\"\n\nThat doesn\u0027t look much worse than what we have right now:\n#include \"../../thermal/thermal_core.h\"\n\nI\u0027m not sure if we should add these \"-I\" flags.",
+      "revId": "6eb8c364f16e9e59daec4d20640dbbed27afa99c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
