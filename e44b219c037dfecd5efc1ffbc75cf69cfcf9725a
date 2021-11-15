@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cf447093_e2cfe715",
+        "filename": "drivers/cpufreq/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-15T22:41:42Z",
+      "side": 1,
+      "message": "typo: cpufreq",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "e44b219c037dfecd5efc1ffbc75cf69cfcf9725a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
