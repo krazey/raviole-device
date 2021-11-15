@@ -116,6 +116,30 @@
       },
       "revId": "910a2f4a8d715db8c1cedc52c62470c9b76d8065",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3390a8bb_6074e37f",
+        "filename": "drivers/staging/android/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-15T17:49:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14c308bb_516f4cd3",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 31
+      },
+      "revId": "910a2f4a8d715db8c1cedc52c62470c9b76d8065",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
