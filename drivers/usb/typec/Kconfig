@@ -2,6 +2,6 @@
 
 if TYPEC
 
-source "device-modules/drivers/usb/typec/tcpm/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/usb/typec/tcpm/Kconfig"
 
 endif # TYPEC
