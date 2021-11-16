@@ -7,14 +7,14 @@ if USB_SUPPORT
 
 if USB
 
-source "device-modules/drivers/usb/host/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/usb/host/Kconfig"
 
 endif
 
-source "device-modules/drivers/usb/dwc3/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/usb/dwc3/Kconfig"
 
-source "device-modules/drivers/usb/gadget/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/usb/gadget/Kconfig"
 
-source "device-modules/drivers/usb/typec/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/usb/typec/Kconfig"
 
 endif # USB_SUPPORT
