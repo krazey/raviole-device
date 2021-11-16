@@ -1,6 +1,6 @@
 DEVICE_MODULES_DIR=${KERNEL_DIR}
  # This project should be nested inside a kernel tree
-KERNEL_DIR="${KERNEL_DIR}/.."
+KERNEL_DIR="gs/kernel"
 
 . ${ROOT_DIR}/${DEVICE_MODULES_DIR}/build.config.gs101
 
