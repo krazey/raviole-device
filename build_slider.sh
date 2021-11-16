@@ -11,7 +11,7 @@ function exit_if_error {
 TRIM_NONLISTED_KMI=${TRIM_NONLISTED_KMI:-0}
 LTO=${LTO:-thin}
 KMI_SYMBOL_LIST_STRICT_MODE=${ENABLE_STRICT_KMI:-0}
-DEFAULT_CONFIG="gs/kernel/device-modules/build.config.slider"
+DEFAULT_CONFIG="gs/google-modules/raviole-device/build.config.slider"
 DEVICE_KERNEL_BUILD_CONFIG=${DEVICE_KERNEL_BUILD_CONFIG:-${DEFAULT_CONFIG}}
 GKI_KERNEL_OUT_DIR=gki-android-mainline
 GKI_KERNEL_BUILD_CONFIG=common/build.config.gki.aarch64

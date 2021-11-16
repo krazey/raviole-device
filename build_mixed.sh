@@ -65,7 +65,9 @@ function build_device_kernel {
     DIST_DIR=${DIST_DIR} \
     MIXED_BUILD=1 \
     KBUILD_MIXED_TREE=${GKI_BINARIES_DIR} \
-    build/build.sh "$@"
+    build/build.sh "$@" \
+      KBUILD_EXT_TREE=`pwd`/gs/google-modules/raviole-device \
+      KBUILD_KCONFIG=`pwd`/gs/google-modules/raviole-device/Kconfig
   exit_if_error $? "Failed to compile device kernel"
 }
 
