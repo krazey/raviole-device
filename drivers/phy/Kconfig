@@ -3,4 +3,4 @@
 # PHY
 #
 
-source "device-modules/drivers/phy/samsung/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/phy/samsung/Kconfig"
