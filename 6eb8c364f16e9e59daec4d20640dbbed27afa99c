@@ -39,6 +39,24 @@
       "message": "What if we use\n#include \"../../../drivers/thermal/thermal_core.h\"\n\nThat doesn\u0027t look much worse than what we have right now:\n#include \"../../thermal/thermal_core.h\"\n\nI\u0027m not sure if we should add these \"-I\" flags.",
       "revId": "6eb8c364f16e9e59daec4d20640dbbed27afa99c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2354596_801b38bd",
+        "filename": "drivers/devfreq/google/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-16T17:23:27Z",
+      "side": 1,
+      "message": "The reason is because it\u0027s not guaranteed that this driver repo is always going to be nested. So the \"../../..\" won\u0027t work anymore in that case.\n\nI think it\u0027s more robust to use $(srctree)/drivers/thermal because that\u0027s defined by upstream. If upstream moves the headers out of drivers/thermal, then we would have to update the driver here to do the same thing, but that would be expected.",
+      "parentUuid": "e5b63f4c_3f31fd9b",
+      "revId": "6eb8c364f16e9e59daec4d20640dbbed27afa99c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
