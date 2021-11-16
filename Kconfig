@@ -1,50 +1,45 @@
 # SPDX-License-Identifier: GPL-2.0
 
-menuconfig DEVICE_MODULES
-	bool "Support for compiling out-of-tree modules within the kernel tree"
-	help
-	  Say Y if you want to compile the drivers within this device-modules folder.
+mainmenu "Linux/$(ARCH) $(KERNELVERSION) Kernel Configuration"
 
-if DEVICE_MODULES
+source "$(srctree)/Kconfig.base"
 
-source "device-modules/drivers/pci/controller/dwc/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/pci/controller/dwc/Kconfig"
 
-source "device-modules/drivers/clk/gs/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/clk/gs/Kconfig"
 
-source "device-modules/drivers/soc/google/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/soc/google/Kconfig"
 
-source "device-modules/drivers/char/hw_random/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/char/hw_random/Kconfig"
 
-source "device-modules/drivers/tty/serial/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/tty/serial/Kconfig"
 
-source "device-modules/drivers/scsi/ufs/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/scsi/ufs/Kconfig"
 
-source "device-modules/drivers/i2c/busses/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/i2c/busses/Kconfig"
 
-source "device-modules/drivers/usb/host/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/usb/host/Kconfig"
 
-source "device-modules/drivers/usb/dwc3/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/usb/dwc3/Kconfig"
 
-source "device-modules/drivers/dma/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/dma/Kconfig"
 
-source "device-modules/drivers/dma-buf/heaps/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/dma-buf/heaps/Kconfig"
 
-source "device-modules/drivers/spi/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/spi/Kconfig"
 
-source "device-modules/drivers/pinctrl/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/pinctrl/Kconfig"
 
-source "device-modules/drivers/watchdog/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/watchdog/Kconfig"
 
-source "device-modules/drivers/media/platform/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/media/platform/Kconfig"
 
-source "device-modules/drivers/clocksource/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/clocksource/Kconfig"
 
-source "device-modules/drivers/iommu/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/iommu/Kconfig"
 
-source "device-modules/drivers/cpufreq/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/cpufreq/Kconfig"
 
-source "device-modules/drivers/devfreq/google/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/devfreq/google/Kconfig"
 
-source "device-modules/drivers/staging/android/Kconfig"
-
-endif # DEVICE_MODULES
+source "$(KBUILD_EXT_TREE)/drivers/staging/android/Kconfig"
