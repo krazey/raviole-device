@@ -72,6 +72,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a19b7b0a_3191f691",
+        "filename": "drivers/devfreq/google/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-16T19:38:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31a0de5_150205ad",
+      "range": {
+        "startLine": 3,
+        "startChar": 38,
+        "endLine": 3,
+        "endChar": 39
+      },
+      "revId": "6eb8c364f16e9e59daec4d20640dbbed27afa99c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e5b63f4c_3f31fd9b",
