@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "300fd1bd_b9491455",
+        "filename": "drivers/clk/gs/Kconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-16T21:43:11Z",
+      "side": 1,
+      "message": "Remove \" on\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 46,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "72bd84e7ab14324c57e64dbb8f5307ecef570aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
