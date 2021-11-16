@@ -36,6 +36,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b54c7e4b_d2ccea4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-16T22:02:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e345141_c941d097",
+      "revId": "16d123d12b15ff62fc9540d9d9802a8ce88a02bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c14aaa20_962df182",
@@ -49,6 +67,30 @@
       "writtenOn": "2021-11-15T17:43:27Z",
       "side": 1,
       "message": "I think we need to rename this .ko as well since upstream already has this module name.",
+      "range": {
+        "startLine": 4,
+        "startChar": 37,
+        "endLine": 4,
+        "endChar": 48
+      },
+      "revId": "16d123d12b15ff62fc9540d9d9802a8ce88a02bb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cc078c56_ace7564f",
+        "filename": "drivers/watchdog/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-16T22:02:07Z",
+      "side": 1,
+      "message": "As discussed over chat, let\u0027s leave it like this.",
+      "parentUuid": "c14aaa20_962df182",
       "range": {
         "startLine": 4,
         "startChar": 37,
