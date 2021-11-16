@@ -60,11 +60,14 @@ function build_gki {
 
 function build_device_kernel {
   echo "Building device kernel using ${DEVICE_KERNEL_BUILD_CONFIG}..."
+
+
   BUILD_CONFIG=${DEVICE_KERNEL_BUILD_CONFIG} \
     OUT_DIR=${BASE_OUT}/${DEVICE_KERNEL_OUT_DIR}/ \
     DIST_DIR=${DIST_DIR} \
     MIXED_BUILD=1 \
     KBUILD_MIXED_TREE=${GKI_BINARIES_DIR} \
+    VENDOR_EXTENDED_TREE=gs/google-modules/raviole-device \
     build/build.sh "$@"
   exit_if_error $? "Failed to compile device kernel"
 }

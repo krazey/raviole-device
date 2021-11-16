@@ -1,20 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0
 
-menuconfig DEVICE_MODULES
-	bool "Support for compiling out-of-tree modules within the kernel tree"
-	help
-	  Say Y if you want to compile the drivers within this device-modules folder.
+mainmenu "Linux/$(ARCH) $(KERNELVERSION) Kernel Configuration"
 
-if DEVICE_MODULES
+source "$(srctree)/Kconfig.base"
 
-source "device-modules/drivers/pci/controller/dwc/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/pci/controller/dwc/Kconfig"
 
-source "device-modules/drivers/scsi/ufs/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/scsi/ufs/Kconfig"
 
-source "device-modules/drivers/i2c/busses/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/i2c/busses/Kconfig"
 
-source "device-modules/drivers/spi/Kconfig"
+source "$(KBUILD_EXT_TREE)/drivers/spi/Kconfig"
 
-source "device-modules/drivers/pinctrl/Kconfig"
-
-endif # DEVICE_MODULES
+source "$(KBUILD_EXT_TREE)/drivers/pinctrl/Kconfig"
