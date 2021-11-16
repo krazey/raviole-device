@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 
 LINUXINCLUDE += \
-		-I$(srctree)/device-modules/include \
-		-I$(srctree)/device-modules/include/uapi \
-		-I$(srctree)/device-modules/arch/$(SRCARCH)/include/uapi
+		-I$(srctree)/$(KBUILD_EXT_TREE)/include \
+		-I$(srctree)/$(KBUILD_EXT_TREE)/include/uapi \
+		-I$(srctree)/$(KBUILD_EXT_TREE)/arch/$(SRCARCH)/include/uapi
 
-dtstree := device-modules/arch/$(SRCARCH)/boot/dts
+dtstree := $(KBUILD_EXT_TREE)/arch/$(SRCARCH)/boot/dts
 
