@@ -24,11 +24,11 @@
 #include <linux/acpi.h>
 #include <linux/usb/of.h>
 
-#include "../core/phy.h"
-#include "xhci.h"
-#include "xhci-plat.h"
-#include "xhci-mvebu.h"
-#include "xhci-rcar.h"
+#include "../../../../drivers/usb/core/phy.h"
+#include "../../../../drivers/usb/host/xhci.h"
+#include "../../../../drivers/usb/host/xhci-plat.h"
+#include "../../../../drivers/usb/host/xhci-mvebu.h"
+#include "../../../../drivers/usb/host/xhci-rcar.h"
 #include "xhci-exynos.h"
 #include "../dwc3/dwc3-exynos.h"
 #include <soc/google/exynos-cpupm.h>
