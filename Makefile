@@ -28,6 +28,8 @@ obj-y += drivers/usb/dwc3/
 
 obj-y += drivers/i2c/busses/
 
+obj-y += drivers/media/platform/
+
 obj-y += drivers/watchdog/
 
 obj-y += drivers/cpufreq/
