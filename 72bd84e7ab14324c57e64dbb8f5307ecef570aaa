@@ -22,6 +22,30 @@
       },
       "revId": "72bd84e7ab14324c57e64dbb8f5307ecef570aaa",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "87eda137_479abc48",
+        "filename": "drivers/clk/gs/Kconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-16T23:01:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "300fd1bd_b9491455",
+      "range": {
+        "startLine": 7,
+        "startChar": 46,
+        "endLine": 7,
+        "endChar": 49
+      },
+      "revId": "72bd84e7ab14324c57e64dbb8f5307ecef570aaa",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
