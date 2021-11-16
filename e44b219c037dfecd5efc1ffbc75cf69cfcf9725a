@@ -22,6 +22,30 @@
       },
       "revId": "e44b219c037dfecd5efc1ffbc75cf69cfcf9725a",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c374d242_99f1c338",
+        "filename": "drivers/cpufreq/Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-16T19:39:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf447093_e2cfe715",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 18
+      },
+      "revId": "e44b219c037dfecd5efc1ffbc75cf69cfcf9725a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
