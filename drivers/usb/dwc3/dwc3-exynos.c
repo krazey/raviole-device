@@ -26,12 +26,12 @@
 
 #include <linux/usb/of.h>
 
-#include "core.h"
+#include "../../../../drivers/usb/dwc3/core.h"
 #include "core-exynos.h"
 #include "dwc3-exynos.h"
 #include "dwc3-exynos-ldo.h"
-#include "io.h"
-#include "gadget.h"
+#include "../../../../drivers/usb/dwc3/io.h"
+#include "../../../../drivers/usb/dwc3/gadget.h"
 
 #include <linux/io.h>
 #include <linux/usb/otg-fsm.h>
