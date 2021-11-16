@@ -16,6 +16,24 @@
       "message": "I think we currently have \"char\" after \"tty\".",
       "revId": "879aabe43a6a95e8635da6d58ab9a8d834db5b25",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a30967b4_1f524afe",
+        "filename": "Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-16T19:40:25Z",
+      "side": 1,
+      "message": "thanks for catching that. Fixed.",
+      "parentUuid": "dd3c5cf4_1ce77fba",
+      "revId": "879aabe43a6a95e8635da6d58ab9a8d834db5b25",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
