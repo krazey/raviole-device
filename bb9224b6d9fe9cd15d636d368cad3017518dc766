@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a589808e_ba080996",
+        "filename": "drivers/usb/host/xhci-exynos.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-17T17:44:34Z",
+      "side": 1,
+      "message": "How about -I$(srctree)/drivers/usb? The #include statements would then look like\n\n#include \u003ccore/phy.h\u003e\n#include \u003chost/xhci.h\u003e",
+      "parentUuid": "36f67d9f_41902ff3",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "bb9224b6d9fe9cd15d636d368cad3017518dc766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "5aa16312_c429469a",
         "filename": "drivers/usb/host/xhci-exynos.h",
         "patchSetId": 2
