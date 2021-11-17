@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "189a8683_95c102ea",
+        "filename": "Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-17T04:01:31Z",
+      "side": 1,
+      "message": "nit: I see in drivers/usb/Makefile that dwc3/ comes before host/.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5e3020b9_c60f1f3e",
+        "filename": "drivers/usb/dwc3/dwc3-exynos-otg.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-17T04:01:31Z",
+      "side": 1,
+      "message": "same with these",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ce372379_4f1077b4",
+        "filename": "drivers/usb/dwc3/dwc3-exynos.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-17T04:01:31Z",
+      "side": 1,
+      "message": "same with these",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e9d02e3b_7f3ffd00",
+        "filename": "drivers/usb/dwc3/dwc3-exynos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-17T04:01:31Z",
+      "side": 1,
+      "message": "Please use the -I$(srctree)/drivers/usb/dwc3 in the Makefile",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
