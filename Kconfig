@@ -47,4 +47,6 @@ source "device-modules/drivers/devfreq/google/Kconfig"
 
 source "device-modules/drivers/staging/android/Kconfig"
 
+source "device-modules/drivers/trusty/Kconfig"
+
 endif # DEVICE_MODULES
