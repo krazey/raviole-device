@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fa79c85a_a9702591",
+        "filename": "drivers/dma-buf/heaps/Kconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-17T04:06:24Z",
+      "side": 0,
+      "message": "I see that you are dropping these, but then cherry-picking the changes later in the series? Why not just keep these and not re-cherry-pick the patches?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "1bfbd19083e6f6e011166dfd0a679d891d784e9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
