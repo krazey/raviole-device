@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7057e3f9_8ae2cdbe",
+        "filename": "Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-17T18:51:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189a8683_95c102ea",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5e3020b9_c60f1f3e",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1dccd0a5_59df9139",
+        "filename": "drivers/usb/dwc3/dwc3-exynos-otg.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-17T18:51:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e3020b9_c60f1f3e",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ce372379_4f1077b4",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-11-17T04:01:31Z",
       "side": 1,
       "message": "same with these",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "90062005_c707b225",
+        "filename": "drivers/usb/dwc3/dwc3-exynos.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-17T18:51:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce372379_4f1077b4",
       "range": {
         "startLine": 29,
         "startChar": 0,
@@ -131,6 +203,30 @@
       "side": 1,
       "message": "yeah I\u0027m good with that.",
       "parentUuid": "6c5ff938_b0d2404d",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4436defb_cd41f8a9",
+        "filename": "drivers/usb/dwc3/dwc3-exynos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-17T18:51:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af1ff72_c516d29f",
       "range": {
         "startLine": 23,
         "startChar": 0,
