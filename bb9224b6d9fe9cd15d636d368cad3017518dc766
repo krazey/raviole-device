@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8a19790_b97bf8ec",
+        "filename": "drivers/usb/host/xhci-exynos.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-17T18:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a589808e_ba080996",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 45
+      },
+      "revId": "bb9224b6d9fe9cd15d636d368cad3017518dc766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5aa16312_c429469a",
@@ -61,6 +85,30 @@
       "writtenOn": "2021-11-17T03:58:52Z",
       "side": 1,
       "message": "Let\u0027s use the -I$(srctree)/drivers/usb/host in the Makefile to find this header since it\u0027s not guaranteed that the raviole-device project will always be nested inside the kernel tree.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 45
+      },
+      "revId": "bb9224b6d9fe9cd15d636d368cad3017518dc766",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d669f8d4_e6ae5c24",
+        "filename": "drivers/usb/host/xhci-exynos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-17T18:48:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aa16312_c429469a",
       "range": {
         "startLine": 12,
         "startChar": 10,
