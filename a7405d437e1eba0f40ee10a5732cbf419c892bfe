@@ -91,6 +91,30 @@
       },
       "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6c5ff938_b0d2404d",
+        "filename": "drivers/usb/dwc3/dwc3-exynos.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-17T17:36:20Z",
+      "side": 1,
+      "message": "My concern here is that io.h and core.h are pretty generic names that increase the risk of collisions. If someone decides to create a file named core.h in any of the other \"-I\" directories, then we might end up including the wrong file here.\n\nWhat do you think about -I$(srctree)/drivers/usb and then use \"#include \u003cdwc3/core.h\u003e\"? That might reduce the risk.",
+      "parentUuid": "e9d02e3b_7f3ffd00",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "a7405d437e1eba0f40ee10a5732cbf419c892bfe",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
