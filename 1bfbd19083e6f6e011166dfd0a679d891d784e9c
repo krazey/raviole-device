@@ -22,6 +22,30 @@
       },
       "revId": "1bfbd19083e6f6e011166dfd0a679d891d784e9c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fcb565b7_4a85c1f0",
+        "filename": "drivers/dma-buf/heaps/Kconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-17T04:07:19Z",
+      "side": 0,
+      "message": "Oh actually I see the drivers aren\u0027t there. They probably were dropped when filtering the git history.",
+      "parentUuid": "fa79c85a_a9702591",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "1bfbd19083e6f6e011166dfd0a679d891d784e9c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
