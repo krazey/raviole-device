@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a61c00e7_889588c1",
+        "filename": "Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-18T22:53:24Z",
+      "side": 1,
+      "message": "can you move this to be right before drivers/watchdog to retain the same order as before?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "acc0c8f83d596f072dd1ccf3cf5f3867ab62d32a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8b335086_c1137d53",
+        "filename": "drivers/input/Kconfig",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-18T22:53:24Z",
+      "side": 1,
+      "message": "Can you switch the order so that it matches the same order as before?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "acc0c8f83d596f072dd1ccf3cf5f3867ab62d32a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
