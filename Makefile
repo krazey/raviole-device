@@ -46,4 +46,6 @@ obj-y += drivers/devfreq/google/
 
 obj-y += drivers/staging/android/
 
+obj-y += drivers/thermal/
+
 obj-y += drivers/trusty/

@@ -55,4 +55,6 @@ source "device-modules/drivers/staging/android/Kconfig"
 
 source "device-modules/drivers/trusty/Kconfig"
 
+source "device-modules/drivers/thermal/Kconfig"
+
 endif # DEVICE_MODULES
