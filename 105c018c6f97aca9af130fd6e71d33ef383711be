@@ -22,6 +22,30 @@
       },
       "revId": "105c018c6f97aca9af130fd6e71d33ef383711be",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e609d35f_94ff77a1",
+        "filename": "drivers/misc/Kconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-18T17:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d212b19_44c0c672",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "105c018c6f97aca9af130fd6e71d33ef383711be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
