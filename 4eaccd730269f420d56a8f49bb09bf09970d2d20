@@ -22,6 +22,30 @@
       },
       "revId": "4eaccd730269f420d56a8f49bb09bf09970d2d20",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a57e6231_44fd77de",
+        "filename": "Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2021-11-18T22:55:42Z",
+      "side": 1,
+      "message": "OK I\u0027ll fix this. Why aren\u0027t we just adding `drivers/Makefile` here btw?",
+      "parentUuid": "c956e6fb_2f6ac6b6",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "4eaccd730269f420d56a8f49bb09bf09970d2d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
