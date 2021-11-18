@@ -13,6 +13,8 @@ source "device-modules/drivers/clk/gs/Kconfig"
 
 source "device-modules/drivers/soc/google/Kconfig"
 
+source "device-modules/drivers/input/Kconfig"
+
 source "device-modules/drivers/char/hw_random/Kconfig"
 
 source "device-modules/drivers/tty/serial/Kconfig"
@@ -32,6 +34,8 @@ source "device-modules/drivers/dma-buf/heaps/Kconfig"
 source "device-modules/drivers/spi/Kconfig"
 
 source "device-modules/drivers/pinctrl/Kconfig"
+
+source "device-modules/drivers/thermal/Kconfig"
 
 source "device-modules/drivers/trusty/Kconfig"
 

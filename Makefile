@@ -30,9 +30,13 @@ obj-y += drivers/usb/dwc3/
 
 obj-y += drivers/usb/host/
 
+obj-y += drivers/input/
+
 obj-y += drivers/i2c/busses/
 
 obj-y += drivers/media/platform/
+
+obj-y += drivers/thermal/
 
 obj-y += drivers/trusty/
 
