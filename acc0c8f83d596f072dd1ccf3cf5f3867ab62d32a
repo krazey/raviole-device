@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bc89aef3_184c329d",
+        "filename": "Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2021-11-18T23:22:26Z",
+      "side": 1,
+      "message": "it seems the correct order is between usb/ and i2c/ right?",
+      "parentUuid": "a61c00e7_889588c1",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "acc0c8f83d596f072dd1ccf3cf5f3867ab62d32a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8b335086_c1137d53",
@@ -37,6 +61,30 @@
       "writtenOn": "2021-11-18T22:53:24Z",
       "side": 1,
       "message": "Can you switch the order so that it matches the same order as before?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "acc0c8f83d596f072dd1ccf3cf5f3867ab62d32a",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3875553a_84fdd020",
+        "filename": "drivers/input/Kconfig",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2021-11-18T23:22:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b335086_c1137d53",
       "range": {
         "startLine": 23,
         "startChar": 0,
