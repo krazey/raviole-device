@@ -43,6 +43,8 @@ source "device-modules/drivers/media/platform/Kconfig"
 
 source "device-modules/drivers/clocksource/Kconfig"
 
+source "device-modules/drivers/input/Kconfig"
+
 source "device-modules/drivers/iommu/Kconfig"
 
 source "device-modules/drivers/cpufreq/Kconfig"

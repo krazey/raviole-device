@@ -16,6 +16,8 @@ obj-y += drivers/tty/serial/
 
 obj-y += drivers/char/hw_random/
 
+obj-y += drivers/input/
+
 obj-y += drivers/iommu/
 
 obj-y += drivers/mfd/
