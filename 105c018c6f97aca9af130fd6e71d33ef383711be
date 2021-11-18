@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1d212b19_44c0c672",
+        "filename": "drivers/misc/Kconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2021-11-18T16:56:32Z",
+      "side": 1,
+      "message": "it\u0027s missing the closing quotes.",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "105c018c6f97aca9af130fd6e71d33ef383711be",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
