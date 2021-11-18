@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c956e6fb_2f6ac6b6",
+        "filename": "Makefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-18T22:49:23Z",
+      "side": 1,
+      "message": "Let\u0027s try to retain the same Makefile order since that defines the module load order. In the pixel tree, this was right before `drivers/watchdog/`.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 24
+      },
+      "revId": "4eaccd730269f420d56a8f49bb09bf09970d2d20",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
