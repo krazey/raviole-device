@@ -35,7 +35,7 @@ genrule(
     # incorrect. Set it manually.
     cmd = """
         echo MIXED_BUILD=1 > $@
-        echo KERNEL_DIR=gs/kernel/device-modules >> $@
+        echo KERNEL_DIR=gs/google-modules/raviole-device >> $@
         """,
 )
 
@@ -68,6 +68,7 @@ kernel_build(
     ],
     base_kernel = "//common:kernel_aarch64",
     build_config = ":build.config.slider.mix",
+    kconfig = "Kconfig",
     module_outs = [
         # keep sorted
         "acpm_flexpmu_dbg.ko",
