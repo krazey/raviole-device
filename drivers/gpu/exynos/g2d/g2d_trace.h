@@ -56,7 +56,7 @@ TRACE_EVENT(tracing_mark_write,
 #endif /* _G2D_TRACE_H_ */
 
 #undef TRACE_INCLUDE_PATH
-#define TRACE_INCLUDE_PATH .
+#define TRACE_INCLUDE_PATH ../../../google-modules/raviole-device/drivers/gpu/exynos/g2d
 
 #undef TRACE_INCLUDE_FILE
 #define TRACE_INCLUDE_FILE g2d_trace
