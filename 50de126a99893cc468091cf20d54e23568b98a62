@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f12dda03_042bdb97",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-19T18:12:03Z",
+      "side": 1,
+      "message": "Since \"drivers/usb/typec/tcpm/tcpci.h\" is an upstream header, we should drop it from the raviole-device project and add our additions to a Pixel specific header.",
+      "revId": "50de126a99893cc468091cf20d54e23568b98a62",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
