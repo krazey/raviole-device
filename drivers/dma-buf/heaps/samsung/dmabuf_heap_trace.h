@@ -37,6 +37,7 @@ TRACE_EVENT(dma_heap_stat,
 
 /* This part must be outside protection */
 #undef TRACE_INCLUDE_PATH
-#define TRACE_INCLUDE_PATH .
+#define TRACE_INCLUDE_PATH ../../../google-modules/raviole-device/drivers/dma-buf/heaps/samsung
+#undef TRACE_INCLUDE_FILE
 #define TRACE_INCLUDE_FILE dmabuf_heap_trace
 #include <trace/define_trace.h>

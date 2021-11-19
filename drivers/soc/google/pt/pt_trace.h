@@ -128,6 +128,9 @@ TRACE_EVENT(pt_driver_log,
 
 /* This part must be outside protection */
 #undef TRACE_INCLUDE_PATH
-#define TRACE_INCLUDE_PATH ../../drivers/soc/google/pt
+#define TRACE_INCLUDE_PATH ../../../google-modules/raviole-device/drivers/soc/google/pt
+
+#undef TRACE_INCLUDE_FILE
+#define TRACE_INCLUDE_FILE pt_trace
 
 #include <trace/define_trace.h>
