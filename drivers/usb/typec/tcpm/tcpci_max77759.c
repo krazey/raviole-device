@@ -78,6 +78,8 @@ enum gbms_charger_modes {
 #define VOLTAGE_ALARM_LOW_EN_MV		1500
 #define VOLTAGE_ALARM_LOW_DIS_MV	0
 
+#define TCPC_ALERT_VENDOR		BIT(15)
+
 static struct logbuffer *tcpm_log;
 
 static bool modparam_conf_sbu;
