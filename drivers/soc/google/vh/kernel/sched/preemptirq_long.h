@@ -40,6 +40,7 @@ DEFINE_EVENT(preemptirq_long_template, preempt_disable_long,
 
 /* This part must be outside protection */
 #undef TRACE_INCLUDE_PATH
-#define TRACE_INCLUDE_PATH .
+#define TRACE_INCLUDE_PATH ../../../google-modules/raviole-device/drivers/soc/google/vh/kernel/sched
+#undef TRACE_INCLUDE_FILE
 #define TRACE_INCLUDE_FILE preemptirq_long
 #include <trace/define_trace.h>
