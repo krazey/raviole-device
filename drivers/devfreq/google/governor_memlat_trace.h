@@ -88,6 +88,7 @@ TRACE_EVENT(memlat_dev_update,
 
 /* This part must be outside protection */
 #undef TRACE_INCLUDE_PATH
-#define TRACE_INCLUDE_PATH .
+#define TRACE_INCLUDE_PATH ../../../google-modules/raviole-device/drivers/devfreq/google
+#undef TRACE_INCLUDE_FILE
 #define TRACE_INCLUDE_FILE governor_memlat_trace
 #include <trace/define_trace.h>
