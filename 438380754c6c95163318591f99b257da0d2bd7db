@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "146383e0_4044ab3a",
+        "filename": "drivers/usb/typec/tcpm/tcpci_max77759.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-19T19:10:26Z",
+      "side": 1,
+      "message": "should we switch this to \"#include \u003ctcpci.h\u003e\" so that it\u0027s more obvious this header should come from the core kernel?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 18
+      },
+      "revId": "438380754c6c95163318591f99b257da0d2bd7db",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
