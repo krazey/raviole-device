@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6c8e8e8_839e283b",
+        "filename": "drivers/usb/gadget/function/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-19T23:49:32Z",
+      "side": 1,
+      "message": "why did you add this?",
+      "range": {
+        "startLine": 6,
+        "startChar": 47,
+        "endLine": 6,
+        "endChar": 56
+      },
+      "revId": "d86b2212024082001316ae49f525b3b125560463",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
