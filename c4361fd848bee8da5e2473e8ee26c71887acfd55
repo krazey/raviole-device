@@ -1,0 +1,47 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017573208",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1899597?revision\u003d1",
+      "fixSuggestions": [
+        {
+          "fixId": "d11d973a_f584d8d1",
+          "description": "Change to \"include/uapi/drm/drm_fourcc_gs101.h\"",
+          "replacements": [
+            {
+              "path": "include/uapi/drm/drm_fourcc_gs101.h",
+              "range": {
+                "startLine": 94,
+                "startChar": 58,
+                "endLine": 94,
+                "endChar": 68
+              },
+              "replacement": "information"
+            }
+          ]
+        }
+      ],
+      "key": {
+        "uuid": "0210c446_b1cc8b33",
+        "filename": "include/uapi/drm/drm_fourcc_gs101.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-22T20:49:52Z",
+      "side": 1,
+      "message": "Common typo found: \"informaton\" -- should it be \"information\"?\nNote: a line containing \"common_typos_disable\" or \"common_typos_enable\" will turn off or on (respectively) the linter for subsequent lines in the file. Alternatively include the token \"NOTYPO\" within a line to skip typo linting that line or include \u0027No-Typo-Check: \u003creason\u003e\u0027in the commit message.",
+      "range": {
+        "startLine": 94,
+        "startChar": 58,
+        "endLine": 94,
+        "endChar": 68
+      },
+      "revId": "c4361fd848bee8da5e2473e8ee26c71887acfd55",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
