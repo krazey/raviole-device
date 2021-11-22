@@ -25,7 +25,11 @@
 #include <linux/spinlock.h>
 #include <linux/regmap.h>
 #include <linux/err.h>
-#include <linux/soc/samsung/exynos-pmu.h>
+#if IS_ENABLED(CONFIG_EXYNOS_PMU_IF)
+#include <soc/google/exynos-pmu-if.h>
+#else
+#include <soc/google/exynos-pmu.h>
+#endif
 #include <linux/soc/samsung/exynos-regs-pmu.h>
 
 #include <dt-bindings/pinctrl/samsung.h>
