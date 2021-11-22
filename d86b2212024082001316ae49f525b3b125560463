@@ -70,6 +70,30 @@
       },
       "revId": "d86b2212024082001316ae49f525b3b125560463",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "42ab8c92_871cd2e6",
+        "filename": "drivers/usb/gadget/function/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-22T20:43:38Z",
+      "side": 1,
+      "message": "I looked into this further and I see why this works. It\u0027s kind of a hack, but basically the ccflags-y +\u003d -I.../udc/ line covered the case when drivers inside the \"function\" folder used \"../\". So switching gadget/udc/ -\u003e gadget/function/ is fine.",
+      "parentUuid": "a6e599a8_b981d0e2",
+      "range": {
+        "startLine": 6,
+        "startChar": 47,
+        "endLine": 6,
+        "endChar": 56
+      },
+      "revId": "d86b2212024082001316ae49f525b3b125560463",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
