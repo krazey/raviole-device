@@ -46,6 +46,30 @@
       },
       "revId": "d86b2212024082001316ae49f525b3b125560463",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a6e599a8_b981d0e2",
+        "filename": "drivers/usb/gadget/function/Makefile",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-22T18:09:05Z",
+      "side": 1,
+      "message": "but doesn\u0027t that require you to change the path from something like\n\n#include \u003cfunction/header.h\u003e\n\nto\n\n#include \u003cheader.h\u003e\n\nSince I don\u0027t see you made any source changes, I\u0027m wondering if this ccflags-y line is needed at all of the pixel drivers we have in this repo. If not, can you just drop this?",
+      "parentUuid": "68f518c4_10074d8a",
+      "range": {
+        "startLine": 6,
+        "startChar": 47,
+        "endLine": 6,
+        "endChar": 56
+      },
+      "revId": "d86b2212024082001316ae49f525b3b125560463",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
