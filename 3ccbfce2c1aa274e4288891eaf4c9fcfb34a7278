@@ -16,6 +16,24 @@
       "message": "Wouldn\u0027t we need then to make changes to userspace code as well to include this new UAPI header?",
       "revId": "3ccbfce2c1aa274e4288891eaf4c9fcfb34a7278",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6aa70c0c_c09b32ac",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-23T21:57:51Z",
+      "side": 1,
+      "message": "Yes, we would have to do that if we wanted to compile the Android userspace with this kernel. That\u0027s the problem with making UAPI changes. Luckily these are pixel specific and no other vendor is using them. Also, I\u0027m not changing the values. So as long as the headers that userspace is compiling against retain the same values (which they have to), then we should be okay.\n\nThe other dependency is the kernel display driver. I had to update it to include \u003cdrm/drm_fourcc_gs101.h\u003e which means that the android-gs-raviole-mainline version of the display driver will always have to compile with this version of the kernel header.",
+      "parentUuid": "c58c5f30_2b309ca0",
+      "revId": "3ccbfce2c1aa274e4288891eaf4c9fcfb34a7278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
