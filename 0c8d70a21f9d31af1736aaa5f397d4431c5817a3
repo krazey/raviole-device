@@ -34,6 +34,24 @@
       "parentUuid": "b2506c80_4d99b690",
       "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5121dca0_932f1fc2",
+        "filename": "scripts/Makefile.lib",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T23:10:03Z",
+      "side": 0,
+      "message": "Honestly, I find it a bit confusing when the commit message reads \"we can remove the config in this repo\" but we\u0027re in fact removing code that was never executed to begin with. I would prefer to cleanup those extra files in a separate commit and then reduce this commit to the change in build.config.gs101\n\nAlso, I believe we need to remove \"select OF_GENERATE_SYMBOLS\" from device-modules/drivers/soc/google/Kconfig",
+      "parentUuid": "535e4269_b5df7acb",
+      "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
