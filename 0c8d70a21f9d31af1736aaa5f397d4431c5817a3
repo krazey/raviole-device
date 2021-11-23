@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2506c80_4d99b690",
+        "filename": "scripts/Makefile.lib",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T22:13:52Z",
+      "side": 0,
+      "message": "Is this file actually used at all? I\u0027m thinking that files under device-modules/scripts/ are never run.",
+      "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
