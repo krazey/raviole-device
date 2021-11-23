@@ -52,6 +52,24 @@
       "parentUuid": "c3e0604e_22497b34",
       "revId": "a4db576441ac80fb9d85a46822521350350a6ddb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "446b71b4_4936f1bd",
+        "filename": "Makefile.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-23T22:33:00Z",
+      "side": 1,
+      "message": "Yeah I agree. I can update that with this series.",
+      "parentUuid": "a3129609_3ac2e0ec",
+      "revId": "a4db576441ac80fb9d85a46822521350350a6ddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
