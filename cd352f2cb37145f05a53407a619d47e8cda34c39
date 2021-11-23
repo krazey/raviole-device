@@ -16,6 +16,24 @@
       "message": "Don\u0027t we need to include this file unconditionally to get access to the definition of exynos_pmu_write which is needed on line 858?",
       "revId": "cd352f2cb37145f05a53407a619d47e8cda34c39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "73efa302_5221879d",
+        "filename": "drivers/pinctrl/gs/pinctrl-exynos.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-23T21:47:34Z",
+      "side": 1,
+      "message": "Looks like I botched this change. The else should still be soc/samsung/exynos-pmu.h, but I\u0027m wondering if we even need the else. I don\u0027t think this driver will ever be used without CONFIG_EXYNOS_PMU_IF.\n\nAre you fine with dropping the #if and just keeping the first #include?",
+      "parentUuid": "3ab92485_b96f2d2c",
+      "revId": "cd352f2cb37145f05a53407a619d47e8cda34c39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
