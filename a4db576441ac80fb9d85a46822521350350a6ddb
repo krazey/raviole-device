@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a07cf5a0_536aa15f",
+        "filename": "Makefile.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T22:19:16Z",
+      "side": 1,
+      "message": "This usage appears to be going beyond what Makefile.include was originally intended for i.e. augment the include file search path.",
+      "revId": "a4db576441ac80fb9d85a46822521350350a6ddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
