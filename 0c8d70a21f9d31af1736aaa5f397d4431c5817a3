@@ -52,6 +52,24 @@
       "parentUuid": "535e4269_b5df7acb",
       "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "be245041_b521a5d0",
+        "filename": "scripts/Makefile.lib",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-23T23:15:17Z",
+      "side": 0,
+      "message": "okay, to make this easier to follow, I\u0027ll split this up into 3 commits:\n\n(1) revert the OF_GENERATE_SYMBOLS commit\n(2) Remove the drivers/of/Kconfig\n(3) Add the DTC_FLAGS to the build config.",
+      "parentUuid": "5121dca0_932f1fc2",
+      "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
