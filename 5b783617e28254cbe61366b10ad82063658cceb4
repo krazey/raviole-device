@@ -1,0 +1,82 @@
+{
+  "comments": [
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017630599",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1900993?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "44649c44_f12c98b5",
+        "filename": "arch/arm64/boot/dts/google/gs101-cp-s5200-sit.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-23T22:18:36Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027complex\u0027, \u0027unexpected\u0027, or \u0027placeholder\u0027; see https://developers.google.com/style/inclusive-documentation#ableist-language for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 363,
+        "startChar": 18,
+        "endLine": 363,
+        "endChar": 23
+      },
+      "revId": "5b783617e28254cbe61366b10ad82063658cceb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017630599",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1900993?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "ae302fea_dd6cda8c",
+        "filename": "arch/arm64/boot/dts/google/gs101.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-23T22:18:36Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027complex\u0027, \u0027unexpected\u0027, or \u0027placeholder\u0027; see https://developers.google.com/style/inclusive-documentation#ableist-language for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 504,
+        "startChar": 5,
+        "endLine": 504,
+        "endChar": 10
+      },
+      "revId": "5b783617e28254cbe61366b10ad82063658cceb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "robotId": "ayeaye",
+      "robotRunId": "AR00000000000017630599",
+      "url": "https://android-build.googleplex.com/builds/treetop/android-review/1900993?revision\u003d3",
+      "fixSuggestions": [],
+      "key": {
+        "uuid": "fb7d3850_3424c2f1",
+        "filename": "arch/arm64/boot/dts/google/gs101.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1757831
+      },
+      "writtenOn": "2021-11-23T22:18:36Z",
+      "side": 1,
+      "message": "Prefer to use inclusive terms like \u0027complex\u0027, \u0027unexpected\u0027, or \u0027placeholder\u0027; see https://developers.google.com/style/inclusive-documentation#ableist-language for more details. In the case of a false positive add BYPASS_INCLUSIVE_LANGUAGE_REASON\u003dmy_reason_here to your commit message to disable this check.",
+      "range": {
+        "startLine": 506,
+        "startChar": 2,
+        "endLine": 506,
+        "endChar": 7
+      },
+      "revId": "5b783617e28254cbe61366b10ad82063658cceb4",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
