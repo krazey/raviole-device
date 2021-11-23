@@ -22,6 +22,30 @@
       },
       "revId": "f298ad2ebcd20513da455dbbb3c3020343bcd384",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "af7fc6e1_2193fc5c",
+        "filename": "drivers/trusty/trusty-ipc.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 2121,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-23T22:18:57Z",
+      "side": 1,
+      "message": "Looks like it was. I could probably just drop this extra whitespace though here since I\u0027m not aligning this line with anything.",
+      "parentUuid": "36d31107_20d4fa69",
+      "range": {
+        "startLine": 2121,
+        "startChar": 28,
+        "endLine": 2121,
+        "endChar": 41
+      },
+      "revId": "f298ad2ebcd20513da455dbbb3c3020343bcd384",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
