@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "32cc7d1d_c3367c50",
+        "filename": "include/dt-bindings/pinctrl/gs101.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T22:23:36Z",
+      "side": 1,
+      "message": "Consider \"2020-2021\" because it contains Google work from 2020 as well as your work from today.",
+      "parentUuid": "7788668f_56385d6e",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "bef231519815eac70f03a8d01f7b3412f1375d77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "de612676_2f2bbfdc",
         "filename": "include/dt-bindings/pinctrl/gs101.h",
         "patchSetId": 2
