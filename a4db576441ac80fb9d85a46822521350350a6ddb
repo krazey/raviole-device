@@ -34,6 +34,24 @@
       "parentUuid": "a07cf5a0_536aa15f",
       "revId": "a4db576441ac80fb9d85a46822521350350a6ddb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a3129609_3ac2e0ec",
+        "filename": "Makefile.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T22:31:08Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion on this, but we do might want to change that comment in the including Makefile and make it more generic:\n\n\"# Include the device-modules Makefile.include to setup the proper includes\n# within the device-modules.\"",
+      "parentUuid": "c3e0604e_22497b34",
+      "revId": "a4db576441ac80fb9d85a46822521350350a6ddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
