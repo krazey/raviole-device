@@ -38,6 +38,24 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "f2904b6e_c6341d53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T22:50:28Z",
+      "side": 1,
+      "message": "I can\u0027t argue with that 😊 I looked again and it turned out that if you compile the kernel outside the source directory, it\u0027ll always add \"-I\u003cdirectory of .c file being compiled\u003e\" to cflags.",
+      "parentUuid": "51fc5b23_f673f3f2",
+      "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "9349ce4d_30c0c316",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
