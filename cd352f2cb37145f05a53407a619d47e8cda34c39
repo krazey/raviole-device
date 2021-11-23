@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3ab92485_b96f2d2c",
+        "filename": "drivers/pinctrl/gs/pinctrl-exynos.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T20:52:12Z",
+      "side": 1,
+      "message": "Don\u0027t we need to include this file unconditionally to get access to the definition of exynos_pmu_write which is needed on line 858?",
+      "revId": "cd352f2cb37145f05a53407a619d47e8cda34c39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
