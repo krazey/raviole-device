@@ -70,6 +70,24 @@
       "parentUuid": "c2e65a75_cad89152",
       "revId": "cd352f2cb37145f05a53407a619d47e8cda34c39",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "038e5abc_96b0de42",
+        "filename": "drivers/pinctrl/gs/pinctrl-exynos.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T22:03:19Z",
+      "side": 1,
+      "message": "You\u0027re right.",
+      "parentUuid": "71a9f447_525ef4d9",
+      "revId": "cd352f2cb37145f05a53407a619d47e8cda34c39",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
