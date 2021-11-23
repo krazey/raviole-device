@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d2e2f18_b15f3667",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T21:45:01Z",
+      "side": 1,
+      "message": "It works because of -Idrivers/soc/samsung/cpif in EXTRA_CFLAGS. Even with the double quotes #include \"modem_v1.h\" syntax, it\u0027ll eventually search the directories specified by -I\u003cdir\u003e.",
+      "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9349ce4d_30c0c316",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T21:45:01Z",
+      "side": 1,
+      "message": "nit: line too long.",
+      "range": {
+        "startLine": 12,
+        "startChar": 72,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
