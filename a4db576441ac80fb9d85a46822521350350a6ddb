@@ -16,6 +16,24 @@
       "message": "This usage appears to be going beyond what Makefile.include was originally intended for i.e. augment the include file search path.",
       "revId": "a4db576441ac80fb9d85a46822521350350a6ddb",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3e0604e_22497b34",
+        "filename": "Makefile.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-23T22:24:11Z",
+      "side": 1,
+      "message": "yeah, do you think we should rename it to something like Makefile.ext? I want to avoid adding more code to the core kernel. I think it would be fine to use this makefile for anything we need in order to support building out-of-tree.",
+      "parentUuid": "a07cf5a0_536aa15f",
+      "revId": "a4db576441ac80fb9d85a46822521350350a6ddb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
