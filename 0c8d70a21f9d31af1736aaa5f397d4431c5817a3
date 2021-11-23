@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "51fc5b23_f673f3f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-23T22:21:14Z",
+      "side": 1,
+      "message": "yeah but drivers/soc/samsung/cpif doesn\u0027t exist.",
+      "parentUuid": "1d2e2f18_b15f3667",
+      "revId": "0c8d70a21f9d31af1736aaa5f397d4431c5817a3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "9349ce4d_30c0c316",
