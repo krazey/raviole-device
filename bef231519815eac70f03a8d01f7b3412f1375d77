@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f96fa3e_ed9fd495",
+        "filename": "include/dt-bindings/pinctrl/gs101.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T21:03:12Z",
+      "side": 1,
+      "message": "nit: Looking back, I think this contribution was actually from 2020.",
+      "range": {
+        "startLine": 3,
+        "startChar": 17,
+        "endLine": 3,
+        "endChar": 21
+      },
+      "revId": "bef231519815eac70f03a8d01f7b3412f1375d77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "de612676_2f2bbfdc",
+        "filename": "include/dt-bindings/pinctrl/gs101.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T21:03:12Z",
+      "side": 1,
+      "message": "I think this is redundant and not needed if we have the SPDX identifier on line 1.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "bef231519815eac70f03a8d01f7b3412f1375d77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "39534d70_2806ebb9",
+        "filename": "include/dt-bindings/pinctrl/gs101.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T21:03:12Z",
+      "side": 1,
+      "message": "nit: This is a little generic and doesn\u0027t add much information.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "bef231519815eac70f03a8d01f7b3412f1375d77",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
