@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c58c5f30_2b309ca0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-23T21:23:13Z",
+      "side": 1,
+      "message": "Wouldn\u0027t we need then to make changes to userspace code as well to include this new UAPI header?",
+      "revId": "3ccbfce2c1aa274e4288891eaf4c9fcfb34a7278",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
