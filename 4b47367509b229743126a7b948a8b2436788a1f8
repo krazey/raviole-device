@@ -34,6 +34,24 @@
       "parentUuid": "93b9fd62_0b98544e",
       "revId": "4b47367509b229743126a7b948a8b2436788a1f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "017bc48a_6cb6f8b2",
+        "filename": "drivers/soc/google/Kconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-24T18:57:02Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "10dfcc1a_44a8c979",
+      "revId": "4b47367509b229743126a7b948a8b2436788a1f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
