@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "93b9fd62_0b98544e",
+        "filename": "drivers/soc/google/Kconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-24T00:46:22Z",
+      "side": 0,
+      "message": "Isn\u0027t Ie439b77d53b06fd0e4e0d137b6074a6cd446aa0b still using this Kconfig symbol in device-modules/arch/arm64/boot/dts/google/Makefile ?",
+      "revId": "4b47367509b229743126a7b948a8b2436788a1f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
