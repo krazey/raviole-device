@@ -16,6 +16,24 @@
       "message": "Isn\u0027t Ie439b77d53b06fd0e4e0d137b6074a6cd446aa0b still using this Kconfig symbol in device-modules/arch/arm64/boot/dts/google/Makefile ?",
       "revId": "4b47367509b229743126a7b948a8b2436788a1f8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "10dfcc1a_44a8c979",
+        "filename": "drivers/soc/google/Kconfig",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-24T01:04:24Z",
+      "side": 0,
+      "message": "I thought it was weird I couldn\u0027t find BOARD_SLIDER anywhere else. I\u0027m not sure what I was grep\u0027ing, but thanks for catching it. I\u0027m still working on the DT stuff. SKIP_MRPROPER wasn\u0027t cleaning up the dtbs. So I wasn\u0027t hitting any DT issues until I did a full clean. I\u0027ll update this when I figure out the DT stuff.",
+      "parentUuid": "93b9fd62_0b98544e",
+      "revId": "4b47367509b229743126a7b948a8b2436788a1f8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
