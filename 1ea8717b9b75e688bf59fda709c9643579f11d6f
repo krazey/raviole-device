@@ -22,6 +22,30 @@
       },
       "revId": "1ea8717b9b75e688bf59fda709c9643579f11d6f",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "84a66721_79c8f4ff",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-24T18:55:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6878438b_adb3abb5",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 26
+      },
+      "revId": "1ea8717b9b75e688bf59fda709c9643579f11d6f",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
