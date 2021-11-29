@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4821af7c_b54d0465",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-11-29T22:21:59Z",
+      "side": 1,
+      "message": "This file is removed three patches later at I3b677afbbab24852af017fda70a63b47832396e4",
+      "revId": "839816a915664c7c56c5b078130dbacabeb561d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
