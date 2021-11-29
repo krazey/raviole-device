@@ -16,6 +16,24 @@
       "message": "This file is removed three patches later at I3b677afbbab24852af017fda70a63b47832396e4",
       "revId": "839816a915664c7c56c5b078130dbacabeb561d6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6652b2bc_67cd13bf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-11-29T22:52:21Z",
+      "side": 1,
+      "message": "Right. I just wanted to have this revert so that there\u0027s a record of moving this config to the build config.",
+      "parentUuid": "4821af7c_b54d0465",
+      "revId": "839816a915664c7c56c5b078130dbacabeb561d6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
