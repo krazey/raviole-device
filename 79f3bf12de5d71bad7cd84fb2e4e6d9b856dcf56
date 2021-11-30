@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a478cf15_3a940f61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2021-11-30T00:01:52Z",
+      "side": 1,
+      "message": "Maybe we should switch the current top Make and Kconfig to call these upstream drivers/Makefile and driver/Kconfig. We are basically recreating these.",
+      "revId": "79f3bf12de5d71bad7cd84fb2e4e6d9b856dcf56",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
