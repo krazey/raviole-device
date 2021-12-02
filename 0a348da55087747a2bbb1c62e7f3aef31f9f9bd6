@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c7bbd8a_1c74c0e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-02T17:38:56Z",
+      "side": 1,
+      "message": "nit: spelling error",
+      "range": {
+        "startLine": 9,
+        "startChar": 50,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "0a348da55087747a2bbb1c62e7f3aef31f9f9bd6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
