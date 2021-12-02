@@ -16,6 +16,24 @@
       "message": "I think this is the correct thing to do, but let me know if it isn\u0027t.",
       "revId": "d34ade98ba832432d578f1ff7dbf0a359ef1a0df",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "298f89bb_690cfaaf",
+        "filename": "Kconfig",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-02T18:30:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d1c68f6f_0218ebcb",
+      "revId": "d34ade98ba832432d578f1ff7dbf0a359ef1a0df",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
