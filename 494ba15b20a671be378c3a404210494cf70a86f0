@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d43ee7e1_895f12d4",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-03T23:28:17Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should remove the word \"slider\" from here. I understand that previously, in the old code, everything hinged on CONFIG_BOARD_SLIDER, but we don\u0027t have to keep that name.",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 12
+      },
+      "revId": "494ba15b20a671be378c3a404210494cf70a86f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1bb1c09c_27556586",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-03T23:28:17Z",
+      "side": 1,
+      "message": "I\u0027m thinking if we should rename this to something like \"gs101-overlay-test-do-not-use\" to make it clear that it\u0027s a build artifact that can\u0027t be used for anything.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "494ba15b20a671be378c3a404210494cf70a86f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d701e2b1_1c802981",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-03T23:28:17Z",
+      "side": 1,
+      "message": "I think what this does is to subsequently apply *all* device overlays to the base DT and then save the output. The result is likely unusable because it likely contains a mix of values that were meant for different devices. In the real world, you\u0027d only want a single device overlay applied for the device you\u0027re running on.\nThat said, this might still be useful to determine if the overlays apply cleanly.\n\nAlternatively, we could use something like this where we apply every overlay individually:\n\ngs101-slider-a0-dtbs :\u003d gs101-a0.dtb gs101-slider.dtbo\ngs101-slider2-a0-dtbs :\u003d gs101-a0.dtb gs101-slider2.dtbo\ngs101-slider2-o6r4-a0-dtbs :\u003d gs101-a0.dtb gs101-slider2-o6r4.dtbo\n[...]",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "494ba15b20a671be378c3a404210494cf70a86f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
