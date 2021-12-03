@@ -65,7 +65,7 @@ kernel_build(
         # Sync with build.config.slider
         "device-modules/arch/arm64/boot/dts/google/gs101-a0.dtb",
         "device-modules/arch/arm64/boot/dts/google/gs101-b0.dtb",
-        "device-modules/arch/arm64/boot/dts/google/dtbo.img",
+        "device-modules/arch/arm64/boot/dts/google/*.dtbo",
     ],
     base_kernel = "//common:kernel_aarch64",
     build_config = ":build.config.slider.mix",
@@ -275,6 +275,10 @@ kernel_images(
         # Keep the following in sync with vendor_dlkm.props.slider:
         # selinux_fc
         "//prebuilts/boot-artifacts/selinux:file_contexts",
+    ],
+    build_dtbo = True,
+    dtbo_srcs = [
+        ":slider/device-modules/arch/arm64/boot/dts/google/*.dtbo",
     ],
 )
 
