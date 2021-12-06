@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dc659db9_13a4988b",
+        "filename": "build.config.slider",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-06T19:05:34Z",
+      "side": 1,
+      "message": "This list of files appears to be redundant with the list in arch/arm64/boot/dts/google/Makefile . Is there any chance that a wildcard can be used here?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "2bc41b96f3bbce1cccf329353369490f166e15b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
