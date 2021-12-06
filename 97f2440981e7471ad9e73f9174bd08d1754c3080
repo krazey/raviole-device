@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9a719ff0_742ee761",
+        "filename": "build.config.gs101",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-06T19:38:38Z",
+      "side": 1,
+      "message": "On a related note, I drafted a change to remove this line: I77ed092eea01b4f8c7d79e6cf399661432782857",
+      "revId": "97f2440981e7471ad9e73f9174bd08d1754c3080",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
