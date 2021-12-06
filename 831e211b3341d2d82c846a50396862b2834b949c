@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c978eeb8_8c1034a2",
+        "filename": "BUILD.bazel",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-12-06T20:52:44Z",
+      "side": 1,
+      "message": "nit: this could be a common list\n\n```\nslider_dtbo \u003d [\n    \"device-modules/arch/arm64/boot/dts/google/gs101-a0.dtb\",\n    # ...\n]\n```\n\nthen here:\n```\nouts \u003d slider_dtbo,\n```\n\nthen below:\n\n```\ndtbo_srcs \u003d [\":slider/\" + e for e in slider_dtbo],\n```",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "831e211b3341d2d82c846a50396862b2834b949c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
