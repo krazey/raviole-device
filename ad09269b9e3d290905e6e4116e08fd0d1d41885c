@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d4723a2_6e955906",
+        "filename": "build.config.gs101",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-07T18:24:32Z",
+      "side": 1,
+      "message": "can we drop this too? I\u0027ve added mkdtimg to the kernel-build-tools now.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "ad09269b9e3d290905e6e4116e08fd0d1d41885c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
