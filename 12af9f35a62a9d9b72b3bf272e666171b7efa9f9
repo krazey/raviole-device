@@ -16,6 +16,24 @@
       "message": "I\u0027m thinking if it would be better to keep this script more generic and move this device specific directory path to build_slider.sh similar to DEVICE_KERNEL_BUILD_CONFIG.\n\nOr maybe it can default to $(dirname ${DEVICE_KERNEL_BUILD_CONFIG}) with an option to override it from build.config.",
       "revId": "12af9f35a62a9d9b72b3bf272e666171b7efa9f9",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "62cc8d45_712084b9",
+        "filename": "build_mixed.sh",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-07T22:43:00Z",
+      "side": 1,
+      "message": "I\u0027m going to be refactoring both build_slider.sh and build_mixed.sh to use the AOSP version of mixed builds.",
+      "parentUuid": "7108e1ae_16c17b45",
+      "revId": "12af9f35a62a9d9b72b3bf272e666171b7efa9f9",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
