@@ -22,6 +22,30 @@
       },
       "revId": "2bc41b96f3bbce1cccf329353369490f166e15b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0169572f_83655df9",
+        "filename": "build.config.slider",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-07T19:36:09Z",
+      "side": 1,
+      "message": "So I explicitly defined each one because we may want to compile other dtbos in the future, like the dpm overlays, but not include them in the dtbo.img. For now it matches, but it may not in the future.",
+      "parentUuid": "dc659db9_13a4988b",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "2bc41b96f3bbce1cccf329353369490f166e15b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
