@@ -22,6 +22,30 @@
       },
       "revId": "ad09269b9e3d290905e6e4116e08fd0d1d41885c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ca4b1dcb_b8cd1e1d",
+        "filename": "build.config.gs101",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-07T23:39:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d4723a2_6e955906",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "ad09269b9e3d290905e6e4116e08fd0d1d41885c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
