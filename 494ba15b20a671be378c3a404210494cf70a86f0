@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8da9c854_7eac8e33",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-08T03:43:04Z",
+      "side": 1,
+      "message": "yeah that\u0027s fine.",
+      "parentUuid": "d43ee7e1_895f12d4",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 12
+      },
+      "revId": "494ba15b20a671be378c3a404210494cf70a86f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1bb1c09c_27556586",
@@ -47,6 +71,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "509f1720_e4bb14ce",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-08T03:43:04Z",
+      "side": 1,
+      "message": "Sure, I can rename these",
+      "parentUuid": "1bb1c09c_27556586",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "494ba15b20a671be378c3a404210494cf70a86f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "d701e2b1_1c802981",
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-03T23:28:17Z",
       "side": 1,
       "message": "I think what this does is to subsequently apply *all* device overlays to the base DT and then save the output. The result is likely unusable because it likely contains a mix of values that were meant for different devices. In the real world, you\u0027d only want a single device overlay applied for the device you\u0027re running on.\nThat said, this might still be useful to determine if the overlays apply cleanly.\n\nAlternatively, we could use something like this where we apply every overlay individually:\n\ngs101-slider-a0-dtbs :\u003d gs101-a0.dtb gs101-slider.dtbo\ngs101-slider2-a0-dtbs :\u003d gs101-a0.dtb gs101-slider2.dtbo\ngs101-slider2-o6r4-a0-dtbs :\u003d gs101-a0.dtb gs101-slider2-o6r4.dtbo\n[...]",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 61
+      },
+      "revId": "494ba15b20a671be378c3a404210494cf70a86f0",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d01f33d_9b9f4f43",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-08T03:43:04Z",
+      "side": 1,
+      "message": "Okay, I\u0027m fine with that.",
+      "parentUuid": "d701e2b1_1c802981",
       "range": {
         "startLine": 22,
         "startChar": 0,
