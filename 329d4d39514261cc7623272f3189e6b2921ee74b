@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c0fba9b8_bd7c693e",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-08T22:07:58Z",
+      "side": 1,
+      "message": "There is some redundancy with line 34. I\u0027m wondering if we can somehow avoid this by introducing a helper function.\n\nI don\u0027t have a strong opinion, though. I\u0027m fine either way.",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "393f9fae_b6c1a8d8",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-08T22:07:58Z",
+      "side": 1,
+      "message": "There\u0027s some redundancy here with line 43. I\u0027m wondering if we can avoid this redundancy by adding a helper function like __multi_dtbs_overlay.",
+      "range": {
+        "startLine": 42,
+        "startChar": 61,
+        "endLine": 42,
+        "endChar": 82
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4591531_c6bfba5a",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-08T22:07:58Z",
+      "side": 1,
+      "message": "I am wondering if we can drop \"gs101-\" to make this code more generic i.e. support dtbs that don\u0027t contain the substring \"gs101-\".",
+      "range": {
+        "startLine": 43,
+        "startChar": 61,
+        "endLine": 43,
+        "endChar": 67
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
