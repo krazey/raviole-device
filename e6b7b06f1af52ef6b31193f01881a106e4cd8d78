@@ -22,6 +22,30 @@
       },
       "revId": "e6b7b06f1af52ef6b31193f01881a106e4cd8d78",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d0f2c921_0ed47abc",
+        "filename": "BUILD.bazel",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-12-08T07:46:05Z",
+      "side": 1,
+      "message": "You need to explicitly specify the file names. \u0027*\u0027 isn\u0027t recognized by `search_and_mv_output.py`. And \u0027*\u0027 is bad in an output list of Bazel rules. We want to be able to refer to these files in some other rules if we want to, so this list must be a static list.",
+      "parentUuid": "7eff89a2_d1a60944",
+      "range": {
+        "startLine": 68,
+        "startChar": 51,
+        "endLine": 68,
+        "endChar": 57
+      },
+      "revId": "e6b7b06f1af52ef6b31193f01881a106e4cd8d78",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
