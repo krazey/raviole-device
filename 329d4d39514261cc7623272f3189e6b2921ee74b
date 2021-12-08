@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d0ea201f_483fdd37",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-08T22:23:55Z",
+      "side": 1,
+      "message": "I think this redundancy is fine since it\u0027s just taking the name of the file and creating the construct name.",
+      "parentUuid": "c0fba9b8_bd7c693e",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "393f9fae_b6c1a8d8",
         "filename": "arch/arm64/boot/dts/google/Makefile",
         "patchSetId": 6
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c4b561a4_4aa34102",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-08T22:23:55Z",
+      "side": 1,
+      "message": "This is extracting the suffix from the base dtb name. We could pass the suffix in instead which would allow this to be more generic.",
+      "parentUuid": "393f9fae_b6c1a8d8",
+      "range": {
+        "startLine": 42,
+        "startChar": 61,
+        "endLine": 42,
+        "endChar": 82
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b4591531_c6bfba5a",
         "filename": "arch/arm64/boot/dts/google/Makefile",
         "patchSetId": 6
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-08T22:07:58Z",
       "side": 1,
       "message": "I am wondering if we can drop \"gs101-\" to make this code more generic i.e. support dtbs that don\u0027t contain the substring \"gs101-\".",
+      "range": {
+        "startLine": 43,
+        "startChar": 61,
+        "endLine": 43,
+        "endChar": 67
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "19f0472e_ba2df183",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-08T22:23:55Z",
+      "side": 1,
+      "message": "yeah we can pass in the suffix",
+      "parentUuid": "b4591531_c6bfba5a",
       "range": {
         "startLine": 43,
         "startChar": 61,
