@@ -48,6 +48,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ac1cca10_10c7942b",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-09T21:19:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0ea201f_483fdd37",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "393f9fae_b6c1a8d8",
@@ -95,6 +119,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be2791b4_2a06f671",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-09T21:19:39Z",
+      "side": 1,
+      "message": "Since the suffix is dependent on the base name, we can just use the whole base dtb name as the suffix. The name isn\u0027t really important since it\u0027s just an intermediate object.",
+      "parentUuid": "c4b561a4_4aa34102",
+      "range": {
+        "startLine": 42,
+        "startChar": 61,
+        "endLine": 42,
+        "endChar": 82
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b4591531_c6bfba5a",
@@ -132,6 +180,30 @@
       "side": 1,
       "message": "yeah we can pass in the suffix",
       "parentUuid": "b4591531_c6bfba5a",
+      "range": {
+        "startLine": 43,
+        "startChar": 61,
+        "endLine": 43,
+        "endChar": 67
+      },
+      "revId": "329d4d39514261cc7623272f3189e6b2921ee74b",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b165ef3d_6fa0b6e0",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-09T21:19:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f0472e_ba2df183",
       "range": {
         "startLine": 43,
         "startChar": 61,
