@@ -24,7 +24,7 @@
 #include <linux/vmalloc.h>
 #include <linux/of.h>
 
-#include "../deferred-free-helper.h"
+#include <linux/deferred-free-helper.h>
 #include "../page_pool.h"
 
 #define HIGH_ORDER_GFP  (((GFP_HIGHUSER | __GFP_ZERO | __GFP_NOWARN \
