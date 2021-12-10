@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "adda07ce_d2ac92b0",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-10T17:15:19Z",
+      "side": 1,
+      "message": "yeah but it doesn\u0027t have to be. These templates are suppose to be generic. So in the future if someone wants to use something else, then they can. For example, you could break up the for-loop and directly call these for each base dtb if you want to customize the suffix used.\n\n$(foreach overlay, $(gs101_raviole_overlays), \\\n  $(eval $(call DTBS_overlay_template, $(overlay), gs101-a0.dtb, foo)))\n \n$(foreach overlay, $(gs101_raviole_overlays), \\\n  $(eval $(call DTBS_overlay_template, $(overlay), gs101-b0.dtb, bar)))\n  \n$(foreach overlay, $(gs101_raviole_overlays), \\\n  $(eval $(call DTBS_overlay_template, $(overlay), gs101-yada-yada.dtb, baz)))",
+      "parentUuid": "0777ef3f_abbdb040",
+      "range": {
+        "startLine": 26,
+        "startChar": 53,
+        "endLine": 26,
+        "endChar": 59
+      },
+      "revId": "19fddd69be04bbb20531a3e95a38f3b760bd4424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97af5ace_5e291f4f",
@@ -49,6 +73,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d8a1aa25_894649cd",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-10T17:15:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97af5ace_5e291f4f",
+      "range": {
+        "startLine": 29,
+        "startChar": 49,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "19fddd69be04bbb20531a3e95a38f3b760bd4424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "14bf9d99_cff645cd",
         "filename": "arch/arm64/boot/dts/google/Makefile",
         "patchSetId": 8
@@ -60,6 +108,30 @@
       "writtenOn": "2021-12-10T01:02:39Z",
       "side": 1,
       "message": "Consider aligning the names base_dtb_name and dtbo_name with the names used on line 29: base_dtb and dtbo.",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 76
+      },
+      "revId": "19fddd69be04bbb20531a3e95a38f3b760bd4424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b6df6d12_e6cda0f3",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-10T17:15:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14bf9d99_cff645cd",
       "range": {
         "startLine": 47,
         "startChar": 40,
