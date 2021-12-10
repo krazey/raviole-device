@@ -95,6 +95,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d696ef7c_080aa2e3",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-10T17:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a1aa25_894649cd",
+      "range": {
+        "startLine": 29,
+        "startChar": 49,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "19fddd69be04bbb20531a3e95a38f3b760bd4424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "14bf9d99_cff645cd",
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "14bf9d99_cff645cd",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 76
+      },
+      "revId": "19fddd69be04bbb20531a3e95a38f3b760bd4424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "54240d66_35a4aa95",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-10T17:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6df6d12_e6cda0f3",
       "range": {
         "startLine": 47,
         "startChar": 40,
