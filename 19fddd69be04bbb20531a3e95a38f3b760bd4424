@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0777ef3f_abbdb040",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-10T01:02:39Z",
+      "side": 1,
+      "message": "The way we use this, it\u0027s now always the stem of the base dtb.",
+      "range": {
+        "startLine": 26,
+        "startChar": 53,
+        "endLine": 26,
+        "endChar": 59
+      },
+      "revId": "19fddd69be04bbb20531a3e95a38f3b760bd4424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "97af5ace_5e291f4f",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-10T01:02:39Z",
+      "side": 1,
+      "message": "I\u0027m thinking it would be good if these names matched the ones used in the function signature on line 26. Consider using something like \"stem of overlay\" or \"stem of dtbo\" to refer to the filename without the .dtbo extension.\n\nSame for the other function on lines 38.",
+      "range": {
+        "startLine": 29,
+        "startChar": 49,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "19fddd69be04bbb20531a3e95a38f3b760bd4424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "14bf9d99_cff645cd",
+        "filename": "arch/arm64/boot/dts/google/Makefile",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2021-12-10T01:02:39Z",
+      "side": 1,
+      "message": "Consider aligning the names base_dtb_name and dtbo_name with the names used on line 29: base_dtb and dtbo.",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 76
+      },
+      "revId": "19fddd69be04bbb20531a3e95a38f3b760bd4424",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
