@@ -7,8 +7,11 @@
  */
 
 #include <linux/module.h>
-#include <linux/samsung-dma-heap.h>
 #include <linux/seq_file.h>
+
+/* These are defined in drivers/dma-buf/heaps/samsung/samsung-dma-heap.h */
+extern unsigned long dma_heap_inuse_pages(void);
+extern unsigned long dma_heap_pool_pages(void);
 
 /*****************************************************************************/
 /*                       Modified Code Section                               */
