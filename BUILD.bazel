@@ -114,7 +114,7 @@ kernel_build(
         "zsmalloc.ko",
     ],
     # Keep in sync with build.config.common
-    toolchain_version = "r433403",
+    toolchain_version = "r437112",
 )
 
 filegroup(
