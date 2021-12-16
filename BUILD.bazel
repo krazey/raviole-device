@@ -141,7 +141,7 @@ filegroup(
         "//gs/google-modules/aoc/alsa:__subpackages__",
         "//gs/google-modules/bluetooth/broadcom:__subpackages__",
         "//gs/google-modules/bms:__subpackages__",
-        "//gs/google-modules/display/samsung:__subpackages__",
+        "//gs/google-modules/display:__subpackages__",
         "//gs/google-modules/edgetpu/drivers/edgetpu:__subpackages__",
         "//gs/google-modules/gpu/mali_kbase:__subpackages__",
         "//gs/google-modules/gpu/mali_pixel:__subpackages__",
@@ -321,7 +321,7 @@ kernel_modules_install(
     kernel_modules = [
         # do not sort
         "//gs/google-modules/raviole-device:gs101_soc",
-        "//gs/google-modules/display/samsung:samsung.slider",
+        "//gs/google-modules/display:samsung.slider",
         "//gs/google-modules/wlan/bcmdhd4389:bcmdhd4389.slider",
         "//gs/google-modules/gpu/mali_kbase:mali_kbase.slider",
         "//gs/google-modules/gpu/mali_pixel:mali_pixel.slider",
