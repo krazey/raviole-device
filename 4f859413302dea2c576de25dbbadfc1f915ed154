@@ -22,6 +22,30 @@
       },
       "revId": "4f859413302dea2c576de25dbbadfc1f915ed154",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20835350_46d9a668",
+        "filename": "arch/arm64/boot/dts/BUILD.bazel",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2021-12-28T22:30:12Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a convention for this name. \"dt\" stands for device tree. \"dtstree\" is a variable in the kernel Makefile that points to the device tree. \n\nSo I think the macro \"kernel_dtstree\" is appropriate, but \"slider_dt\" should be fine for the name.",
+      "parentUuid": "f4326d8e_883db6b0",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "4f859413302dea2c576de25dbbadfc1f915ed154",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
