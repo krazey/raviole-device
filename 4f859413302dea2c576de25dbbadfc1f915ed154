@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4326d8e_883db6b0",
+        "filename": "arch/arm64/boot/dts/BUILD.bazel",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2021-12-28T22:24:51Z",
+      "side": 1,
+      "message": "is the convention to use _dt or _dtstree?\n\nWe had better agree on a certain convention and put it in the documentation in kernel.bzl",
+      "range": {
+        "startLine": 18,
+        "startChar": 19,
+        "endLine": 18,
+        "endChar": 21
+      },
+      "revId": "4f859413302dea2c576de25dbbadfc1f915ed154",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
