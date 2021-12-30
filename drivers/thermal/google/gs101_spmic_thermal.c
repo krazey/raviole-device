@@ -297,6 +297,7 @@ static int gs101_spmic_thermal_register_tzd(struct gs101_spmic_thermal_chip *gs1
 	struct device *dev = gs101_spmic_thermal->dev;
 	u8 mask = 0x1;
 	struct kobject *kobj;
+	int ret = 0;
 
 	for (i = 0; i < GTHERM_CHAN_NUM; i++, mask <<= 1) {
 		dev_info(dev, "Registering channel %d\n", i);
@@ -306,7 +307,7 @@ static int gs101_spmic_thermal_register_tzd(struct gs101_spmic_thermal_chip *gs1
 
 		if (IS_ERR(tzd)) {
 			dev_err(dev,
-				"Error registering thermal zone:%ld for channel:%d\n",
+				"Error registering thermal zone:%ld for channel:%u\n",
 				PTR_ERR(tzd), i);
 			continue;
 		}
@@ -316,9 +317,13 @@ static int gs101_spmic_thermal_register_tzd(struct gs101_spmic_thermal_chip *gs1
 		else
 			thermal_zone_device_disable(tzd);
 		kobj = kobject_create_and_add("adc_channel", &tzd->device.kobj);
-		sysfs_create_file(kobj, &channel_temp_attr.attr);
+		ret = sysfs_create_file(kobj, &channel_temp_attr.attr);
+		if (ret < 0)
+			dev_err(dev,
+				"Error creating sysfs file for thermal zone:%ld for channel:%u\n",
+				PTR_ERR(tzd), i);
 	}
-	return 0;
+	return ret;
 }
 
 /*
