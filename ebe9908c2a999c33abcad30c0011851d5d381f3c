@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc5bdf21_7b451716",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-03T20:48:40Z",
+      "side": 1,
+      "message": "It\u0027s now a global symbol but not exported to be used by modules. That\u0027s why we can\u0027t just it here. Is this correct?",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "ebe9908c2a999c33abcad30c0011851d5d381f3c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
