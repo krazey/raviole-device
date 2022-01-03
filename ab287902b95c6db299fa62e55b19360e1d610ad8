@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "713aa14d_e67346f8",
+        "filename": "drivers/thermal/google/gs101_spmic_thermal.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-03T20:51:20Z",
+      "side": 1,
+      "message": "%u for unsigned int i",
+      "range": {
+        "startLine": 323,
+        "startChar": 64,
+        "endLine": 323,
+        "endChar": 66
+      },
+      "revId": "ab287902b95c6db299fa62e55b19360e1d610ad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
