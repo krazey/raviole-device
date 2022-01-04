@@ -34,6 +34,23 @@
       "parentUuid": "ffecadbc_4ef93b03",
       "revId": "17b0d9fccf68225bc9b659cca509476a2ff08a8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0768d7f8_061d29a9",
+        "filename": "arch/arm64/configs/slider_gki.fragment",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-04T23:20:21Z",
+      "side": 1,
+      "message": "Do we have CONFIG_WERROR, though? I thought it got reverted.\nI7e6a0ebb76ab2876cb180214911c1c25b0904a23",
+      "revId": "17b0d9fccf68225bc9b659cca509476a2ff08a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
