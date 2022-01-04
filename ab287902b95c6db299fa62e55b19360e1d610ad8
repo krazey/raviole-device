@@ -46,6 +46,30 @@
       },
       "revId": "ab287902b95c6db299fa62e55b19360e1d610ad8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6bb5ba5a_2ea124e4",
+        "filename": "drivers/thermal/google/gs101_spmic_thermal.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-04T19:26:57Z",
+      "side": 1,
+      "message": "There\u0027s another one on line 304, but that\u0027s arguably out-of-scope of this change.",
+      "parentUuid": "3dd49124_9bc8066b",
+      "range": {
+        "startLine": 323,
+        "startChar": 64,
+        "endLine": 323,
+        "endChar": 66
+      },
+      "revId": "ab287902b95c6db299fa62e55b19360e1d610ad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
