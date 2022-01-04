@@ -22,6 +22,30 @@
       },
       "revId": "ab287902b95c6db299fa62e55b19360e1d610ad8",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3dd49124_9bc8066b",
+        "filename": "drivers/thermal/google/gs101_spmic_thermal.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-01-04T18:56:59Z",
+      "side": 1,
+      "message": "ah, thanks. I copied and pasted this from line 310. I\u0027ll fix both.",
+      "parentUuid": "713aa14d_e67346f8",
+      "range": {
+        "startLine": 323,
+        "startChar": 64,
+        "endLine": 323,
+        "endChar": 66
+      },
+      "revId": "ab287902b95c6db299fa62e55b19360e1d610ad8",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
