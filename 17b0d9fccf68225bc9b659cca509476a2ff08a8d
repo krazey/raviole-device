@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ffecadbc_4ef93b03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-04T17:44:39Z",
+      "side": 1,
+      "message": "It appears as if those warnings get fixed by I441b5e6eed6304f40a1051371bce789ab19a8aa3 . Can we just re-order commits to avoid having to disable Werror?",
+      "revId": "17b0d9fccf68225bc9b659cca509476a2ff08a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
