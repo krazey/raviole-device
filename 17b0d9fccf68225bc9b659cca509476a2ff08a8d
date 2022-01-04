@@ -51,6 +51,24 @@
       "message": "Do we have CONFIG_WERROR, though? I thought it got reverted.\nI7e6a0ebb76ab2876cb180214911c1c25b0904a23",
       "revId": "17b0d9fccf68225bc9b659cca509476a2ff08a8d",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "58c6c248_a90974fd",
+        "filename": "arch/arm64/configs/slider_gki.fragment",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-01-04T23:25:38Z",
+      "side": 1,
+      "message": "We do. It was re-enabled in android-mainline and android13-5.15 here:\n\nhttps://android-review.googlesource.com/q/I06034aa2487f039cd10fd3576c2d2416e599c1ac",
+      "parentUuid": "0768d7f8_061d29a9",
+      "revId": "17b0d9fccf68225bc9b659cca509476a2ff08a8d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
