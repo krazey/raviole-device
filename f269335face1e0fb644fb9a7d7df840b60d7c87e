@@ -22,6 +22,30 @@
       },
       "revId": "f269335face1e0fb644fb9a7d7df840b60d7c87e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5d21b29_3bfa1746",
+        "filename": "Makefile",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-01-06T22:28:43Z",
+      "side": 1,
+      "message": "We run modules_install in build.sh right after \"make modules\".",
+      "parentUuid": "0a35ca59_957b8438",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "f269335face1e0fb644fb9a7d7df840b60d7c87e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
