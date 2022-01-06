@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a35ca59_957b8438",
+        "filename": "Makefile",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-06T21:29:37Z",
+      "side": 1,
+      "message": "This maps modules_install to headers_install. When do we actually run modules_install?",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "f269335face1e0fb644fb9a7d7df840b60d7c87e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
