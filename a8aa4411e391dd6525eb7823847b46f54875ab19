@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "560ce2ff_5ae1b307",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-06T17:53:32Z",
+      "side": 1,
+      "message": "ERROR:MISSING_SIGN_OFF: Missing Signed-off-by: line(s)",
+      "revId": "a8aa4411e391dd6525eb7823847b46f54875ab19",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
