@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c8de783d_6a988a26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-06T21:11:34Z",
+      "side": 1,
+      "message": "Nit: Consider \"Add SPDX identifiers to Kconfig files\"",
+      "revId": "29d3e0254c516d69202438d4249c6a1b9791e1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e48f3c6a_16c504df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-06T21:11:34Z",
+      "side": 1,
+      "message": "SPDX identifiers.",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "29d3e0254c516d69202438d4249c6a1b9791e1c3",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
