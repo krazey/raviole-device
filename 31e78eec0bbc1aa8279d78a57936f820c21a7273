@@ -16,6 +16,24 @@
       "message": "Signed-off-by:",
       "revId": "31e78eec0bbc1aa8279d78a57936f820c21a7273",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6e3ad00_782052b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-01-07T17:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b01ecd0b_952da44c",
+      "revId": "31e78eec0bbc1aa8279d78a57936f820c21a7273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
