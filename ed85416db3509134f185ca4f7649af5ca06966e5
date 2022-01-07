@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f4995f1e_fed8f74e",
+        "filename": "drivers/thermal/google/gs101_spmic_thermal.c",
+        "patchSetId": 5
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-07T00:18:01Z",
+      "side": 1,
+      "message": "I\u0027d argue that this is a function change. It might be better to keep returning 0 here. This code doesn\u0027t change ret if any of devm_thermal_zone_of_sensor_register, thermal_zone_device_{enable,disable} or kobject_create_and_add fail. Might as well ignore errors from sysfs_create_file, too.",
+      "revId": "ed85416db3509134f185ca4f7649af5ca06966e5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
