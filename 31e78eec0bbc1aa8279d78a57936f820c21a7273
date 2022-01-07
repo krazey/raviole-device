@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b01ecd0b_952da44c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-07T01:03:32Z",
+      "side": 1,
+      "message": "Signed-off-by:",
+      "revId": "31e78eec0bbc1aa8279d78a57936f820c21a7273",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
