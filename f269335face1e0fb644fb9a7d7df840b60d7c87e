@@ -46,6 +46,30 @@
       },
       "revId": "f269335face1e0fb644fb9a7d7df840b60d7c87e",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f01ce3d_cc93a77c",
+        "filename": "Makefile",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-01-10T22:55:39Z",
+      "side": 1,
+      "message": "I believe previously, you ran\n\n$(MAKE) -C $(KERNEL_SRC) M\u003d$(M) $(@) modules_install\n\nNow, you\u0027re running\n\n$(MAKE) -C $(KERNEL_SRC) M\u003d$(M) $(@) headers_install\n\nI\u0027d expect something like\n\nmodules_install:\n     $(MAKE) -C $(KERNEL_SRC) M\u003d$(M) $(@) modules_install\n     $(MAKE) -C $(KERNEL_SRC) M\u003d$(M) $(@) headers_install\n     \nLet me do some experiments.",
+      "parentUuid": "c5d21b29_3bfa1746",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "f269335face1e0fb644fb9a7d7df840b60d7c87e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
