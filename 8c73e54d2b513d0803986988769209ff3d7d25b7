@@ -22,6 +22,30 @@
       },
       "revId": "8c73e54d2b513d0803986988769209ff3d7d25b7",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0a6e7bdb_24f845ec",
+        "filename": "BUILD.bazel",
+        "patchSetId": 22
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-01-10T23:48:12Z",
+      "side": 1,
+      "message": "sure I can do that.",
+      "parentUuid": "cc421001_ae87cc85",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 62
+      },
+      "revId": "8c73e54d2b513d0803986988769209ff3d7d25b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
