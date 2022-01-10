@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "92cfa1e0_da850fe4",
+        "filename": "BUILD.bazel",
+        "patchSetId": 11
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-01-10T20:36:03Z",
+      "side": 1,
+      "message": "keep sorted?\n\nThe order doesn\u0027t matter here.",
+      "range": {
+        "startLine": 325,
+        "startChar": 10,
+        "endLine": 325,
+        "endChar": 21
+      },
+      "revId": "1bcf5e9735ac3a8e7c884a815457bd17822869fb",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
