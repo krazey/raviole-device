@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cc421001_ae87cc85",
+        "filename": "BUILD.bazel",
+        "patchSetId": 22
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-01-10T23:35:45Z",
+      "side": 1,
+      "message": "nit: could just be `//gs/google-modules:__subpackages__`",
+      "range": {
+        "startLine": 310,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 62
+      },
+      "revId": "8c73e54d2b513d0803986988769209ff3d7d25b7",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
