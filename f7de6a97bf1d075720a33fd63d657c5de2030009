@@ -16,6 +16,52 @@
       "message": "This will be required when aosp/1946053 lands on the ACK branches. Doesn\u0027t hurt to have it there in advanced.",
       "revId": "f7de6a97bf1d075720a33fd63d657c5de2030009",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4190a793_ef33ea64",
+        "filename": "arch/arm64/configs/slider_gki.fragment",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-01-12T19:28:28Z",
+      "side": 1,
+      "message": "Can you remove this commit?",
+      "range": {
+        "startLine": 163,
+        "startChar": 0,
+        "endLine": 163,
+        "endChar": 37
+      },
+      "revId": "f7de6a97bf1d075720a33fd63d657c5de2030009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80942c78_db760507",
+        "filename": "arch/arm64/configs/slider_gki.fragment",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-01-12T19:28:28Z",
+      "side": 1,
+      "message": "Can you move this to the top of this file so that\u0027s it\u0027s obvious it\u0027s here?",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 164,
+        "endChar": 34
+      },
+      "revId": "f7de6a97bf1d075720a33fd63d657c5de2030009",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
