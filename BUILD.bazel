@@ -359,8 +359,7 @@ copy_to_dist_dir(
         ":slider_images",
         ":slider_modules_install",
         "//common:kernel_aarch64",
-        "//common:kernel_aarch64_headers",
-        "//common:kernel_aarch64_uapi_headers",
+        "//common:kernel_aarch64_additional_artifacts",
     ],
     flat = True,
 )
