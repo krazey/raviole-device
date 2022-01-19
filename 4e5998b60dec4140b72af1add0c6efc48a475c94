@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ab85bdf2_145a6377",
+        "filename": "BUILD.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-01-19T00:42:23Z",
+      "side": 1,
+      "message": "Do you have to have this here even though it\u0027s defined in the GKI kernel module_outs here:\n\nhttps://android-review.googlesource.com/c/kernel/build/+/1947839/3/kleaf/common_kernels.bzl\n\nAlso, when is this kernel module expected to be loaded? I believe that with this topic, this kernel module will be loaded from vendor_dlkm during second stage init.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 28
+      },
+      "revId": "4e5998b60dec4140b72af1add0c6efc48a475c94",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
