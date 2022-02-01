@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "d0493ff4_8b67fbf3",
+        "filename": "drivers/scsi/ufs/ufs-pixel-crypto.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2022-02-01T20:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7559647_108fb719",
+      "range": {
+        "startLine": 191,
+        "startChar": 38,
+        "endLine": 191,
+        "endChar": 55
+      },
+      "revId": "1c127907f8ce7cddfb28b359a7cc7633114894f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "64e297e2_c7a41c3a",
@@ -60,6 +84,54 @@
       "writtenOn": "2022-02-01T19:59:11Z",
       "side": 1,
       "message": "I think this needs to be BLK_CRYPTO_KEY_TYPE_HW_WRAPPED",
+      "range": {
+        "startLine": 380,
+        "startChar": 43,
+        "endLine": 380,
+        "endChar": 71
+      },
+      "revId": "1c127907f8ce7cddfb28b359a7cc7633114894f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1852a9b5_f8a22355",
+        "filename": "drivers/scsi/ufs/ufs-pixel-crypto.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2022-02-01T20:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fbc0ac2_056b83f2",
+      "range": {
+        "startLine": 380,
+        "startChar": 43,
+        "endLine": 380,
+        "endChar": 71
+      },
+      "revId": "1c127907f8ce7cddfb28b359a7cc7633114894f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b344463b_b5d28f36",
+        "filename": "drivers/scsi/ufs/ufs-pixel-crypto.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2022-02-01T20:16:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64e297e2_c7a41c3a",
       "range": {
         "startLine": 380,
         "startChar": 43,
