@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f7559647_108fb719",
+        "filename": "drivers/scsi/ufs/ufs-pixel-crypto.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-02-01T19:55:51Z",
+      "side": 1,
+      "message": "Rename to pixel_ufs_crypto_ops?",
+      "range": {
+        "startLine": 191,
+        "startChar": 38,
+        "endLine": 191,
+        "endChar": 55
+      },
+      "revId": "1c127907f8ce7cddfb28b359a7cc7633114894f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "64e297e2_c7a41c3a",
+        "filename": "drivers/scsi/ufs/ufs-pixel-crypto.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1137063
+      },
+      "writtenOn": "2022-02-01T19:55:51Z",
+      "side": 1,
+      "message": "This needs to be BLK_CRYPTO_KEY_TYPE_HW_WRAPPED.",
+      "range": {
+        "startLine": 380,
+        "startChar": 43,
+        "endLine": 380,
+        "endChar": 71
+      },
+      "revId": "1c127907f8ce7cddfb28b359a7cc7633114894f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
