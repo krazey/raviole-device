@@ -45,6 +45,29 @@
       },
       "revId": "1c127907f8ce7cddfb28b359a7cc7633114894f6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5fbc0ac2_056b83f2",
+        "filename": "drivers/scsi/ufs/ufs-pixel-crypto.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-02-01T19:59:11Z",
+      "side": 1,
+      "message": "I think this needs to be BLK_CRYPTO_KEY_TYPE_HW_WRAPPED",
+      "range": {
+        "startLine": 380,
+        "startChar": 43,
+        "endLine": 380,
+        "endChar": 71
+      },
+      "revId": "1c127907f8ce7cddfb28b359a7cc7633114894f6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
