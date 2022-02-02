@@ -140,9 +140,9 @@ int exynos_bcm_dbg_ipc_send_data(enum exynos_bcm_dbg_ipc_type ipc_type,
 EXPORT_SYMBOL(exynos_bcm_dbg_ipc_send_data);
 
 #if IS_ENABLED(CONFIG_EXYNOS_ADV_TRACER)
-static int adv_tracer_bcm_dbg_handler(struct adv_tracer_ipc_cmd *cmd, unsigned int len)
+static void adv_tracer_bcm_dbg_handler(unsigned int *cmd, unsigned int size)
 {
-	return 0;
+	return;
 }
 
 static int exynos_bcm_dbg_ipc_channel_request(struct exynos_bcm_dbg_data *data)
