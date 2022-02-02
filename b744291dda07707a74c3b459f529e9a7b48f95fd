@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1e613142_61a5cc0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-02-02T07:54:27Z",
+      "side": 1,
+      "message": "Similar upstream commits use the commit message \"The core code bakes its own cookies now.\" Maybe we should align with that ;-)\n\nhttps://lore.kernel.org/all/aff51e2da1e431987ae5fdafa62a6a7c4bd042dc.1628682048.git.robin.murphy@arm.com/",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 60
+      },
+      "revId": "b744291dda07707a74c3b459f529e9a7b48f95fd",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
