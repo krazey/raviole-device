@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de535241_a785dd83",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2022-02-02T17:56:05Z",
+      "side": 1,
+      "message": "lol, the rebase here added up to a noop",
+      "revId": "7e4ffff4fb95ed1bcb7bd898ef9b1fc75a53854e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
