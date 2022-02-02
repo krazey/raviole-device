@@ -16,6 +16,24 @@
       "message": "Shouldn\u0027t we remove the curly braces around this if statement since this branch is only one statement long, as per the kernel coding style convention?",
       "revId": "512682be04c5025314e9250de6b8361c55cb6e30",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f2f0cfdf_88776a4d",
+        "filename": "drivers/cpufreq/exynos-acme.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-02-02T18:00:55Z",
+      "side": 1,
+      "message": "yeah, I should have fixed that.",
+      "parentUuid": "bc9826ae_6d22003b",
+      "revId": "512682be04c5025314e9250de6b8361c55cb6e30",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
