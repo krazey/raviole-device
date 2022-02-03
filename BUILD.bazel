@@ -321,6 +321,10 @@ kernel_modules_install(
         "//gs/google-modules/touch/fts/ftm5:ftm5.slider",
         "//gs/google-modules/touch/sec:sec.slider",
         "//gs/google-modules/uwb/kernel:kernel.slider",
+<<<<<<< HEAD   (07b860 kleaf: run buildifier)
+=======
+        "//gs/google-modules/wlan/bcmdhd4389:bcmdhd4389.slider",
+>>>>>>> BRANCH (bd820e Update the DT include prefix path)
     ],
     # TODO(b/217483442) disable till we can fix the Werror errors
     #"//gs/google-modules/wlan/bcmdhd4389:bcmdhd4389.slider",
