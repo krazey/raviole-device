@@ -29,26 +29,6 @@ load(
 )
 load("@kernel_toolchain_info//:dict.bzl", "CLANG_VERSION")
 
-genrule(
-    name = "build.config.mix",
-    outs = ["build.config.mix.generated"],
-    # Now that the build config is generated, the inferred KERNEL_DIR is
-    # incorrect. Set it manually.
-    cmd = """
-        echo MIXED_BUILD=1 > $@
-        echo KERNEL_DIR=gs/google-modules/soc-modules >> $@
-        """,
-)
-
-kernel_build_config(
-    name = "build.config.slider.mix",
-    srcs = [
-        # do not sort
-        ":build.config.mix",
-        "build.config.slider",
-    ],
-)
-
 slider_dtbos = [
     "gs101-oriole.dtbo",
     "gs101-oriole-evt1_1.dtbo",
@@ -99,8 +79,13 @@ kernel_build(
         "gs101-a0.dtb",
         "gs101-b0.dtb",
     ],
+<<<<<<< HEAD   (19e870 kleaf: //build/kleaf -> //build/kernel/kleaf.)
     base_kernel = "//common:kernel_aarch64",
     build_config = ":build.config.slider.mix",
+=======
+    base_kernel = "//common:kernel_aarch64_download_or_build",
+    build_config = "build.config.slider",
+>>>>>>> CHANGE (cee707 kleaf: drop slider.mix)
     dtstree = "//gs/google-modules/soc-modules/arch/arm64/boot/dts:slider_dt",
     implicit_outs = slider_dtbos,
     kconfig_ext = "Kconfig.ext",
