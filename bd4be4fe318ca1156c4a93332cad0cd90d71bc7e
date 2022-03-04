@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bca77a12_4ac3ffbd",
+        "filename": "BUILD.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-03-04T22:52:20Z",
+      "side": 1,
+      "message": "Note: I say \"sync\" here because we are still supporting build.sh builds. Once we drop support of build.sh, this statement can be deleted.",
+      "range": {
+        "startLine": 323,
+        "startChar": 28,
+        "endLine": 323,
+        "endChar": 32
+      },
+      "revId": "bd4be4fe318ca1156c4a93332cad0cd90d71bc7e",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
