@@ -21,6 +21,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
+    "kernel_abi",
     "kernel_build",
     "kernel_build_config",
     "kernel_images",
@@ -81,8 +82,14 @@ filegroup(
     ],
 )
 
-kernel_build(
-    name = "slider",
+_slider_outs = [
+    # Sync with build.config.slider
+    "gs101-a0.dtb",
+    "gs101-b0.dtb",
+]
+
+[kernel_build(
+    name = kwargs["name"],
     srcs = glob([
         "build.config.*",
         "arch/arm64/configs/slider_gki.fragment",
@@ -94,16 +101,15 @@ kernel_build(
     ]) + [
         "//common:kernel_aarch64_sources",
     ],
-    outs = [
-        # Sync with build.config.slider
-        "gs101-a0.dtb",
-        "gs101-b0.dtb",
-    ],
-    base_kernel = "//common:kernel_aarch64",
+    outs = kwargs.get("outs"),
+    additional_kmi_symbol_lists = kwargs.get("additional_kmi_symbol_lists"),
+    base_kernel = kwargs.get("base_kernel"),
     build_config = ":build.config.slider.mix",
     dtstree = "//gs/google-modules/soc-modules/arch/arm64/boot/dts:slider_dt",
     implicit_outs = slider_dtbos,
     kconfig_ext = "Kconfig.ext",
+    kmi_symbol_list = kwargs.get("kmi_symbol_list"),
+    kmi_symbol_list_strict_mode = kwargs.get("kmi_symbol_list_strict_mode"),
     module_outs = [
         # keep sorted
         "arm_dsu_pmu.ko",
@@ -117,7 +123,24 @@ kernel_build(
     ],
     # Keep in sync with build.config.common
     toolchain_version = CLANG_VERSION,
-)
+    trim_nonlisted_kmi = kwargs.get("trim_nonlisted_kmi"),
+) for kwargs in [
+    {
+        "name": "slider",
+        "base_kernel": "//common:kernel_aarch64",
+        "outs": _slider_outs,
+    },
+    {
+        # For slider_abi
+        "name": "slider_notrim",
+        "outs": _slider_outs + ["vmlinux"],
+        "trim_nonlisted_kmi": False,
+        "kmi_symbol_list_strict_mode": False,
+        # TODO: slider does not specify KMI_SYMBOL_LIST and ADDITIONAL_KMI_SYMBOL_LISTS right now. Using kernel_aarch64 ones to test.
+        "kmi_symbol_list": "//common:kernel_aarch64_kmi_symbol_list",
+        "additional_kmi_symbol_lists": ["//common:kernel_aarch64_additional_kmi_symbol_lists"],
+    },
+]]
 
 filegroup(
     name = "gs101_soc_headers",
@@ -295,33 +318,41 @@ kernel_module(
     ],
 )
 
+_slider_modules = [
+    # keep sorted
+    "//gs/google-modules/amplifiers/audiometrics:audiometrics.slider",
+    "//gs/google-modules/amplifiers/cs35l41:cs35l41.slider",
+    "//gs/google-modules/amplifiers/cs40l25:cs40l25.slider",
+    "//gs/google-modules/amplifiers/drv2624:drv2624.slider",
+    "//gs/google-modules/aoc:aoc.slider",
+    "//gs/google-modules/aoc/alsa:alsa.slider",
+    "//gs/google-modules/bluetooth/broadcom:broadcom.slider",
+    "//gs/google-modules/bms:bms.slider",
+    "//gs/google-modules/display:samsung.slider",
+    "//gs/google-modules/edgetpu/drivers/edgetpu:edgetpu.slider",
+    "//gs/google-modules/gpu/mali_kbase:mali_kbase.slider",
+    "//gs/google-modules/gpu/mali_pixel:mali_pixel.slider",
+    "//gs/google-modules/lwis:lwis.slider",
+    "//gs/google-modules/nfc:nfc.slider",
+    "//gs/google-modules/power/reset:reset.slider",
+    "//gs/google-modules/soc-modules:gs101_soc",
+    "//gs/google-modules/touch/common:common.slider",
+    "//gs/google-modules/touch/fts/ftm5:ftm5.slider",
+    "//gs/google-modules/touch/sec:sec.slider",
+    "//gs/google-modules/uwb/kernel:kernel.slider",
+    "//gs/google-modules/wlan/bcmdhd4389:bcmdhd4389.slider",
+]
+
 kernel_modules_install(
     name = "slider_modules_install",
     kernel_build = ":slider",
-    kernel_modules = [
-        # keep sorted
-        "//gs/google-modules/amplifiers/audiometrics:audiometrics.slider",
-        "//gs/google-modules/amplifiers/cs35l41:cs35l41.slider",
-        "//gs/google-modules/amplifiers/cs40l25:cs40l25.slider",
-        "//gs/google-modules/amplifiers/drv2624:drv2624.slider",
-        "//gs/google-modules/aoc:aoc.slider",
-        "//gs/google-modules/aoc/alsa:alsa.slider",
-        "//gs/google-modules/bluetooth/broadcom:broadcom.slider",
-        "//gs/google-modules/bms:bms.slider",
-        "//gs/google-modules/display:samsung.slider",
-        "//gs/google-modules/edgetpu/drivers/edgetpu:edgetpu.slider",
-        "//gs/google-modules/gpu/mali_kbase:mali_kbase.slider",
-        "//gs/google-modules/gpu/mali_pixel:mali_pixel.slider",
-        "//gs/google-modules/lwis:lwis.slider",
-        "//gs/google-modules/nfc:nfc.slider",
-        "//gs/google-modules/power/reset:reset.slider",
-        "//gs/google-modules/soc-modules:gs101_soc",
-        "//gs/google-modules/touch/common:common.slider",
-        "//gs/google-modules/touch/fts/ftm5:ftm5.slider",
-        "//gs/google-modules/touch/sec:sec.slider",
-        "//gs/google-modules/uwb/kernel:kernel.slider",
-        "//gs/google-modules/wlan/bcmdhd4389:bcmdhd4389.slider",
-    ],
+    kernel_modules = _slider_modules,
+)
+
+kernel_abi(
+    name = "slider_abi",
+    kernel_build = "slider_notrim",
+    kernel_modules = _slider_modules,
 )
 
 kernel_images(
