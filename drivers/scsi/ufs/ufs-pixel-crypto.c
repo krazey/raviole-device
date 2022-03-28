@@ -57,57 +57,6 @@ struct pixel_ufs_prdt_entry {
 	__le32 reserved[20];
 };
 
-/*
- * Block new UFS requests from being issued, and wait for any outstanding UFS
- * requests to complete.   Modified from ufshcd_clock_scaling_prepare().
- * Must be paired with ufshcd_put_exclusive_access().
- */
-static void ufshcd_get_exclusive_access(struct ufs_hba *hba)
-{
-	#define DOORBELL_CLR_WARN_US		(5 * 1000 * 1000) /* 5 secs */
-	#define	DEFAULT_IO_TIMEOUT		(msecs_to_jiffies(20))
-	u32 tm_doorbell;
-	u32 tr_doorbell;
-	ktime_t start;
-	unsigned long flags;
-
-	if (atomic_inc_return(&hba->scsi_block_reqs_cnt) == 1)
-		scsi_block_requests(hba->host);
-
-	down_write(&hba->clk_scaling_lock);
-
-	ufshcd_hold(hba, false);
-	spin_lock_irqsave(hba->host->host_lock, flags);
-	start = ktime_get();
-	do {
-		tm_doorbell = ufshcd_readl(hba, REG_UTP_TASK_REQ_DOOR_BELL);
-		tr_doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
-		if (!tm_doorbell && !tr_doorbell)
-			break;
-
-		spin_unlock_irqrestore(hba->host->host_lock, flags);
-		io_schedule_timeout(DEFAULT_IO_TIMEOUT);
-		if (ktime_to_us(ktime_sub(ktime_get(), start)) >
-					DOORBELL_CLR_WARN_US) {
-			start = ktime_get();
-			dev_err(hba->dev,
-				"%s: warning: waiting too much for doorbell to clear (tm=0x%x, tr=0x%x)\n",
-				__func__, tm_doorbell, tr_doorbell);
-		}
-		spin_lock_irqsave(hba->host->host_lock, flags);
-	} while (tm_doorbell || tr_doorbell);
-
-	spin_unlock_irqrestore(hba->host->host_lock, flags);
-	ufshcd_release(hba);
-}
-
-static void ufshcd_put_exclusive_access(struct ufs_hba *hba)
-{
-	up_write(&hba->clk_scaling_lock);
-	if (atomic_dec_and_test(&hba->scsi_block_reqs_cnt))
-		scsi_unblock_requests(hba->host);
-}
-
 static int pixel_ufs_keyslot_program(struct blk_keyslot_manager *ksm,
 				     const struct blk_crypto_key *key,
 				     unsigned int slot)
@@ -124,13 +73,16 @@ static int pixel_ufs_keyslot_program(struct blk_keyslot_manager *ksm,
 	 * This hardware doesn't allow any encrypted I/O at all while a keyslot
 	 * is being modified.
 	 */
-	ufshcd_get_exclusive_access(hba);
+	while (ufshcd_freeze_scsi_devs(hba, 5 * USEC_PER_SEC) < 0)
+		dev_err(hba->dev,
+			"%s: waiting for doorbell to clear takes too long",
+			__func__);
 
 	err = gsa_kdn_program_key(ufs->gsa_dev, slot, key->raw, key->size);
 	if (err)
 		dev_err(ufs->dev, "kdn: failed to program key; err=%d\n", err);
 
-	ufshcd_put_exclusive_access(hba);
+	ufshcd_unfreeze_scsi_devs(hba);
 
 	return err;
 }
@@ -149,13 +101,16 @@ static int pixel_ufs_keyslot_evict(struct blk_keyslot_manager *ksm,
 	 * This hardware doesn't allow any encrypted I/O at all while a keyslot
 	 * is being modified.
 	 */
-	ufshcd_get_exclusive_access(hba);
+	while (ufshcd_freeze_scsi_devs(hba, 5 * USEC_PER_SEC) < 0)
+		dev_err(hba->dev,
+			"%s: waiting for doorbell to clear takes too long",
+			__func__);
 
 	err = gsa_kdn_program_key(ufs->gsa_dev, slot, NULL, 0);
 	if (err)
 		dev_err(ufs->dev, "kdn: failed to evict key; err=%d\n", err);
 
-	ufshcd_put_exclusive_access(hba);
+	ufshcd_unfreeze_scsi_devs(hba);
 
 	return err;
 }
