@@ -84,7 +84,11 @@ kernel_build(
         "gs101-a0.dtb",
         "gs101-b0.dtb",
     ],
+<<<<<<< HEAD   (3e82d4 Revert "slider_gki: enable CONFIG_VH_SCHED")
     base_kernel = "//common:kernel_aarch64_download_or_build",
+=======
+    base_kernel = "//common:kernel_aarch64",
+>>>>>>> CHANGE (b09a48 kleaf: Remove mixed build config.)
     build_config = "build.config.slider",
     dtstree = "//gs/google-modules/soc-modules/arch/arm64/boot/dts:slider_dt",
     implicit_outs = slider_dtbos,
