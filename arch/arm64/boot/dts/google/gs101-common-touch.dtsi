@@ -114,7 +114,8 @@
 	 * Drivers must probe failed if the panel_map does not matched to
 	 * prevent bus conflitcs.
 	 */
-	cs-gpios = <&gpp23 3 GPIO_ACTIVE_HIGH>, <&gpp23 3 GPIO_ACTIVE_HIGH>;
+	cs-gpios = <&gpp23 3 GPIO_ACTIVE_LOW>;
+	num-cs = <1>;
 
 	spitouch: touchscreen@0 {
 		status = "disabled";
