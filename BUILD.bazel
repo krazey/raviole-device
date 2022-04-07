@@ -26,6 +26,7 @@ load(
     "kernel_images",
     "kernel_module",
     "kernel_modules_install",
+    "kernel_unstripped_modules_archive",
     "merged_kernel_uapi_headers",
 )
 load("@kernel_toolchain_info//:dict.bzl", "CLANG_VERSION")
@@ -118,6 +119,7 @@ kernel_build(
     ],
     # Keep in sync with build.config.common
     toolchain_version = CLANG_VERSION,
+    collect_unstripped_modules = True,
 )
 
 filegroup(
@@ -329,6 +331,12 @@ kernel_modules_install(
 
 merged_kernel_uapi_headers(
     name = "slider_merged_kernel_uapi_headers",
+    kernel_build = ":slider",
+    kernel_modules = _slider_modules,
+)
+
+kernel_unstripped_modules_archive(
+    name = "slider_unstripped_modules_archive",
     kernel_build = ":slider",
     kernel_modules = _slider_modules,
 )
