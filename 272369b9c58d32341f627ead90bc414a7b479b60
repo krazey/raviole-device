@@ -22,6 +22,30 @@
       },
       "revId": "272369b9c58d32341f627ead90bc414a7b479b60",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0a210385_cdcab274",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-04-07T18:41:09Z",
+      "side": 1,
+      "message": "No.\n\nWhat do you suggest me to set this to? Just `--dist_dir\u003dout/dist`?",
+      "parentUuid": "ae2648b5_fce96a9a",
+      "range": {
+        "startLine": 30,
+        "startChar": 71,
+        "endLine": 30,
+        "endChar": 91
+      },
+      "revId": "272369b9c58d32341f627ead90bc414a7b479b60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
