@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ae2648b5_fce96a9a",
+        "filename": "README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-07T16:27:23Z",
+      "side": 1,
+      "message": "I don\u0027t actually set the DIST_DIR directory. I just do this \"--dist_dir\u003dout/mixed-kleaf\". Is there a reason we can\u0027t just have a default DIST_DIR like build.sh does?",
+      "range": {
+        "startLine": 30,
+        "startChar": 71,
+        "endLine": 30,
+        "endChar": 91
+      },
+      "revId": "272369b9c58d32341f627ead90bc414a7b479b60",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
