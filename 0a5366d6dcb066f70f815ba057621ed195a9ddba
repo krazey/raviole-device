@@ -46,6 +46,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f0216a7_756b1cfa",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-11T22:18:24Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "dbcb864e_b1bac25b",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
