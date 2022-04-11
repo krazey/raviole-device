@@ -22,6 +22,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dbcb864e_b1bac25b",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-11T21:17:02Z",
+      "side": 0,
+      "message": "I think multiple here is referring to 2 touch chips. I tried to figure out what this panel_map comment means, but didn\u0027t find anything relevant. I had to remove the duplicate because the driver fails to register the spi master with it resulting in a failed probe and touch not working.",
+      "parentUuid": "5b95c7c9_1e987d76",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
