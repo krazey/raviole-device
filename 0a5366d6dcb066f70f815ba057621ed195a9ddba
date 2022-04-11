@@ -70,6 +70,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c084e49_d1e27f16",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-04-11T23:57:40Z",
+      "side": 0,
+      "message": "We specify the two touch devices spitouch and spitouch1 on lines 119 and 131, respectively. I\u0027m wondering if the number of CS gpios has to match the number of SPI devices.\n\nIn the following change, they added spitouch1 as well as the two CS lines:\n\nhttps://android.googlesource.com/kernel/gs/+/807654cadd246e0b3ab79113a1b8667e416aef36%5E%21/#F0",
+      "parentUuid": "4f0216a7_756b1cfa",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
