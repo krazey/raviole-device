@@ -94,6 +94,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bbb1d2b6_cdf93394",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-12T17:54:31Z",
+      "side": 0,
+      "message": "I don\u0027t see why it would have to match. When the master SPI controller registers itself, the core SPI driver parses the device tree and requests for the GPIOs. These GPIOs then are used by the touch drivers accordingly in spi_setup() and during SPI data transfers.",
+      "parentUuid": "0c084e49_d1e27f16",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
