@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "99369933_469b4dce",
+        "filename": "README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-13T22:02:28Z",
+      "side": 1,
+      "message": "Do we need --flat?",
+      "range": {
+        "startLine": 5,
+        "startChar": 59,
+        "endLine": 5,
+        "endChar": 60
+      },
+      "revId": "43fac4920e8bd7a00c25063ac5f9da7e9bd9f0c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d912a841_b1dcb170",
+        "filename": "README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-13T22:02:28Z",
+      "side": 1,
+      "message": "this should be:\n\n//gs/google-modules/soc-modules",
+      "range": {
+        "startLine": 5,
+        "startChar": 18,
+        "endLine": 5,
+        "endChar": 45
+      },
+      "revId": "43fac4920e8bd7a00c25063ac5f9da7e9bd9f0c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "df3dc698_031b5c45",
+        "filename": "README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-13T22:02:28Z",
+      "side": 1,
+      "message": "This needs to be updated to:\n\n//gs/google-modules/soc-modules",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 55
+      },
+      "revId": "43fac4920e8bd7a00c25063ac5f9da7e9bd9f0c1",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
