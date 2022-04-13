@@ -52,6 +52,24 @@
       "parentUuid": "e7555575_9b9a5a1b",
       "revId": "30a9f63309e5ad0383725c084864d7ceeeeedf67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80c9643b_3cc39cc7",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-13T22:35:20Z",
+      "side": 1,
+      "message": "Okay, I\u0027m fine with that since it\u0027s kind of related to this gpio stuff, but honestly I\u0027ve picked through this driver for the past week or so and there is a bunch of unused code, e.g. dma_mode is always off, secure-mode is never used, num-cs isn\u0027t used. We really should just be using the upstream version and pushing our differences there. I was able to get this driver stripped down to 3 main differences from upstream. All of that is out-of-scope for this patch which is just fixing the probe issue for the audio device. Any other clean-up should be handled in follow up patches.",
+      "parentUuid": "a98e63ef_2136156d",
+      "revId": "30a9f63309e5ad0383725c084864d7ceeeeedf67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
