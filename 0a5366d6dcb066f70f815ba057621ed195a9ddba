@@ -190,6 +190,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "95de64f1_4045bf9a",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-04-13T19:12:04Z",
+      "side": 0,
+      "message": "I am afraid we might not be able to have two SPI devices with identical \"reg\" values. We might run into this code in spi_add_device:\n\n\t/* We need to make sure there\u0027s no other device with this\n\t * chipselect **BEFORE** we call setup(), else we\u0027ll trash\n\t * its configuration.  Lock against concurrent add() calls.\n\t */\n\tmutex_lock(\u0026spi_add_lock);\n\n\tstatus \u003d bus_for_each_dev(\u0026spi_bus_type, NULL, spi, spi_dev_check);\n\tif (status) {\n\t\tdev_err(dev, \"chipselect %d already in use\\n\",\n\t\t\t\tspi-\u003echip_select);\n\t\tgoto done;\n\t}\n\n\nI suggest we just remove spitouch1 for now and ask the author of https://android.googlesource.com/kernel/gs/+/807654cadd246e0b3ab79113a1b8667e416aef36%5E%21/#F0 to find a different solution.",
+      "parentUuid": "837d5cd2_232f0ec9",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
