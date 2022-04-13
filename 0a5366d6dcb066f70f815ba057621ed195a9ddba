@@ -214,6 +214,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4056931e_035ca57f",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-13T22:07:28Z",
+      "side": 0,
+      "message": "This should be fine because spitouch1 is disabled on all devices except oriole proto1 (defined here gs101-oriole-touch-proto1.dtsi). So it won\u0027t probe for the other devices. And for oriole proto1, spitouch will be disabled. So there wouldn\u0027t be a case where we probe both spitouch and spitouch1 on the same device.",
+      "parentUuid": "95de64f1_4045bf9a",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
