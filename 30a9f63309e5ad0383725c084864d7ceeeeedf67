@@ -70,6 +70,24 @@
       "parentUuid": "a98e63ef_2136156d",
       "revId": "30a9f63309e5ad0383725c084864d7ceeeeedf67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7af4fb62_87cbf649",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-13T22:41:15Z",
+      "side": 1,
+      "message": "Actually I take part of this back. \"num-cs\" is present in the upstream spi-s3c64xx.c driver. So I don\u0027t want to diverge any more from upstream by removing this.",
+      "parentUuid": "80c9643b_3cc39cc7",
+      "revId": "30a9f63309e5ad0383725c084864d7ceeeeedf67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
