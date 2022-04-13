@@ -142,6 +142,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "837d5cd2_232f0ec9",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-13T18:32:21Z",
+      "side": 0,
+      "message": "ah, I don\u0027t have an oriole to verify that, but I think if we just set line 133 to:\n\nreg \u003d \u003c0\u003e;\n\nthen that should work right? Maybe I can swap spitouch and spitouch1 to try and reproduce this on a raven.",
+      "parentUuid": "686a975c_85fcb0f8",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
