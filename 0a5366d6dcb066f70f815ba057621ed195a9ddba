@@ -166,6 +166,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0f2aad7c_4e1a3af1",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-13T18:56:50Z",
+      "side": 0,
+      "message": "Thanks for finding this! I was able to reproduce it by setting reg \u003d \u003c1\u003e; for the first spitouch.\n\n```\n04-13 18:54:06.875     8     8 W s3c64xx-spi 10d40000.spi: spi bus clock parent not specified, using clock at index 0 as parent\n04-13 18:54:06.876     8     8 I s3c64xx-spi 10d40000.spi: set usi mode - 0x2 \n04-13 18:54:06.876     8     8 I s3c64xx-spi 10d40000.spi: Not using idle state \n04-13 18:54:06.876     8     8 I s3c64xx-spi 10d40000.spi: spi clkoff-time is empty(Default: 0ms)\n04-13 18:54:06.876     8     8 I s3c64xx-spi 10d40000.spi: PORT 11 fifo_lvl_mask \u003d 0x7f\n04-13 18:54:06.877     8     8 E s3c64xx-spi 10d40000.spi: cs1 \u003e\u003d max 1\n04-13 18:54:06.878     8     8 E spi_master spi11: spi_device register error /spi@10D40000/touchscreen@0\n04-13 18:54:06.878     8     8 W spi_master spi11: Failed to create SPI device for /spi@10D40000/touchscreen@0\n```\n\nI think setting both SPI devices to \"reg \u003d \u003c0\u003e;\" should be enough to fix this. I don\u0027t have an oriole to verify that, but am working on trying to get one.",
+      "parentUuid": "837d5cd2_232f0ec9",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
