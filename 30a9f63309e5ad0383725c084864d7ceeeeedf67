@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6e02563a_465c059e",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-04-13T20:22:43Z",
+      "side": 1,
+      "message": "Not sure if this is in scope for this change, but I\u0027m thinking we can just rely on the SPI framework to set num_chipselect to the number of cs-gpios it finds in the DT. I suggest removing the field num_cs from s3c64xx_spi_info and every occurrence where it is used.\n\nIn the function spi_get_gpio_descs(), we have this code:\n\n\tnb \u003d gpiod_count(dev, \"cs\");\n\tif (nb \u003c 0) {\n\t\t/* No GPIOs at all is fine, else return the error */\n\t\tif (nb \u003d\u003d -ENOENT)\n\t\t\treturn 0;\n\t\treturn nb;\n\t}\n\n\tctlr-\u003enum_chipselect \u003d max_t(int, nb, ctlr-\u003enum_chipselect);\n\nSo ctlr-\u003enum_chipselect is already set by the framework.",
+      "revId": "30a9f63309e5ad0383725c084864d7ceeeeedf67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
