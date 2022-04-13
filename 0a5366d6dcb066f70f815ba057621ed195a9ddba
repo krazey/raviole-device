@@ -118,6 +118,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "686a975c_85fcb0f8",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-04-13T17:28:58Z",
+      "side": 0,
+      "message": "In spi_get_gpio_descs(), the number of GPIO descriptors found in the DT property cs-gpios is assigned to ctlr-\u003enum_chipselect. In of_spi_parse_dt(), the value of the property named reg (see lines 121 and 133 of this patch) is assigned to spi-\u003echip_select . Then, in spi_add_device(), it returns an error if spi-\u003echip_select \u003e\u003d ctlr-\u003enum_chipselect. Hence, I believe it\u0027ll fail to add the SPI device spitouch1:\n\n\t/* Chipselects are numbered 0..max; validate. */\n\tif (spi-\u003echip_select \u003e\u003d ctlr-\u003enum_chipselect) {\n\t\tdev_err(dev, \"cs%d \u003e\u003d max %d\\n\", spi-\u003echip_select,\n\t\t\tctlr-\u003enum_chipselect);\n\t\treturn -EINVAL;\n\t}\n\nWe are looking at two SPI devices here, spitouch and spitouch1, and we need two chip select lines to differentiate between the two.",
+      "parentUuid": "bbb1d2b6_cdf93394",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
