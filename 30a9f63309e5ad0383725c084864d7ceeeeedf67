@@ -34,6 +34,24 @@
       "parentUuid": "6e02563a_465c059e",
       "revId": "30a9f63309e5ad0383725c084864d7ceeeeedf67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a98e63ef_2136156d",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 1670,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-04-13T22:15:58Z",
+      "side": 1,
+      "message": "I would recommend removing the field num_cs from struct s3c64xx_spi_info, because, at this point, it doesn\u0027t serve any purpose any more. I would also remove the num-cs property from all relevant device tree source files.",
+      "parentUuid": "e7555575_9b9a5a1b",
+      "revId": "30a9f63309e5ad0383725c084864d7ceeeeedf67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }

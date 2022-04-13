@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5fb12bf_d485d582",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 8
+      },
+      "lineNbr": 1499,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-04-13T22:15:58Z",
+      "side": 1,
+      "message": "I think this can be removed now because sci-\u003enum_cs is not used anywhere.",
+      "range": {
+        "startLine": 1492,
+        "startChar": 0,
+        "endLine": 1499,
+        "endChar": 0
+      },
+      "revId": "9b515eb6ae8f9bcd6e547bf4523e0840ecf95f6c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
