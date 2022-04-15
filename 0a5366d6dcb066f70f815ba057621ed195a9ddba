@@ -238,6 +238,30 @@
       },
       "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "44dc2507_4a74a541",
+        "filename": "arch/arm64/boot/dts/google/gs101-common-touch.dtsi",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-15T21:20:14Z",
+      "side": 0,
+      "message": "So I found this error related to the spitouch nodes:\n\narch/arm64/boot/dts/google/gs101-common-touch.dtsi:127.27-135.4: Warning (spi_bus_reg): /fragment@85/__overlay__/touchscreen@1: SPI bus unit address format error, expected \"0\"\n\nBasically since the oriole proto1 doesn\u0027t include touchscreen@0 you can\u0027t have touchscreen@1. So I refactored this to work with just touchscreen@0 for all the devices and override the differences in arch/arm64/boot/dts/google/gs101-oriole-touch-proto1.dtsi",
+      "parentUuid": "4056931e_035ca57f",
+      "range": {
+        "startLine": 113,
+        "startChar": 35,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "0a5366d6dcb066f70f815ba057621ed195a9ddba",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
