@@ -69,6 +69,24 @@
       "message": "Nit: I\u0027m wondering if this comment should be pulled into the if body because it might not apply in the else case.",
       "revId": "e64074a74a04e2d78330118d3078b9f6672237e6",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4e056b41_098d31d2",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-22T20:46:52Z",
+      "side": 1,
+      "message": "From what I gathered in the bugs about cs_init_state, I believe the st33 device needed the GPIO set to 0 on init to disable it even though it\u0027s configured as ACTIVE_LOW. So I think returning as de-selected is still relevant for both cases.",
+      "parentUuid": "a6b672fc_97b292ed",
+      "revId": "e64074a74a04e2d78330118d3078b9f6672237e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
