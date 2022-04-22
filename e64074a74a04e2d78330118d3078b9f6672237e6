@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "96375edd_9eb7c8f8",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-04-22T18:28:59Z",
+      "side": 1,
+      "message": "I believe that in all other places where we access spi-\u003ecs_gpiod, we guard it with\n\nif (spi-\u003ecs_gpiod)\n\n\nSame on line 1343",
+      "revId": "e64074a74a04e2d78330118d3078b9f6672237e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a6b672fc_97b292ed",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 1334,
+      "author": {
+        "id": 1150933
+      },
+      "writtenOn": "2022-04-22T18:28:59Z",
+      "side": 1,
+      "message": "Nit: I\u0027m wondering if this comment should be pulled into the if body because it might not apply in the else case.",
+      "revId": "e64074a74a04e2d78330118d3078b9f6672237e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
