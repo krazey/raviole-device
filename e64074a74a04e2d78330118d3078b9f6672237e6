@@ -18,6 +18,24 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": true,
+      "key": {
+        "uuid": "813b6e23_871913ee",
+        "filename": "drivers/spi/spi-s3c64xx.c",
+        "patchSetId": 9
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-22T18:36:27Z",
+      "side": 1,
+      "message": "ah good catch. Let me add that. Thanks!",
+      "parentUuid": "96375edd_9eb7c8f8",
+      "revId": "e64074a74a04e2d78330118d3078b9f6672237e6",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": false,
       "key": {
         "uuid": "a6b672fc_97b292ed",
