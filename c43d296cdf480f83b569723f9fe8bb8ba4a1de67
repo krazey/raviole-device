@@ -34,6 +34,24 @@
       "parentUuid": "4dae4916_06c052c5",
       "revId": "c43d296cdf480f83b569723f9fe8bb8ba4a1de67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5b46a70f_e62d9721",
+        "filename": "drivers/dma-buf/heaps/page_pool.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1157738
+      },
+      "writtenOn": "2022-04-26T01:17:03Z",
+      "side": 0,
+      "message": "I guess without this fix theoretically it\u0027s possible to read a negative value for the NR_KERNEL_MISC_RECLAIMABLE but that\u0027s a very unlikely scenario.\n\nIn any case, the fix seems reasonable to me (even if just to keep the symmetry with dmabuf_page_pool_remove) though the issue does not seem to be critical.",
+      "parentUuid": "4dae4916_06c052c5",
+      "revId": "c43d296cdf480f83b569723f9fe8bb8ba4a1de67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
