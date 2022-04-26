@@ -70,6 +70,24 @@
       "parentUuid": "5b46a70f_e62d9721",
       "revId": "c43d296cdf480f83b569723f9fe8bb8ba4a1de67",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1839e1d5_d5878ec0",
+        "filename": "drivers/dma-buf/heaps/page_pool.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-26T18:02:53Z",
+      "side": 0,
+      "message": "Thanks for the comments. This patch came from android13-5.15.",
+      "parentUuid": "847b870a_2abc2897",
+      "revId": "c43d296cdf480f83b569723f9fe8bb8ba4a1de67",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
