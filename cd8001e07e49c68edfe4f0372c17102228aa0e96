@@ -16,6 +16,24 @@
       "message": "This should probably also be backported to android13-5.15 through android12-5.10(I can\u0027t remember exactly the first kernel it was included in)?",
       "revId": "cd8001e07e49c68edfe4f0372c17102228aa0e96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1ca67065_15fa4822",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2022-04-26T04:54:17Z",
+      "side": 1,
+      "message": "It seems this patch has also been cherry-picked to those branches, commit-id query:\nhttps://android-review.googlesource.com/q/I6f129926c96176258a965964c24602fc647db61e",
+      "parentUuid": "7ed9569b_f13942ee",
+      "revId": "cd8001e07e49c68edfe4f0372c17102228aa0e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ],
   "submitRequirementResults": [
