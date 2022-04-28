@@ -22,6 +22,30 @@
       },
       "revId": "cd8001e07e49c68edfe4f0372c17102228aa0e96",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c1a3581_f572c9f7",
+        "filename": "arch/arm64/boot/dts/google/gs101-tpu.dtsi",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-04-28T21:04:42Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e6e5fc0c_c133c4ec",
+      "range": {
+        "startLine": 18,
+        "startChar": 8,
+        "endLine": 19,
+        "endChar": 28
+      },
+      "revId": "cd8001e07e49c68edfe4f0372c17102228aa0e96",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
