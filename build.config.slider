@@ -37,7 +37,13 @@ function modify_vendor_ramdisk() {
   ln -f init.recovery.gs101.rc init.recovery.raven.rc
 }
 
-KCONFIG_EXT_MODULES_PREFIX=$(rel_path ${ROOT_DIR} ${KERNEL_DIR})/
+# HACK: The following does not work with Kleaf --config=local builds because
+# rel_path is not simplified enough (e.g. the following evaluates to
+# ../../__main__ in Kleaf, which does not work in non-sandbox builds). Hence
+# manually expand it.
+# KCONFIG_EXT_MODULES_PREFIX=$(rel_path ${ROOT_DIR} ${KERNEL_DIR})/
+KCONFIG_EXT_MODULES_PREFIX=../
+
 EXT_MODULES+="
 gs/google-modules/soc-modules
 gs/google-modules/display
