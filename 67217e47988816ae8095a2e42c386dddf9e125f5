@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1d12c56_30f1dc3a",
+        "filename": "build.config.slider",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-05-03T18:51:01Z",
+      "side": 1,
+      "message": "Can you add a comment here about why you\u0027re using rel_path_py? Mainly because we use rel_path in other spots within this file like on line 5.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 68
+      },
+      "revId": "67217e47988816ae8095a2e42c386dddf9e125f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
