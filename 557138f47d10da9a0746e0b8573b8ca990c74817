@@ -22,6 +22,30 @@
       },
       "revId": "557138f47d10da9a0746e0b8573b8ca990c74817",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5944171f_cd9c2838",
+        "filename": "BUILD.bazel",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-05-04T19:26:03Z",
+      "side": 1,
+      "message": "why do you need to do that? We don\u0027t merge this branch into android-gs-raviole-mainline.",
+      "parentUuid": "6ea2d1aa_5b7ead7b",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "557138f47d10da9a0746e0b8573b8ca990c74817",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
