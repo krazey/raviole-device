@@ -16,7 +16,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
-    "kernel_build",
+    "kernel_build_abi",
     "kernel_images",
     "kernel_module",
     "kernel_modules_install",
@@ -24,6 +24,8 @@ load(
     "merged_kernel_uapi_headers",
 )
 load("@kernel_toolchain_info//:dict.bzl", "BRANCH", "CLANG_VERSION")
+
+DEFINE_ABI_TARGETS = True
 
 def define_slider():
     slider_dtbos = [
@@ -101,20 +103,20 @@ def define_slider():
             "gs101-a0.dtb",
             "gs101-b0.dtb",
         ],
-        abi_definition = "//common:android/abi_gki_aarch64.xml" if _DEFINE_ABI_TARGETS else None,
-        additional_kmi_symbol_lists = ["//common:kernel_aarch64_all_kmi_symbol_lists"] if _DEFINE_ABI_TARGETS else None,
+        abi_definition = "//common:android/abi_gki_aarch64.xml" if DEFINE_ABI_TARGETS else None,
+        additional_kmi_symbol_lists = ["//common:kernel_aarch64_all_kmi_symbol_lists"] if DEFINE_ABI_TARGETS else None,
         base_kernel = "//common:kernel_aarch64_download_or_build",
         build_config = "build.config.slider",
-        define_abi_targets = _DEFINE_ABI_TARGETS,
+        define_abi_targets = DEFINE_ABI_TARGETS,
         dtstree = "//gs/google-modules/soc-modules/arch/arm64/boot/dts:slider_dt",
         implicit_outs = slider_dtbos,
         kconfig_ext = "Kconfig.ext",
         # Also refer to the list of ext modules for ABI monitoring targets
         kernel_modules = _slider_modules,
-        kmi_symbol_list = "//common:android/abi_gki_aarch64_pixel" if _DEFINE_ABI_TARGETS else None,
+        kmi_symbol_list = "//common:android/abi_gki_aarch64_pixel" if DEFINE_ABI_TARGETS else None,
         # Note: This is intentionally disabled here. We don't run build_abi.sh on
         # build.config.slider so we don't care about disabling it there.
-        module_grouping = False if _DEFINE_ABI_TARGETS else None,
+        module_grouping = False if DEFINE_ABI_TARGETS else None,
         module_outs = [
             # keep sorted
             "arm_dsu_pmu.ko",
@@ -371,5 +373,12 @@ def define_slider():
         name = "slider_dist",
         data = slider_dist_targets,
         dist_dir = "out/{branch}/dist".format(branch = BRANCH),
+        flat = True,
+    )
+
+    copy_to_dist_dir(
+        name = "slider_abi_dist",
+        data = slider_dist_targets + [":slider_abi"],
+        dist_dir = "out_abi/{branch}/dist".format(branch = BRANCH),
         flat = True,
     )
