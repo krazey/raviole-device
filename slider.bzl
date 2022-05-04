@@ -49,9 +49,9 @@ def define_slider():
         "gs101-whitefin.dtbo",
     ]
 
-    filegroup(
+    native.filegroup(
         name = "slider_dt-bindings",
-        srcs = glob([
+        srcs = native.glob([
             "include/dt-bindings/**",
             "include/dtc/**",
         ]),
@@ -87,7 +87,7 @@ def define_slider():
 
     kernel_build_abi(
         name = "slider",
-        srcs = glob([
+        srcs = native.glob([
             "build.config.*",
             "arch/arm64/configs/slider_gki.fragment",
             "Kconfig.ext",
@@ -134,9 +134,9 @@ def define_slider():
         unstripped_modules_archive = ":slider_unstripped_modules_archive",
     )
 
-    filegroup(
+    native.filegroup(
         name = "gs101_soc_headers",
-        srcs = glob([
+        srcs = native.glob([
             # Standard pixel headers
             "include/**/*.h",
             "include/**/uapi/*.h",
@@ -155,7 +155,7 @@ def define_slider():
 
     kernel_module(
         name = "gs101_soc",
-        srcs = glob(
+        srcs = native.glob(
             ["**"],
             exclude = [
                 ".*",
