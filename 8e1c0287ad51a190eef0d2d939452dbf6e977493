@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f9485154_313d0fb3",
+        "filename": "build.config.gs101",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-05-05T22:20:50Z",
+      "side": 1,
+      "message": "Deleting POST_DEFCONFIG_CMDS accidentally makes it the default value:\n\n```\n\"check_defconfig\"\n```\n\nin build.config.gki. But check_defconfig seems to work, so let\u0027s keep it.",
+      "revId": "8e1c0287ad51a190eef0d2d939452dbf6e977493",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
