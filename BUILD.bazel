@@ -17,7 +17,7 @@ load(":slider.bzl", "SLIDER_DTBOS")
 load(":tests.bzl", "define_slider_kleaf_tests")
 
 filegroup(
-    name = "slider_dt-bindings",
+    name = "dt-bindings",
     srcs = glob([
         "include/dt-bindings/**",
         "include/dtc/**",
@@ -78,7 +78,7 @@ kernel_build_abi(
     ],
     base_kernel = "//common:kernel_aarch64_download_or_build",
     build_config = "build.config.slider",
-    dtstree = "//private/google-modules/soc/gs/arch/arm64/boot/dts:slider_dt",
+    dtstree = "//private/google-modules/soc/gs/arch/arm64/boot/dts:dt",
     implicit_outs = SLIDER_DTBOS,
     kconfig_ext = "Kconfig.ext",
     # Also refer to the list of ext modules for ABI monitoring targets
