@@ -25,28 +25,28 @@ load(
 )
 load("@kernel_toolchain_info//:dict.bzl", "BRANCH", "CLANG_VERSION")
 
-def define_slider():
-    slider_dtbos = [
-        "gs101-oriole.dtbo",
-        "gs101-oriole-evt1_1.dtbo",
-        "gs101-oriole-evt1.dtbo",
-        "gs101-oriole-evt-wingboard.dtbo",
-        "gs101-oriole-proto1_1.dtbo",
-        "gs101-oriole-proto1.dtbo",
-        "gs101-raven.dtbo",
-        "gs101-raven-evt1_1.dtbo",
-        "gs101-raven-evt1.dtbo",
-        "gs101-raven-evt-wingboard.dtbo",
-        "gs101-raven-proto1_1.dtbo",
-        "gs101-raven-proto1.dtbo",
-        "gs101-slider2.dtbo",
-        "gs101-slider2-o6r4.dtbo",
-        "gs101-slider.dtbo",
-        "gs101-whitefin2.dtbo",
-        "gs101-whitefin2v2.dtbo",
-        "gs101-whitefin.dtbo",
-    ]
+slider_dtbos = [
+    "gs101-oriole.dtbo",
+    "gs101-oriole-evt1_1.dtbo",
+    "gs101-oriole-evt1.dtbo",
+    "gs101-oriole-evt-wingboard.dtbo",
+    "gs101-oriole-proto1_1.dtbo",
+    "gs101-oriole-proto1.dtbo",
+    "gs101-raven.dtbo",
+    "gs101-raven-evt1_1.dtbo",
+    "gs101-raven-evt1.dtbo",
+    "gs101-raven-evt-wingboard.dtbo",
+    "gs101-raven-proto1_1.dtbo",
+    "gs101-raven-proto1.dtbo",
+    "gs101-slider2.dtbo",
+    "gs101-slider2-o6r4.dtbo",
+    "gs101-slider.dtbo",
+    "gs101-whitefin2.dtbo",
+    "gs101-whitefin2v2.dtbo",
+    "gs101-whitefin.dtbo",
+]
 
+def define_slider():
     native.filegroup(
         name = "slider_dt-bindings",
         srcs = native.glob([
