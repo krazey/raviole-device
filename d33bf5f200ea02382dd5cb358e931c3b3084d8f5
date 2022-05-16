@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b4fc7693_c95e59ff",
+        "filename": "slider.bzl",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1402878
+      },
+      "writtenOn": "2022-05-16T12:00:37Z",
+      "side": 1,
+      "message": "not sure what the convention is for constants in starlark, but I suppose they are UPPERCASE as well.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 12
+      },
+      "revId": "d33bf5f200ea02382dd5cb358e931c3b3084d8f5",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
