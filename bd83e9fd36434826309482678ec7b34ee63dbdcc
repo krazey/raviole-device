@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61ac5bee_d85dbd0e",
+        "filename": "slider.bzl",
+        "patchSetId": 24
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-05-16T22:34:18Z",
+      "side": 1,
+      "message": "This need to be in quotes",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 18
+      },
+      "revId": "bd83e9fd36434826309482678ec7b34ee63dbdcc",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
