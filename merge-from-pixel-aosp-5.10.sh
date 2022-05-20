@@ -12,9 +12,9 @@ repo_sync_rebase_prune() {
     echo "Not at top of repo" >&2
     return 1
   fi
-  repo sync -j64 || true
+  repo sync -j12 || true
   repo rebase || return 1
-  repo sync -j64 2>&1 |
+  repo sync -j12 2>&1 |
     tee /dev/stderr |
     grep '^error: \|^Failing repos:\|^Please commit your changes or stash them' >/dev/null &&
     exit 1
@@ -41,7 +41,7 @@ do_merge() {
   (
     cd ${dir} || exit 1
     branch=`git branch -r 2>&1 | sed -n 's/ *m\/.* -> //p'`
-    [ -n "${branch}" ] || branch=partner/android-gs-pixel-5.10-stabilization
+    [ -n "${branch}" ] || branch=aosp/android13-gs-raviole-5.15
     repo start ${BRANCH} . || exit 1
     commits="`git cherry -v ${branch} ${from_branch} |
                 sed -n 's/^[+] //p'`"
@@ -57,37 +57,24 @@ do_merge() {
             sort -u |
             grep -v '^$' |
             sed 's/.*/Bug: &/'`"
-    git merge --no-ff ${from_branch} --m "Merge ${from_branch} into ${branch}
-${@}
-
-* ${from_branch}:
-${titles}
-
-Signed-off-by: ${AUTHOR_NAME} "'<'"${AUTHOR_EMAIL}"'>'"
-${bug}"
+    git merge --no-ff --commit --signoff --log=100 ${from_branch} --m "Merge ${from_branch} into ${branch}
+"
   ) ||
     echo Failed merge of ${dir} >&2
 }
 
 [ "Perform Merge" ]
 
-find common private -type d -name .git |
+find gs/google-modules -name .git |
   while read gitdir; do
     dir=${gitdir%/.git}
     case ${dir} in
-      common)
-        do_merge ${dir} partner-common/android12-5.10-staging
-        ;;
-      */wlan/*)
-        do_merge ${dir} partner/android-gs-pixel-4.19 "
-NB: All development for this driver for 4.19, 5.4 and 5.10 is in
-    partner/android-gs-pixel-4.19 tree.  If there are any problems
-    with one tree, then the maintainers have made it their
-    responsibility to not create branches and figure out a solution
-    that works in all three kernel versions and beyond."
+      */soc-modules)
+        # Note: this project doesn't have an android12 AOSP upstream branch.
+        # Need to cherry-pick the changes manually
         ;;
       *)
-        do_merge ${dir} partner/android-gs-pixel-mainline
+        do_merge ${dir} aosp/android-gs-raviole-5.10-android12-qpr3
         ;;
     esac ||
       echo ERROR: merge ${dir} failed
