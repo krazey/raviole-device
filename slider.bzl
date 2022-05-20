@@ -125,6 +125,7 @@ def define_slider():
             "at24.ko",
             "i2c-dev.ko",
             "pktgen.ko",
+            "pps-gpio.ko",
             "sg.ko",
             "softdog.ko",
             "spidev.ko",
