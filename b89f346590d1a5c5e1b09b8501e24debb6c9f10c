@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b63ba0c3_9be4a491",
+        "filename": "drivers/usb/typec/tcpm/google/Kbuild",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2022-05-23T17:32:19Z",
+      "side": 1,
+      "message": "Why do you skip the last dir entry for these? Is there a particular conflict? or is this some way of saying \"it comes from GKI tree\" when including the path?",
+      "range": {
+        "startLine": 14,
+        "startChar": 38,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "b89f346590d1a5c5e1b09b8501e24debb6c9f10c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
