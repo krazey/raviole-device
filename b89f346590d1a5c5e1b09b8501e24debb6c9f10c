@@ -22,6 +22,30 @@
       },
       "revId": "b89f346590d1a5c5e1b09b8501e24debb6c9f10c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b95ac6c6_1ca9b282",
+        "filename": "drivers/usb/typec/tcpm/google/Kbuild",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-05-23T17:39:46Z",
+      "side": 1,
+      "message": "Yeah I wanted to make it a little different to indicate that this is from the GKI tree and not within the current directory. I know the angle brackets do that, but I figured this also helps a little with finding which directory to look under in the GKI tree.",
+      "parentUuid": "b63ba0c3_9be4a491",
+      "range": {
+        "startLine": 14,
+        "startChar": 38,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "b89f346590d1a5c5e1b09b8501e24debb6c9f10c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
