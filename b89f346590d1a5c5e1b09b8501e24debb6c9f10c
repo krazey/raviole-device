@@ -46,6 +46,30 @@
       },
       "revId": "b89f346590d1a5c5e1b09b8501e24debb6c9f10c",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "776f512f_7821926f",
+        "filename": "drivers/usb/typec/tcpm/google/Kbuild",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2022-05-23T17:40:45Z",
+      "side": 1,
+      "message": "cool, makes sense.",
+      "parentUuid": "b95ac6c6_1ca9b282",
+      "range": {
+        "startLine": 14,
+        "startChar": 38,
+        "endLine": 14,
+        "endChar": 43
+      },
+      "revId": "b89f346590d1a5c5e1b09b8501e24debb6c9f10c",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
