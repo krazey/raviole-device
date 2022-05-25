@@ -123,7 +123,9 @@ def define_slider():
             # keep sorted
             "arm_dsu_pmu.ko",
             "at24.ko",
+            "cfg80211.ko",
             "i2c-dev.ko",
+            "mac80211.ko",
             "pktgen.ko",
             "sg.ko",
             "softdog.ko",
