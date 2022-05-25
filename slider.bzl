@@ -304,6 +304,8 @@ def define_slider():
             "drivers/usb/typec/tcpm/usb_psy.ko",
             "drivers/usb/typec/tcpm/usbc_cooling_dev.ko",
             "drivers/watchdog/s3c2410_wdt.ko",
+            "net/mac80211/mac80211.ko",
+            "net/wireless/cfg80211.ko",
         ],
         kernel_build = "//gs/google-modules/soc-modules:slider",
         visibility = [
