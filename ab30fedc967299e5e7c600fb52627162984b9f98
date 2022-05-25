@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a5d0ee20_c33a639f",
+        "filename": "slider.bzl",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1557540
+      },
+      "writtenOn": "2022-05-25T19:14:23Z",
+      "side": 1,
+      "message": "Move to module_outs on line 122",
+      "range": {
+        "startLine": 307,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 0
+      },
+      "revId": "ab30fedc967299e5e7c600fb52627162984b9f98",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
