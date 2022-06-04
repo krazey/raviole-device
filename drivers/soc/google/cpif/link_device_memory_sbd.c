@@ -17,6 +17,11 @@
 #include "include/sbd.h"
 #include <linux/shm_ipc.h>
 
+// FIXME EXTRA_CFLAGS not supported in DDK
+#ifndef CONFIG_OPTION_REGION
+#define CONFIG_OPTION_REGION ""
+#endif
+
 static void print_sbd_config(struct sbd_link_device *sl)
 {
 #ifdef DEBUG_MODEM_IF

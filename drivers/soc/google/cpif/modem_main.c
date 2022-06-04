@@ -50,6 +50,11 @@
 #include "cpif_qos_info.h"
 #endif
 
+// FIXME EXTRA_CFLAGS not supported in DDK
+#ifndef CONFIG_OPTION_REGION
+#define CONFIG_OPTION_REGION ""
+#endif
+
 #define FMT_WAKE_TIME   (msecs_to_jiffies(300))
 #define RAW_WAKE_TIME   (HZ*6)
 #define NET_WAKE_TIME	(HZ/2)

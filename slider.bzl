@@ -16,6 +16,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
+    "ddk_module",
     "kernel_build_abi",
     "kernel_build_abi_dist",
     "kernel_images",
@@ -156,6 +157,69 @@ def define_slider():
             # keep sorted
             "//gs/google-modules:__subpackages__",
         ],
+    )
+
+    ddk_module(
+        name = "gs101_soc_ddk",
+        srcs = native.glob([
+            "**/*.c",
+            "**/*.h",
+        ], exclude = [
+            # keep sorted
+            # These are not part of the objects; maybe just delete?
+            # Or our Kbuild2ddk should generate this properly
+            "drivers/block/zram/zram_drv.c",
+            "drivers/input/misc/vl53l1/src/vl53l1_hist_char.c",
+            "drivers/phy/samsung/phy-exynos-dbg.c",
+            "drivers/phy/samsung/phy-exynos-usbdp-gen2.c",
+            "drivers/soc/google/cal-if/**/*.c",
+            "drivers/soc/google/cpif/cp_btl.c",
+            "drivers/soc/google/cpif/link_ctrlmsg_iosm.c",
+            "drivers/soc/google/cpif/link_rx_zerocopy.c",
+            "drivers/soc/google/cpif/mcu_ipc.c",
+            "drivers/soc/google/cpif/modem_argos_notifier.c",
+            "drivers/soc/google/cpif/modem_ctrl_s5000ap.c",
+            "drivers/soc/google/debug/debug-snapshot-built.c",
+            "drivers/soc/google/vh/kernel/cgroup/*.c",
+            "drivers/soc/google/vh/kernel/fs/init.c",
+            "drivers/soc/google/vh/kernel/i2c/vh_i2c.c",
+            "drivers/soc/google/vh/kernel/sched/*.c",
+            "drivers/usb/gadget/function/f_etr_miu.c",
+            "drivers/usb/typec/tcpm/google/pogo_transport.c",
+
+            # FIXME tracing
+            "drivers/soc/google/pt/pt_trace_points.c",
+            "drivers/soc/google/vh/kernel/systrace.c",
+        ]),
+        outs = [
+            "drivers/staging/android/delay_init.ko",
+        ],
+        local_include_dirs = [
+            # keep sorted
+            "include",
+            "include/uapi",
+
+            # drivers specific
+            ".",
+            "drivers/devfreq/google",
+            "drivers/dma-buf/heaps/samsung",
+            "drivers/gpu/exynos/g2d",
+            "drivers/input/misc/vl53l1",
+        ],
+        kernel_include_dirs = [
+            # keep sorted
+            "drivers/devfreq",
+            "drivers/dma",
+            "drivers/dma-buf",
+            "drivers/pci/controller/dwc",
+            "drivers/pinctrl",
+            "drivers/scsi/ufs",
+            "drivers/thermal",
+            "drivers/usb",
+            "drivers/usb/gadget/function",
+            "drivers/usb/typec",
+        ],
+        kernel_build = "//gs/google-modules/soc-modules:slider",
     )
 
     kernel_module(
