@@ -16,6 +16,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
+    "ddk_module",
     "kernel_build_abi",
     "kernel_build_abi_dist",
     "kernel_images",
@@ -156,6 +157,19 @@ def define_slider():
             # keep sorted
             "//gs/google-modules:__subpackages__",
         ],
+    )
+
+    ddk_module(
+        name = "gs101_soc_ddk",
+        srcs = native.glob([
+            "include/**/*.h",
+            "include/uapi/**/*.h",
+            "drivers/staging/android/delay_init.c",
+        ]),
+        outs = [
+            "drivers/staging/android/delay_init.ko",
+        ],
+        kernel_build = "//gs/google-modules/soc-modules:slider",
     )
 
     kernel_module(
