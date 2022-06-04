@@ -10,6 +10,9 @@
 #include <linux/delay.h>
 #include <linux/module.h>
 
+// FIXME DELETE
+#include <misc/crashinfo.h>
+
 static int delay_ms = 2 * 1000;
 MODULE_PARM_DESC(delay_ms, "Delay init for set number of milliseconds");
 module_param(delay_ms, int, 0600);

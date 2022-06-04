@@ -16,6 +16,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
+    "ddk_module",
     "kernel_build_abi",
     "kernel_build_abi_dist",
     "kernel_images",
@@ -156,6 +157,54 @@ def define_slider():
             # keep sorted
             "//gs/google-modules:__subpackages__",
         ],
+    )
+
+    # FIXME this should probably be one ddk_module per Kbuild file
+    ddk_module(
+        name = "gs101_soc_ddk",
+        srcs = native.glob([
+            "**/*.c",
+            "**/*.h",
+        ], exclude = [
+            # keep sorted
+            # These are not part of the objects; maybe just delete?
+            "drivers/block/zram/zram_drv.c",
+            "drivers/input/misc/vl53l1/src/vl53l1_hist_char.c",
+            "drivers/phy/samsung/phy-exynos-dbg.c",
+            "drivers/phy/samsung/phy-exynos-usbdp-gen2.c",
+            "drivers/soc/google/cal-if/**",
+
+            # FIXME The include dirs are incorrect in the following because
+            # they use relative paths. If this is a ddk_module
+            # per module, then it should work.
+            "drivers/clk/**",
+            "drivers/devfreq/google/gs-devfreq.c",
+        ]),
+        outs = [
+            "drivers/staging/android/delay_init.ko",
+        ],
+        local_include_dirs = [
+            # keep sorted
+            "include",
+            "include/uapi",
+
+            # drivers specific
+            "drivers/devfreq/google",
+            "drivers/dma-buf/heaps/samsung",
+            "drivers/gpu/exynos/g2d",
+            "drivers/input/misc/vl53l1",
+        ],
+        kernel_include_dirs = [
+            # keep sorted
+            "drivers/devfreq",
+            "drivers/dma",
+            "drivers/dma-buf",
+            "drivers/pci/controller/dwc",
+            "drivers/pinctrl",
+            "drivers/scsi/ufs",
+            "drivers/thermal",
+        ],
+        kernel_build = "//gs/google-modules/soc-modules:slider",
     )
 
     kernel_module(
