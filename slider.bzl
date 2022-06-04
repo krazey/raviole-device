@@ -16,6 +16,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
+    "ddk_module",
     "kernel_build_abi",
     "kernel_build_abi_dist",
     "kernel_images",
@@ -156,6 +157,27 @@ def define_slider():
             # keep sorted
             "//gs/google-modules:__subpackages__",
         ],
+    )
+
+    ddk_module(
+        name = "gs101_soc_ddk",
+        srcs = native.glob(
+            ["**"],
+            exclude = [
+                ".*",
+                ".*/**",
+                "BUILD.bazel",
+                "**/*.bzl",
+                "build.config.*",
+                # FIXME this should be in ddk_module
+                "**/Makefile",
+                "**/Kbuild",
+            ],
+        ),
+        outs = [
+            "drivers/char/hw_random/exyswd-rng.ko",
+        ],
+        kernel_build = "//gs/google-modules/soc-modules:slider",
     )
 
     kernel_module(
