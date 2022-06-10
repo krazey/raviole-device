@@ -159,6 +159,19 @@ def define_slider():
         ],
     )
 
+    kernel_module(
+        name = "delay_init",
+        srcs = native.glob([
+            "drivers/staging/android/*",
+            "**/*.h",
+            "Kbuild",
+        ]),
+        outs = [
+            "drivers/staging/android/my_delay_init.ko",
+        ],
+        kernel_build = "//gs/google-modules/soc-modules:slider",
+    )
+
     ddk_module(
         name = "gs101_soc_ddk",
         srcs = native.glob([
