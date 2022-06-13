@@ -1178,8 +1178,8 @@ static int dwc3_exynos_probe(struct platform_device *pdev)
 	ret = pm_runtime_put(dev);
 	pm_runtime_allow(dev);
 
-	exynos_usbdrd_phy_tune(exynos->dwc->usb2_generic_phy, 0);
-	exynos_usbdrd_phy_tune(exynos->dwc->usb3_generic_phy, 0);
+	exynos_usbdrd_phy_tune(exynos->dwc->usb2_generic_phy[0], 0);
+	exynos_usbdrd_phy_tune(exynos->dwc->usb3_generic_phy[0], 0);
 
 	dwc3_exynos_otg_init(exynos->dwc, exynos);
 
