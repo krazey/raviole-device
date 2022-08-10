@@ -21,6 +21,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
+    "ddk_headers",
     "kernel_build_abi",
     "kernel_build_abi_dist",
     "kernel_images",
@@ -100,6 +101,9 @@ kernel_build_abi(
         "include/dtc/**",
     ]) + [
         "//common:kernel_aarch64_sources",
+        "//gs/google-modules/soc-modules/drivers/power/reset:kconfig_files",
+        "//gs/google-modules/soc-modules/drivers/staging/android:kconfig_files",
+        "//gs/google-modules/soc-modules/drivers/soc/google/cpif:kconfig_files",
     ],
     outs = [
         # Sync with build.config.slider
@@ -141,7 +145,7 @@ kernel_build_abi(
     unstripped_modules_archive = ":slider_unstripped_modules_archive",
 )
 
-filegroup(
+ddk_headers(
     name = "gs101_soc_headers",
     srcs = glob([
         # Standard pixel headers
@@ -154,6 +158,9 @@ filegroup(
         # Needed for external modules to include in their makefiles
         "Makefile.include",
     ]),
+    export_include_dirs = [
+        "include",
+    ],
     visibility = [
         # keep sorted
         "//gs/google-modules:__subpackages__",
