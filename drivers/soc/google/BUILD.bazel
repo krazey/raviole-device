@@ -1,0 +1,56 @@
+load(
+    "//build/kernel/kleaf:kernel.bzl",
+    "ddk_headers",
+    "ddk_module",
+    "ddk_package",
+)
+
+filegroup(
+    name = "kconfig_files",
+    srcs = glob(["**/Kconfig"]),
+    visibility = ["//gs/google-modules/soc-modules:__subpackages__"],
+)
+
+ddk_headers(
+    name = "headers",
+    srcs = glob(["**/*.h"]),
+    export_include_dirs = ["."],
+)
+
+# FIXME need to reoslve deps
+#ddk_module(
+#    name = "exynos-cpupm",
+#    srcs = ["exynos-cpupm.c"],
+#    hdrs = [
+#        ":exynos-cpupm_headers",
+#        "//gs/google-modules/soc-modules:gs101_soc_headers",
+#    ],
+#    kernel_build = "//gs/google-modules/soc-modules:slider",
+#)
+
+ddk_module(
+    name = "exynos-pmu-if",
+    hdrs = [
+        ":headers",
+        "//gs/google-modules/soc-modules:gs101_soc_headers",
+    ],
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+)
+
+ddk_module(
+    name = "exynos-pd_el3",
+    hdrs = [
+        ":headers",
+        "//gs/google-modules/soc-modules:gs101_soc_headers",
+    ],
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+)
+
+ddk_package(
+    name = "google",
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+    deps = [
+        ":exynos-pd_el3",
+        ":exynos-pmu-if",
+    ],
+)
