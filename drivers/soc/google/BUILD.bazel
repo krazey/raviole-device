@@ -1,0 +1,69 @@
+load(
+    "//build/kernel/kleaf:kernel.bzl",
+    "ddk_headers",
+    "ddk_module",
+    "ddk_package",
+)
+
+filegroup(
+    name = "kconfig_files",
+    srcs = glob(["**/Kconfig"]),
+    visibility = ["//gs/google-modules/soc-modules:__pkg__"],
+)
+
+filegroup(
+    name = "gs101_srcs",
+    srcs = glob(
+        ["**"],
+        exclude = ["BUILD.bazel"],
+    ),
+    visibility = ["//gs/google-modules/soc-modules:__pkg__"],
+)
+
+ddk_headers(
+    name = "headers",
+    srcs = glob(["**/*.h"]),
+    export_include_dirs = ["."],
+)
+
+# FIXME this requires pinctrl, but pinctrl requires exynos-pmu-if
+# Need deps in the ddk_module level OR declare everything on the top
+#ddk_module(
+#    name = "exynos-cpupm",
+#    hdrs = [
+#        ":headers",
+#        "//gs/google-modules/soc-modules:gs101_soc_headers",
+#    ],
+#    kernel_build = "//gs/google-modules/soc-modules:slider",
+#)
+
+ddk_module(
+    name = "exynos-pmu-if",
+    hdrs = [
+        ":headers",
+        "//gs/google-modules/soc-modules:gs101_soc_headers",
+    ],
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+)
+
+ddk_module(
+    name = "exynos-pd_el3",
+    hdrs = [
+        ":headers",
+        "//gs/google-modules/soc-modules:gs101_soc_headers",
+    ],
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+)
+
+ddk_package(
+    name = "google",
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+    visibility = [
+        "//gs/google-modules/soc-modules:__subpackages__",
+    ],
+    deps = [
+        # ":exynos-cpupm",
+        ":exynos-pd_el3",
+        ":exynos-pmu-if",
+    ],
+)

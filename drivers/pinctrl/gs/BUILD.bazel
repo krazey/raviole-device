@@ -1,0 +1,46 @@
+load(
+    "//build/kernel/kleaf:kernel.bzl",
+    "ddk_headers",
+    "ddk_module_package",
+)
+
+filegroup(
+    name = "kconfig_files",
+    srcs = glob(["**/Kconfig"]),
+    visibility = ["//gs/google-modules/soc-modules:__pkg__"],
+)
+
+filegroup(
+    name = "gs101_srcs",
+    srcs = glob(
+        ["**"],
+        exclude = ["BUILD.bazel"],
+    ),
+    visibility = ["//gs/google-modules/soc-modules:__pkg__"],
+)
+
+ddk_headers(
+    name = "headers",
+    srcs = glob(["**/*.h"]),
+    export_include_dirs = ["."],
+)
+
+# FIXME need to reoslve deps
+ddk_module_package(
+    name = "pinctrl-exynos-gs",
+    srcs = [
+        "pinctrl-exynos.c",
+        "pinctrl-exynos-arm64.c",
+        "pinctrl-gs.c",
+        "pinctrl-samsung.c",
+    ],
+    hdrs = [
+        ":headers",
+        "//common:drivers/pinctrl/headers",
+        "//gs/google-modules/soc-modules:gs101_soc_headers",
+    ],
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+    deps = [
+        "//gs/google-modules/soc-modules/drivers/soc/google",
+    ],
+)

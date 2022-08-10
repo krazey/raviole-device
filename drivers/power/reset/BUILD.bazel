@@ -1,0 +1,27 @@
+load(
+    "//build/kernel/kleaf:kernel.bzl",
+    "ddk_module_package",
+)
+
+filegroup(
+    name = "kconfig_files",
+    srcs = glob(["**/Kconfig"]),
+    visibility = ["//gs/google-modules/soc-modules:__pkg__"],
+)
+
+filegroup(
+    name = "gs101_srcs",
+    srcs = glob(
+        ["**"],
+        exclude = ["BUILD.bazel"],
+    ),
+    visibility = ["//gs/google-modules/soc-modules:__pkg__"],
+)
+
+ddk_module_package(
+    name = "debug-reboot",
+    hdrs = [
+        "//gs/google-modules/soc-modules:gs101_soc_headers",
+    ],
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+)
