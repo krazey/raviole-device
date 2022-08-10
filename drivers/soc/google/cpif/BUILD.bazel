@@ -1,0 +1,24 @@
+load(
+    "//build/kernel/kleaf:kernel.bzl",
+    "ddk_module",
+)
+
+filegroup(
+    name = "kconfig_files",
+    srcs = glob(["**/Kconfig"]),
+    visibility = ["//gs/google-modules/soc-modules:__subpackages__"],
+)
+
+ddk_module(
+    name = "exynos_dit",
+    srcs = glob([
+        "dit.c",
+        "dit_hal.c",
+        "dit_net.c",
+        "**/*.h",
+    ]),
+    hdrs = [
+        "//gs/google-modules/soc-modules:gs101_soc_headers",
+    ],
+    kernel_build = "//gs/google-modules/soc-modules:slider",
+)
