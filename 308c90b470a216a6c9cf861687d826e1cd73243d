@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bdd5f99_d1b1b380",
+        "filename": "BUILD.bazel",
+        "patchSetId": 7
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-08-30T18:34:54Z",
+      "side": 1,
+      "message": "This can be incorporated into `gs101_soc_ddk`",
+      "range": {
+        "startLine": 408,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 11
+      },
+      "revId": "308c90b470a216a6c9cf861687d826e1cd73243d",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
