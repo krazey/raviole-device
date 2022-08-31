@@ -488,8 +488,6 @@ kernel_modules_install(
         ":drivers/soc/google/exynos-pd_el3",
         ":drivers/soc/google/exynos-pmu-if",
         ":drivers/staging/android/delay_init",
-        "//gs/google-modules/nfc:st21nfc",
-        "//gs/google-modules/nfc:ese/st33spi",
-        "//gs/google-modules/nfc:ese/st54spi",
+        "//gs/google-modules/nfc",
     ],
 )
