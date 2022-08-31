@@ -16,6 +16,24 @@
       "message": "Maybe there\u0027s a way to declare a `kernel_module_group`. idk...",
       "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "98291ec7_3a88318e",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-08-31T04:27:58Z",
+      "side": 1,
+      "message": "s/there\u0027s/there needs to be/",
+      "parentUuid": "777f4e9d_71b13827",
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
