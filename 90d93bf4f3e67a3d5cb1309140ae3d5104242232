@@ -3,6 +3,92 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e35ff274_fa0e1a7d",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1402878
+      },
+      "writtenOn": "2022-08-31T15:57:10Z",
+      "side": 1,
+      "message": "\"include/**/*.h\" should be a superset of \"include/**/uapi/*.h\", so we should be able to omit the latter.",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 30
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05a42da4_7a57e8d7",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1402878
+      },
+      "writtenOn": "2022-08-31T15:57:10Z",
+      "side": 1,
+      "message": "why not just `hdrs` ? That would be in alignment with `cc_library`.\n\n```\nhdrs\nThe list of header files published by this library to be directly included by sources in dependent rules.\n```\n\nhttps://bazel.build/reference/be/c-cpp#cc_library",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 17
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7cc3afc9_7ca0096a",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1402878
+      },
+      "writtenOn": "2022-08-31T15:57:10Z",
+      "side": 1,
+      "message": "those headers seem to be used during compilation only. As such they should be `srcs`. Again, this is to align with `cc_library`:\n\n```\nsrcs\n\nThe list of C and C++ files that are processed to create the target. These are C/C++ source and header files, either non-generated (normal source code) or generated.\n```",
+      "range": {
+        "startLine": 453,
+        "startChar": 4,
+        "endLine": 453,
+        "endChar": 8
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a9b5ad20_3e25d8f0",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1402878
+      },
+      "writtenOn": "2022-08-31T15:57:10Z",
+      "side": 1,
+      "message": "the kernel_build should be inherited from the modules and it should be checked for consistency among them (similar to how we inherit and check the toolchain).",
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "777f4e9d_71b13827",
         "filename": "BUILD.bazel",
         "patchSetId": 12
