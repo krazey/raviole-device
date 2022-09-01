@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "846cd329_1cf967e0",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-01T20:48:05Z",
+      "side": 1,
+      "message": "This should be \"includes\"; see https://bazel.build/reference/be/c-cpp#cc_library",
+      "range": {
+        "startLine": 415,
+        "startChar": 4,
+        "endLine": 415,
+        "endChar": 23
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "05a42da4_7a57e8d7",
         "filename": "BUILD.bazel",
         "patchSetId": 12
@@ -85,6 +108,30 @@
       "side": 1,
       "message": "`hdrs` should be the one that gets exported (like in `cc_library`). If the headers are just for local use they should be passed as `srcs` if in the package or as deps (if via another ddk_module or ddk_headers).\n\nso, in my understanding we should have (B depending on A), pseudo:\n\n```\nddk_headers(\n  name \u003d \"some_headers\",\n  srcs \u003d [\"some.h\"],\n)\n\nddk_headers(\n  name \u003d \"some_other_headers\",\n  srcs \u003d [\"some_other.h\"],\n)\n\nddk_module(\n  name \u003d \"modA\",\n  srcs \u003d [\"modA.c\",              # local source\n          \"modA_internal.h\",]    # local header (not exported)\n  hdrs \u003d [\":some_other_headers\", # re-published and internal used\n          \"modA.h\",]             # published from package and for internal use\n  deps \u003d [\":some_headers\",]      # internal use\n)\n\nddk_module(\n  name \u003d \"modB\",\n  srcs \u003d [\"modB.c\",              # local source\n          \"modB.h\",]             # local source\n  deps \u003d [\":modA\",]              # makes available via A:\n                                    - :some_other_headers\n                                    - modA.h\n)\n```\n\nDid I cover all cases that we can have here?",
       "parentUuid": "d77a5fcf_89d44bba",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 17
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "17f77271_7f5654b9",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-01T20:48:05Z",
+      "side": 1,
+      "message": "With your current setup:\n\n- srcs: all local files (real files + filegroups, no providers other than DefaultInfo is examined)\n- hdrs: all re-published headers (can be real files or ddk_headers)\n- deps: all internal use targets:\n  - If ddk_module, will depend on their Module.symvers\n  - If ddk_headers, will include their directory\n  - Nothing is re-published from there\n\nHere\u0027s a few suggestions I have on your current setup:\n\n- It appears to be a bit clobbering in deps because it can contain both ddk_headers and ddk_modules\n- If hdrs can contain real files, then `ddk_module` also needs an `export_include_dirs` attribute like `ddk_headers` do. I think it is more isolated to not allow real files in `hdrs` and request caller to specify a different `ddk_headers` rule; this can make each target focus on a smaller thing.",
+      "parentUuid": "439dca57_79d416d2",
       "range": {
         "startLine": 422,
         "startChar": 4,
