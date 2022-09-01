@@ -268,6 +268,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a30583c3_5cd853e0",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-01T22:07:11Z",
+      "side": 1,
+      "message": "This is not the case for e.g. the GKI kernel:\n\nhttps://cs.android.com/android/kernel/superproject/+/common-android-mainline:build/kernel/kleaf/common_kernels.bzl;l\u003d520;drc\u003d427071a84cd1d599f474c75625d64b0f45819b24\n\nThe reason is that kernel_images requires a kernel_modules_install target b/212653676",
+      "parentUuid": "695a41ce_d7e25912",
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "777f4e9d_71b13827",
         "filename": "BUILD.bazel",
         "patchSetId": 12
