@@ -49,6 +49,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "d77a5fcf_89d44bba",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-01T06:21:05Z",
+      "side": 1,
+      "message": "hdrs doesn\u0027t get exported. See CL:1918022 and CL:2199429\n\nexported_hdrs means that, if another module depends on `drivers/staging/android/delay_init`, it will get `:gs101_soc_ddk_headers` automatically. Though, In this specific case, `hdrs` also works because there are no other modules depending on it.",
+      "parentUuid": "05a42da4_7a57e8d7",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 17
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7cc3afc9_7ca0096a",
         "filename": "BUILD.bazel",
         "patchSetId": 12
@@ -60,6 +84,30 @@
       "writtenOn": "2022-08-31T15:57:10Z",
       "side": 1,
       "message": "those headers seem to be used during compilation only. As such they should be `srcs`. Again, this is to align with `cc_library`:\n\n```\nsrcs\n\nThe list of C and C++ files that are processed to create the target. These are C/C++ source and header files, either non-generated (normal source code) or generated.\n```",
+      "range": {
+        "startLine": 453,
+        "startChar": 4,
+        "endLine": 453,
+        "endChar": 8
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "db18dfd9_518d1f9f",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-01T06:21:05Z",
+      "side": 1,
+      "message": "I also need them to change the output of Makefile to add -I option.\n\nAre you suggesting that I should combine hdrs into srcs, and rename exported_hdrs into hdrs?",
+      "parentUuid": "7cc3afc9_7ca0096a",
       "range": {
         "startLine": 453,
         "startChar": 4,
