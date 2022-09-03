@@ -24,6 +24,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "67889810_2b585da0",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-03T01:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e35ff274_fa0e1a7d",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 30
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "846cd329_1cf967e0",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-09-01T20:48:05Z",
       "side": 1,
       "message": "This should be \"includes\"; see https://bazel.build/reference/be/c-cpp#cc_library",
+      "range": {
+        "startLine": 415,
+        "startChar": 4,
+        "endLine": 415,
+        "endChar": 23
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a8cd3096_8ad44cab",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-03T01:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "846cd329_1cf967e0",
       "range": {
         "startLine": 415,
         "startChar": 4,
@@ -166,6 +214,30 @@
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79d2966c_d269becd",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-03T01:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccd6262a_721be1b0",
+      "range": {
+        "startLine": 422,
+        "startChar": 4,
+        "endLine": 422,
+        "endChar": 17
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7cc3afc9_7ca0096a",
@@ -227,6 +299,30 @@
       "side": 1,
       "message": "see my other suggestion.",
       "parentUuid": "db18dfd9_518d1f9f",
+      "range": {
+        "startLine": 453,
+        "startChar": 4,
+        "endLine": 453,
+        "endChar": 8
+      },
+      "revId": "90d93bf4f3e67a3d5cb1309140ae3d5104242232",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d427b41_d507cd75",
+        "filename": "BUILD.bazel",
+        "patchSetId": 12
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-09-03T01:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6527b5c_4c4dfe0b",
       "range": {
         "startLine": 453,
         "startChar": 4,
