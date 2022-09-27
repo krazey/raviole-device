@@ -21,6 +21,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
+    "analyze_inputs",
     "kernel_build_abi",
     "kernel_build_abi_dist",
     "kernel_images",
@@ -398,4 +399,22 @@ test_suite(
         ":slider_test",
         ":slider_modules_test",
     ] + [m + "_test" for m in _SLIDER_EXT_MODULES],
+)
+
+analyze_inputs(
+    name = "slider_input_headers",
+    exclude_filters = [
+        "arch/arm64/include/generated/*",
+        "include/generated/*",
+        # TODO scripts?
+        "scripts/*",
+    ],
+    include_filters = ["*.h"],
+    input_archives = [
+        # Ignore device-specific UAPI headers for now.
+        "//common:kernel_aarch64_uapi_headers",
+    ],
+    deps = [
+        ":slider",
+    ] + _SLIDER_EXT_MODULES,
 )
