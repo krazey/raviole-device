@@ -21,6 +21,7 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
 load(
     "//build/kernel/kleaf:kernel.bzl",
+    "analyze_ddk_headers",
     "kernel_build_abi",
     "kernel_build_abi_dist",
     "kernel_images",
@@ -398,4 +399,11 @@ test_suite(
         ":slider_test",
         ":slider_modules_test",
     ] + [m + "_test" for m in _SLIDER_EXT_MODULES],
+)
+
+analyze_ddk_headers(
+    name = "slider_analyze_headers",
+    deps = [
+        ":slider",
+    ] + _SLIDER_EXT_MODULES,
 )
