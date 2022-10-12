@@ -370,6 +370,7 @@ _SLIDER_DIST_TARGETS = [
     # instead.
     ":slider_merged_kernel_uapi_headers",
     ":slider_modules_install",
+    ":slider_unstripped_modules_archive",
     "//common:kernel_aarch64_download_or_build",
     "//common:kernel_aarch64_additional_artifacts_download_or_build",
 ]
