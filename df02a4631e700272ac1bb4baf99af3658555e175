@@ -16,6 +16,24 @@
       "message": "Waiting on CL:2252478 to be cherry-picked to master-kernel-build-2022",
       "revId": "df02a4631e700272ac1bb4baf99af3658555e175",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ff5a7896_1062cc98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121838
+      },
+      "writtenOn": "2022-10-12T23:38:28Z",
+      "side": 1,
+      "message": "Waiting on CL:2253236",
+      "parentUuid": "f2b5f209_d183bf68",
+      "revId": "df02a4631e700272ac1bb4baf99af3658555e175",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
