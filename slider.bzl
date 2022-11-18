@@ -110,21 +110,16 @@ def define_slider():
             "gs101-a0.dtb",
             "gs101-b0.dtb",
         ],
-        abi_definition = "//common:android/abi_gki_aarch64.xml" if DEFINE_ABI_TARGETS else None,
-        additional_kmi_symbol_lists = ["//common:kernel_aarch64_all_kmi_symbol_lists"] if DEFINE_ABI_TARGETS else None,
         base_kernel = "//common:kernel_aarch64_download_or_build",
         build_config = "build.config.slider",
-        define_abi_targets = DEFINE_ABI_TARGETS,
         dtstree = "//private/google-modules/soc/gs/arch/arm64/boot/dts:slider_dt",
         implicit_outs = SLIDER_DTBOS,
         kconfig_ext = "Kconfig.ext",
         # Also refer to the list of ext modules for ABI monitoring targets
         kernel_modules = _slider_modules,
-        kmi_symbol_list = "//common:android/abi_gki_aarch64_pixel" if DEFINE_ABI_TARGETS else None,
-        kmi_symbol_list_add_only = True if DEFINE_ABI_TARGETS else None,
-        # Note: This is intentionally disabled here. We don't run build_abi.sh on
-        # build.config.slider so we don't care about disabling it there.
-        module_grouping = False if DEFINE_ABI_TARGETS else None,
+        kmi_symbol_list = "abi_gki_aarch64_pixel",
+        kmi_symbol_list_add_only = False,
+        module_grouping = False,
         module_outs = [
             # keep sorted
             "arm_dsu_pmu.ko",
