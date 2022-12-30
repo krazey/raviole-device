@@ -456,6 +456,7 @@ static void exynos_ufs_set_features(struct ufs_hba *hba)
 			UFSHCD_QUIRK_BROKEN_OCS_FATAL_ERROR |
 			UFSHCI_QUIRK_SKIP_MANUAL_WB_FLUSH_CTRL |
 			UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING |
+			UFSHCD_QUIRK_SUB_PAGE_SEGMENTS |
 			UFSHCD_QUIRK_4KB_DMA_ALIGNMENT;
 
 	if (of_find_property(np, "fixed-prdt-req_list-ocs", NULL))
