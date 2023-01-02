@@ -1474,6 +1474,7 @@ static int exynos_ufs_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct exynos_ufs *ufs;
+	struct ufs_hba *hba;
 	int ret;
 
 	dev_info(dev, "%s: start\n", __func__);
@@ -1537,6 +1538,14 @@ static int exynos_ufs_probe(struct platform_device *pdev)
 
 	/* go to core driver through the glue driver */
 	ret = ufshcd_pltfrm_init(pdev, &exynos_ufs_ops);
+
+	if (ret) {
+		dev_err(dev, "ufshcd_pltfrm_init() failed %d\n", ret);
+	}
+
+	hba = dev_get_drvdata(dev);
+	hba->host->max_segment_size = 4096;
+
 out:
 	return ret;
 }
