@@ -79,6 +79,7 @@ kernel_build(
     ],
     base_kernel = "//common:kernel_aarch64_download_or_build",
     build_config = "build.config.slider",
+    collect_unstripped_modules = True,
     dtstree = "//private/google-modules/soc/gs/arch/arm64/boot/dts:dt",
     implicit_outs = SLIDER_DTBOS,
     kconfig_ext = "Kconfig.ext",
