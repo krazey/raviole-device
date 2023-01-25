@@ -64,5 +64,6 @@ private/google-modules/touch/sec
 private/google-modules/power/reset
 private/google-modules/bluetooth/broadcom
 private/google-modules/nfc
-private/google-modules/uwb/kernel
 "
+# TODO(b/266414538) disable till properly fixed
+# private/google-modules/uwb/kernel
