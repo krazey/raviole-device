@@ -71,9 +71,10 @@ kernel_module_group(
         "//private/google-modules/power/reset",
         "//private/google-modules/bluetooth/broadcom:bluetooth.broadcom",
         "//private/google-modules/nfc",
-        "//private/google-modules/uwb/kernel:uwb.dw3000",
     ],
 )
+#       TODO(b/266414538) disable till properly fixed
+#       "//private/google-modules/uwb/kernel:uwb.dw3000",
 
 # This can be set to true if you want to generate a symbol list to see what
 # symbols the drivers are using.
