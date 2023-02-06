@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1f3440b5_313335b4",
+        "filename": "drivers/iommu/samsung-iommu.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1247518
+      },
+      "writtenOn": "2023-02-06T06:19:33Z",
+      "side": 0,
+      "message": "I think this is a mistake, just the label should be removed?",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 26
+      },
+      "revId": "ba96ffba0e16537fe0d7eef5f57f61da97e249e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
