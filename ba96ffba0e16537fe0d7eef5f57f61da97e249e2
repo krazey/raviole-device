@@ -22,6 +22,30 @@
       },
       "revId": "ba96ffba0e16537fe0d7eef5f57f61da97e249e2",
       "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3788c9d2_4ef183c7",
+        "filename": "drivers/iommu/samsung-iommu.c",
+        "patchSetId": 4
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1869395
+      },
+      "writtenOn": "2023-02-06T14:28:52Z",
+      "side": 0,
+      "message": "After `lv2entcnt` is allocated successfully there are no subsequent errors to be handled that would require releasing it.",
+      "parentUuid": "1f3440b5_313335b4",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 293,
+        "endChar": 26
+      },
+      "revId": "ba96ffba0e16537fe0d7eef5f57f61da97e249e2",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
     }
   ]
 }
