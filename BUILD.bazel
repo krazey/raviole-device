@@ -54,6 +54,10 @@ _slider_modules = [
 #    TODO(b/266414538) disable till properly fixed
 #    "//private/google-modules/uwb/kernel:kernel.slider",
 
+# This can be set to true if you want to generate a symbol list to see what
+# symbols the drivers are using.
+DEFINE_SYMBOL_LIST = False
+
 kernel_build(
     name = "slider",
     srcs = glob([
@@ -84,7 +88,7 @@ kernel_build(
     dtstree = "//private/google-modules/soc/gs/arch/arm64/boot/dts:dt",
     implicit_outs = SLIDER_DTBOS,
     kconfig_ext = "Kconfig.ext",
-    kmi_symbol_list = "abi_gki_aarch64_pixel",
+    kmi_symbol_list = "abi_gki_aarch64_pixel" if DEFINE_SYMBOL_LIST else None,
     module_outs = [
         # keep sorted
         "arm_dsu_pmu.ko",
