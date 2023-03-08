@@ -305,8 +305,7 @@ static int gs101_tmu_initialize(struct platform_device *pdev)
 {
 	struct gs101_tmu_data *data = platform_get_drvdata(pdev);
 	struct thermal_zone_device *tz = data->tzd;
-	enum thermal_trip_type type;
-	int i, temp, ret = 0;
+	int i, ret;
 	unsigned char threshold[8] = {0, };
 	unsigned char hysteresis[8] = {0, };
 	unsigned char inten = 0;
@@ -314,31 +313,21 @@ static int gs101_tmu_initialize(struct platform_device *pdev)
 	mutex_lock(&data->lock);
 
 	for (i = (thermal_zone_get_num_trips(tz) - 1); i >= 0; i--) {
-		ret = tz->ops->get_trip_type(tz, i, &type);
+		struct thermal_trip trip;
+
+		ret = thermal_zone_get_trip(tz, i, &trip);
 		if (ret) {
-			dev_err(&pdev->dev, "Failed to get trip type(%d)\n", i);
+			dev_err(&pdev->dev, "Failed to get trip %d\n", i);
 			goto out;
 		}
 
-		if (type == THERMAL_TRIP_PASSIVE)
+		if (trip.type == THERMAL_TRIP_PASSIVE)
 			continue;
 
-		ret = tz->ops->get_trip_temp(tz, i, &temp);
-		if (ret) {
-			dev_err(&pdev->dev, "Failed to get trip temp(%d)\n", i);
-			goto out;
-		}
+		threshold[i] = (unsigned char)(trip.temperature / MCELSIUS);
+		hysteresis[i] = (unsigned char)(trip.hysteresis / MCELSIUS);
 
-		threshold[i] = (unsigned char)(temp / MCELSIUS);
 		inten |= (1 << i);
-
-		ret = tz->ops->get_trip_hyst(tz, i, &temp);
-		if (ret) {
-			dev_err(&pdev->dev, "Failed to get trip hyst(%d)\n", i);
-			goto out;
-		}
-
-		hysteresis[i] = (unsigned char)(temp / MCELSIUS);
 	}
 
 	ret = gs101_tmu_tz_config_init(pdev);
@@ -457,23 +446,24 @@ static int gs101_get_temp(struct thermal_zone_device *tz, int *temp)
 	return 0;
 }
 
-static int gs101_get_trend(struct thermal_zone_device *tz, int trip,
+static int gs101_get_trend(struct thermal_zone_device *tz, int trip_id,
 			   enum thermal_trend *trend)
 {
 	struct gs101_tmu_data *data = tz->devdata;
-	int trip_temp, ret = 0;
+	struct thermal_trip trip;
+	int ret;
 
 	if (!tz)
-		return ret;
+		return 0;
 
-	ret = tz->ops->get_trip_temp(tz, trip, &trip_temp);
+	ret = __thermal_zone_get_trip(tz, trip_id, &trip);
 	if (ret < 0)
 		return ret;
 
 	if (data->use_pi_thermal) {
 		*trend = THERMAL_TREND_STABLE;
 	} else {
-		if (tz->temperature >= trip_temp)
+		if (tz->temperature >= trip.temperature)
 			*trend = THERMAL_TREND_RAISING;
 		else
 			*trend = THERMAL_TREND_DROPPING;
@@ -482,42 +472,37 @@ static int gs101_get_trend(struct thermal_zone_device *tz, int trip,
 	return 0;
 }
 
-static int gs1010_tmu_set_trip_temp(struct thermal_zone_device *tz, int trip,
+static int gs1010_tmu_set_trip_temp(struct thermal_zone_device *tz, int trip_id,
 				    int temp)
 {
 	struct gs101_tmu_data *data = tz->devdata;
-	enum thermal_trip_type type;
-	int i, trip_temp, ret = 0;
+	struct thermal_trip trip;
+	int i, ret;
 	unsigned char threshold[8] = {0, };
 
-	ret = tz->ops->get_trip_type(tz, trip, &type);
+	ret = thermal_zone_get_trip(tz, trip_id, &trip);
 	if (ret) {
-		pr_err("Failed to get trip type(%d)\n", trip);
+		pr_err("Failed to get trip %d\n", trip_id);
 		return ret;
 	}
 
-	if (type == THERMAL_TRIP_PASSIVE)
-		return ret;
+	if (trip.type == THERMAL_TRIP_PASSIVE)
+		return 0;
 
 	for (i = (thermal_zone_get_num_trips(tz) - 1); i >= 0; i--) {
-		ret = tz->ops->get_trip_type(tz, i, &type);
+		ret = thermal_zone_get_trip(tz, i, &trip);
 		if (ret) {
-			pr_err("Failed to get trip type(%d)\n", i);
+			pr_err("Failed to get trip %d\n", i);
 			return ret;
 		}
 
-		if (type == THERMAL_TRIP_PASSIVE)
+		if (trip.type == THERMAL_TRIP_PASSIVE)
 			continue;
 
-		ret = tz->ops->get_trip_temp(tz, i, &trip_temp);
-		if (ret) {
-			pr_err("Failed to get trip temp(%d)\n", i);
-			return ret;
-		}
-		if (i == trip)
-			threshold[trip] = (unsigned char)(temp / MCELSIUS);
-		else
-			threshold[i] = (unsigned char)(trip_temp / MCELSIUS);
+		if (i != trip_id)
+			temp = trip.temperature;
+
+		threshold[i] = (unsigned char)(temp / MCELSIUS);
 	}
 	mutex_lock(&data->lock);
 	if (data->enabled) {
@@ -529,7 +514,7 @@ static int gs1010_tmu_set_trip_temp(struct thermal_zone_device *tz, int trip,
 	}
 	mutex_unlock(&data->lock);
 
-	return ret;
+	return 0;
 }
 
 #if IS_ENABLED(CONFIG_THERMAL_EMULATION)
@@ -575,18 +560,17 @@ static void reset_pi_trips(struct gs101_tmu_data *data)
 	last_passive = INVALID_TRIP;
 
 	for (i = 0; i < tz->num_trips; i++) {
-		enum thermal_trip_type type;
+		struct thermal_trip trip;
 		int ret;
 
-		ret = tz->ops->get_trip_type(tz, i, &type);
+		ret = thermal_zone_get_trip(tz, i, &trip);
 		if (ret) {
 			dev_warn(&tz->device,
-				 "Failed to get trip point %d type: %d\n", i,
-				 ret);
+				 "Failed to get trip point %d: %d\n", i, ret);
 			continue;
 		}
 
-		if (type == THERMAL_TRIP_PASSIVE) {
+		if (trip.type == THERMAL_TRIP_PASSIVE) {
 			if (!found_first_passive) {
 				params->trip_switch_on = i;
 				found_first_passive = true;
@@ -594,7 +578,7 @@ static void reset_pi_trips(struct gs101_tmu_data *data)
 			}
 
 			last_passive = i;
-		} else if (type == THERMAL_TRIP_ACTIVE) {
+		} else if (trip.type == THERMAL_TRIP_ACTIVE) {
 			last_active = i;
 		} else {
 			break;
@@ -766,8 +750,8 @@ static void gs101_pi_thermal(struct gs101_tmu_data *data)
 {
 	struct thermal_zone_device *tz = data->tzd;
 	struct gs101_pi_param *params = data->pi_param;
-	int ret = 0;
-	int switch_on_temp, control_temp, delay;
+	struct thermal_trip trip;
+	int ret, delay;
 
 	if (atomic_read(&gs101_tmu_in_suspend))
 		return;
@@ -786,9 +770,8 @@ static void gs101_pi_thermal(struct gs101_tmu_data *data)
 
 	mutex_lock(&data->lock);
 
-	ret = tz->ops->get_trip_temp(tz, params->trip_switch_on,
-				     &switch_on_temp);
-	if (!ret && tz->temperature < switch_on_temp) {
+	ret = thermal_zone_get_trip(tz, params->trip_switch_on, &trip);
+	if (!ret && tz->temperature < trip.temperature) {
 		reset_pi_params(data);
 		allow_maximum_power(data);
 		params->switched_on = false;
@@ -797,16 +780,14 @@ static void gs101_pi_thermal(struct gs101_tmu_data *data)
 
 	params->switched_on = true;
 
-	ret = tz->ops->get_trip_temp(tz, params->trip_control_temp,
-				     &control_temp);
+	ret = thermal_zone_get_trip(tz, params->trip_control_temp, &trip);
 	if (ret) {
-		pr_warn("Failed to get the maximum desired temperature: %d\n",
-			ret);
+		pr_warn("Failed to get trip %d: %d\n",
+			params->trip_control_temp, ret);
 		goto polling;
 	}
 
-	ret = gs101_pi_controller(data, control_temp);
-
+	ret = gs101_pi_controller(data, trip.temperature);
 	if (ret) {
 		pr_debug("Failed to calculate pi controller: %d\n",
 			 ret);
