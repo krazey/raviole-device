@@ -240,19 +240,23 @@ static int gs101_spmic_thermal_set_hot_trip(struct gs101_spmic_thermal_sensor *s
  * programmed as shutdown threshold.
  */
 static int gs101_spmic_thermal_set_trip_temp(struct thermal_zone_device *tz,
-					     int trip_id, int temp)
+					     int trip, int temp)
 {
 	struct gs101_spmic_thermal_sensor *s = tz->devdata;
-	struct thermal_trip trip;
+	const struct thermal_trip *trip_points;
+	int ret = 0;
 
-	if (thermal_zone_get_trip(s->tzd, trip_id, &trip))
+	trip_points = of_thermal_get_trip_points(s->tzd);
+	if (!trip_points)
 		return -EINVAL;
 
-	if (trip.type != THERMAL_TRIP_HOT)
-		return 0;
+	if (trip_points[trip].type != THERMAL_TRIP_HOT)
+		return ret;
 
 	/* Use THERMAL_TRIP_HOT for HW thermal shutdown */
-	return gs101_spmic_thermal_set_hot_trip(s, temp);
+	ret = gs101_spmic_thermal_set_hot_trip(s, temp);
+
+	return ret;
 }
 
 /*
@@ -316,14 +320,21 @@ static struct kobj_attribute channel_temp_attr = __ATTR_RO(channel_temp);
 
 static int gs101_spmic_thermal_get_hot_temp(struct thermal_zone_device *tzd)
 {
-	struct thermal_trip trip;
+	int ntrips;
+	const struct thermal_trip *trips;
 	int i;
 
-	for (i = 0; i < thermal_zone_get_num_trips(tzd); i++) {
-		if (thermal_zone_get_trip(tzd, i, &trip))
-			continue;
-		if (trip.type == THERMAL_TRIP_HOT)
-			return trip.temperature;
+	ntrips = of_thermal_get_ntrips(tzd);
+	if (ntrips <= 0)
+		return THERMAL_TEMP_INVALID;
+
+	trips = of_thermal_get_trip_points(tzd);
+	if (!trips)
+		return THERMAL_TEMP_INVALID;
+
+	for (i = 0; i < ntrips; i++) {
+		if (of_thermal_is_trip_valid(tzd, i) && trips[i].type == THERMAL_TRIP_HOT)
+			return trips[i].temperature;
 	}
 
 	return THERMAL_TEMP_INVALID;
