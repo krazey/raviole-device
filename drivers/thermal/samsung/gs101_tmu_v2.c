@@ -313,7 +313,7 @@ static int gs101_tmu_initialize(struct platform_device *pdev)
 
 	mutex_lock(&data->lock);
 
-	for (i = (thermal_zone_get_num_trips(tz) - 1); i >= 0; i--) {
+	for (i = (of_thermal_get_ntrips(tz) - 1); i >= 0; i--) {
 		ret = tz->ops->get_trip_type(tz, i, &type);
 		if (ret) {
 			dev_err(&pdev->dev, "Failed to get trip type(%d)\n", i);
@@ -499,7 +499,7 @@ static int gs1010_tmu_set_trip_temp(struct thermal_zone_device *tz, int trip,
 	if (type == THERMAL_TRIP_PASSIVE)
 		return ret;
 
-	for (i = (thermal_zone_get_num_trips(tz) - 1); i >= 0; i--) {
+	for (i = (of_thermal_get_ntrips(tz) - 1); i >= 0; i--) {
 		ret = tz->ops->get_trip_type(tz, i, &type);
 		if (ret) {
 			pr_err("Failed to get trip type(%d)\n", i);
@@ -2957,7 +2957,7 @@ static int gs101_tmu_parse_ect(struct gs101_tmu_data *data)
 			return -EINVAL;
 		}
 
-		ntrips = thermal_zone_get_num_trips(tz);
+		ntrips = of_thermal_get_ntrips(tz);
 		pr_info("Trip count parsed from ECT : %d, ntrips: %d, zone : %s",
 			function->num_of_range, ntrips, tz->type);
 
@@ -3021,7 +3021,7 @@ static int gs101_tmu_parse_ect(struct gs101_tmu_data *data)
 			return -EINVAL;
 		}
 
-		ntrips = thermal_zone_get_num_trips(tz);
+		ntrips = of_thermal_get_ntrips(tz);
 		pr_info("Trip count parsed from ECT : %d, ntrips: %d, zone : %s",
 			pidtm_block->num_of_temperature, ntrips, tz->type);
 
