@@ -447,8 +447,8 @@ static int slg51000_pinctrl_probe(struct platform_device *pdev)
 	int ret;
 	struct slg51000_pinctrl *slg51000_pctl;
 	struct pinctrl_dev *pctl;
+	struct device_node *dp;
 	u32 ngpios;
-	const char *pinctrl_of_name = NULL;
 
 	slg51000_pctl = devm_kzalloc(&pdev->dev,
 		sizeof(struct slg51000_pinctrl), GFP_KERNEL);
@@ -495,18 +495,17 @@ static int slg51000_pinctrl_probe(struct platform_device *pdev)
 
 	slg51000_pctl->gc.base = -1;
 	slg51000_pctl->gc.can_sleep = true;
-	slg51000_pctl->gc.of_node =
-		of_find_node_by_name(pdev->dev.parent->of_node, pdev->name);
 	slg51000_pctl->gc.set_config = gpiochip_generic_config;
 	slg51000_pctl->gc.request = gpiochip_generic_request;
 	slg51000_pctl->gc.free = gpiochip_generic_free;
 
-	if (!slg51000_pctl->gc.of_node) {
+	dp = of_find_node_by_name(pdev->dev.parent->of_node, pdev->name);
+	if (!dp) {
 		dev_err(&pdev->dev, "Failed to find %s DT node\n", pdev->name);
 		return -EINVAL;
 	}
-	if (of_property_read_u32(slg51000_pctl->gc.of_node,
-			"ngpios", &ngpios)) {
+	slg51000_pctl->gc.fwnode = of_node_to_fwnode(dp);
+	if (of_property_read_u32(dp, "ngpios", &ngpios)) {
 		dev_err(&pdev->dev, "Failed to get ngpios from %s DT node\n",
 			pdev->name);
 		return -EINVAL;
@@ -551,15 +550,6 @@ static int slg51000_pinctrl_probe(struct platform_device *pdev)
 	slg51000_pctl->pctrl.confops = &slg51000_pctl->pconf_ops;
 	slg51000_pctl->pctrl.owner = THIS_MODULE;
 	slg51000_pctl->pctrl.name = dev_name(&pdev->dev);
-
-	pinctrl_of_name = "slg51000_pinctrl";
-	pdev->dev.of_node = of_find_node_by_name(pdev->dev.parent->of_node,
-						 pinctrl_of_name);
-	if (!pdev->dev.of_node) {
-		dev_err(&pdev->dev, "Failed to find %s DT node\n",
-			pinctrl_of_name);
-		return -EINVAL;
-	}
 
 	ret = devm_pinctrl_register_and_init(&pdev->dev,
 		&slg51000_pctl->pctrl, slg51000_pctl, &pctl);
