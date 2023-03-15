@@ -378,7 +378,7 @@ __init int exynos_eint_gpio_init(struct samsung_pinctrl_drv_data *d)
 		}
 		bank->irq_chip->chip.name = bank->name;
 
-		bank->irq_domain = irq_domain_add_linear(bank->of_node,
+		bank->irq_domain = irq_domain_create_linear(bank->fwnode,
 				bank->nr_pins, &exynos_eint_irqd_ops, bank);
 		if (!bank->irq_domain) {
 			dev_err(dev, "gpio irq domain add failed\n");
@@ -653,7 +653,7 @@ __init int exynos_eint_wkup_init(struct samsung_pinctrl_drv_data *d)
 		}
 		bank->irq_chip->chip.name = bank->name;
 
-		bank->irq_domain = irq_domain_add_linear(bank->of_node,
+		bank->irq_domain = irq_domain_create_linear(bank->fwnode,
 				bank->nr_pins, &exynos_eint_irqd_ops, bank);
 		if (!bank->irq_domain) {
 			dev_err(dev, "wkup irq domain add failed\n");
@@ -664,7 +664,7 @@ __init int exynos_eint_wkup_init(struct samsung_pinctrl_drv_data *d)
 		bank->eint_num = eint_num;
 		eint_num = eint_num + bank->nr_pins;
 
-		if (!of_find_property(bank->of_node, "interrupts", NULL)) {
+		if (!fwnode_property_present(bank->fwnode, "interrupts")) {
 			bank->eint_type = EINT_TYPE_WKUP_MUX;
 			++muxed_banks;
 			continue;
@@ -679,7 +679,7 @@ __init int exynos_eint_wkup_init(struct samsung_pinctrl_drv_data *d)
 		}
 
 		for (idx = 0; idx < bank->nr_pins; ++idx) {
-			irq = irq_of_parse_and_map(bank->of_node, idx);
+			irq = irq_of_parse_and_map(to_of_node(bank->fwnode), idx);
 			if (!irq) {
 				dev_err(dev, "irq number for eint-%s-%d not found\n",
 							bank->name, idx);
