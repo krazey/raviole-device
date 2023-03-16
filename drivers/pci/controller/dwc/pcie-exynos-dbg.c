@@ -77,10 +77,10 @@ static int chk_link_recovery(struct exynos_pcie *exynos_pcie)
 	val &= ~APP_REQ_EXIT_L1_MODE;
 	exynos_elbi_write(exynos_pcie, val, exynos_pcie->app_req_exit_l1_mode);
 	pr_info("%s: Before set perst, gpio val = %d\n",
-		__func__, gpio_get_value(exynos_pcie->perst_gpio));
-	gpio_set_value(exynos_pcie->perst_gpio, 0);
+		__func__, gpiod_get_value(exynos_pcie->perst_gpio));
+	gpiod_set_value(exynos_pcie->perst_gpio, 1);
 	pr_info("%s: After set perst, gpio val = %d\n",
-		__func__, gpio_get_value(exynos_pcie->perst_gpio));
+		__func__, gpiod_get_value(exynos_pcie->perst_gpio));
 	val = exynos_elbi_read(exynos_pcie, exynos_pcie->app_req_exit_l1_mode);
 	val |= APP_REQ_EXIT_L1_MODE;
 	exynos_elbi_write(exynos_pcie, val, exynos_pcie->app_req_exit_l1_mode);
@@ -254,18 +254,18 @@ int exynos_pcie_dbg_unit_test(struct device *dev, struct exynos_pcie *exynos_pci
 {
 	int ret = 0;
 
-	if (exynos_pcie->ssd_gpio < 0) {
+	if (IS_ERR_OR_NULL(exynos_pcie->ssd_gpio)) {
 		dev_warn(dev, "can't find ssd pin info. Need to check EP device power pin\n");
 	} else {
-		gpio_set_value(exynos_pcie->ssd_gpio, 1);
+		gpiod_set_value(exynos_pcie->ssd_gpio, 0);
 		mdelay(100);
 	}
 
-	if (exynos_pcie->wlan_gpio < 0) {
+	if (IS_ERR_OR_NULL(exynos_pcie->wlan_gpio)) {
 		dev_warn(dev, "can't find wlan pin info. Need to check EP device power pin\n");
 	} else {
-		gpio_direction_output(exynos_pcie->wlan_gpio, 0);
-		gpio_set_value(exynos_pcie->wlan_gpio, 1);
+		gpiod_direction_output(exynos_pcie->wlan_gpio, 0);
+		gpiod_set_value(exynos_pcie->wlan_gpio, 0);
 		mdelay(100);
 	}
 
@@ -342,21 +342,21 @@ int exynos_pcie_dbg_link_test(struct device *dev, struct exynos_pcie *exynos_pci
 			return -1;
 		}
 
-		if (exynos_pcie->ssd_gpio < 0) {
+		if (IS_ERR_OR_NULL(exynos_pcie->ssd_gpio)) {
 			dev_err(dev, "can't find ssd pin info. Need to check EP device pwr pin\n");
 		} else {
-			gpio_set_value(exynos_pcie->ssd_gpio, 1);
+			gpiod_set_value(exynos_pcie->ssd_gpio, 0);
 			mdelay(100);
 		}
 
-		if (exynos_pcie->wlan_gpio < 0) {
+		if (IS_ERR_OR_NULL(exynos_pcie->wlan_gpio)) {
 			dev_err(dev, "can't find wlan pin info. Need to check EP device pwr pin\n");
 		} else {
 			dev_err(dev, "## make gpio direction to output\n");
-			gpio_direction_output(exynos_pcie->wlan_gpio, 0);
+			gpiod_direction_output(exynos_pcie->wlan_gpio, 0);
 
-			dev_err(dev, "## make gpio set high\n");
-			gpio_set_value(exynos_pcie->wlan_gpio, 1);
+			dev_err(dev, "## make gpio set logical 0\n");
+			gpiod_set_value(exynos_pcie->wlan_gpio, 0);
 			mdelay(100);
 		}
 
@@ -370,15 +370,15 @@ int exynos_pcie_dbg_link_test(struct device *dev, struct exynos_pcie *exynos_pci
 		}
 		pcie_ops->poweroff(exynos_pcie->ch_num);
 
-		if (exynos_pcie->ssd_gpio < 0)
+		if (IS_ERR_OR_NULL(exynos_pcie->ssd_gpio))
 			dev_err(dev, "can't find ssd pin info. Need to check EP device pwr pin\n");
 		else
-			gpio_set_value(exynos_pcie->ssd_gpio, 0);
+			gpiod_set_value(exynos_pcie->ssd_gpio, 1);
 
-		if (exynos_pcie->wlan_gpio < 0)
+		if (IS_ERR_OR_NULL(exynos_pcie->wlan_gpio))
 			dev_err(dev, "can't find wlan pin info. Need to check EP device pwr pin\n");
 		else
-			gpio_set_value(exynos_pcie->wlan_gpio, 0);
+			gpiod_set_value(exynos_pcie->wlan_gpio, 1);
 
 		ret = 0;
 	}
