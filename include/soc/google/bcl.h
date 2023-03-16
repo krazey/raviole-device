@@ -117,7 +117,7 @@ struct bcl_device {
 
 	unsigned int bcl_irq[TRIGGERED_SOURCE_MAX];
 	int bcl_tz_cnt[TRIGGERED_SOURCE_MAX];
-	int bcl_pin[TRIGGERED_SOURCE_MAX];
+	struct gpio_desc *bcl_pin[TRIGGERED_SOURCE_MAX];
 	struct ocpsmpl_stats bcl_stats[TRIGGERED_SOURCE_MAX];
 
 	struct i2c_client *main_pmic_i2c;
@@ -146,8 +146,8 @@ struct bcl_device {
 	unsigned int offsrc;
 	unsigned int pwronsrc;
 
-	unsigned int vdroop1_pin;
-	unsigned int vdroop2_pin;
+	struct gpio_desc *vdroop1_pin;
+	struct gpio_desc *vdroop2_pin;
 };
 
 extern void google_bcl_irq_update_lvl(struct bcl_device *bcl_dev, int index, unsigned int lvl);
