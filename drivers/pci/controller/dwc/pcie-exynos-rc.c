@@ -10,12 +10,11 @@
 
 #include <linux/clk.h>
 #include <linux/delay.h>
-#include <linux/gpio.h>
+#include <linux/gpio/consumer.h>
 #include <linux/interrupt.h>
 #include <linux/kernel.h>
 #include <linux/mfd/syscon.h>
 #include <linux/module.h>
-#include <linux/of_gpio.h>
 #include <linux/of_address.h>
 #include <linux/pci.h>
 #include <linux/pinctrl/consumer.h>
@@ -294,13 +293,15 @@ void exynos_pcie_set_perst_gpio(int ch_num, bool on)
 	if (exynos_pcie->ep_device_type == EP_SAMSUNG_MODEM) {
 		pr_info("%s: force settig for abnormal state\n", __func__);
 		if (on) {
-			gpio_set_value(exynos_pcie->perst_gpio, 1);
-			pr_info("%s: Set PERST to HIGH, gpio val = %d\n",
-				__func__, gpio_get_value(exynos_pcie->perst_gpio));
+			gpiod_set_value(exynos_pcie->perst_gpio, 0);
+			pr_info("%s: Set PERST to logical 0, gpio(%d) val=(%d)\n",
+				__func__, desc_to_gpio(exynos_pcie->perst_gpio),
+				gpiod_get_value(exynos_pcie->perst_gpio));
 		} else {
-			gpio_set_value(exynos_pcie->perst_gpio, 0);
-			pr_info("%s: Set PERST to LOW, gpio val = %d\n",
-				__func__, gpio_get_value(exynos_pcie->perst_gpio));
+			gpiod_set_value(exynos_pcie->perst_gpio, 1);
+			pr_info("%s: Set PERST to logical 1, gpio(%d) val=(%d)\n",
+				__func__, desc_to_gpio(exynos_pcie->perst_gpio),
+				gpiod_get_value(exynos_pcie->perst_gpio));
 		}
 	}
 }
@@ -1531,20 +1532,20 @@ static int exynos_pcie_rc_parse_dt(struct device *dev, struct exynos_pcie *exyno
 	}
 
 	/* SSD & WIFI power control */
-	exynos_pcie->wlan_gpio = of_get_named_gpio(np, "pcie,wlan-gpio", 0);
-	if (exynos_pcie->wlan_gpio < 0) {
+	exynos_pcie->wlan_gpio = devm_gpiod_get_optional(dev, "pcie,wlan", GPIOD_ASIS);
+	if (IS_ERR_OR_NULL(exynos_pcie->wlan_gpio)) {
 		dev_err(dev, "wlan gpio is not defined -> don't use wifi through pcie#%d\n",
 			exynos_pcie->ch_num);
 	} else {
-		gpio_direction_output(exynos_pcie->wlan_gpio, 0);
+		gpiod_direction_output(exynos_pcie->wlan_gpio, 0);
 	}
 
-	exynos_pcie->ssd_gpio = of_get_named_gpio(np, "pcie,ssd-gpio", 0);
-	if (exynos_pcie->ssd_gpio < 0) {
+	exynos_pcie->ssd_gpio = devm_gpiod_get_optional(dev, "pcie,ssd", GPIOD_ASIS);
+	if (IS_ERR_OR_NULL(exynos_pcie->ssd_gpio)) {
 		dev_err(dev, "ssd gpio is not defined -> don't use ssd through pcie#%d\n",
 			exynos_pcie->ch_num);
 	} else {
-		gpio_direction_output(exynos_pcie->ssd_gpio, 0);
+		gpiod_direction_output(exynos_pcie->ssd_gpio, 0);
 	}
 
 	return 0;
@@ -1554,18 +1555,13 @@ static int exynos_pcie_rc_get_pin_state(struct platform_device *pdev,
 					struct exynos_pcie *exynos_pcie)
 {
 	struct device *dev = &pdev->dev;
-	struct device_node *np = dev->of_node;
-	int ret;
 
-	exynos_pcie->perst_gpio = of_get_gpio(np, 0);
-	if (exynos_pcie->perst_gpio < 0) {
+	exynos_pcie->perst_gpio = devm_gpiod_get_index(dev, NULL, 0, GPIOD_OUT_LOW);
+	if (IS_ERR(exynos_pcie->perst_gpio)) {
 		dev_err(&pdev->dev, "cannot get perst_gpio\n");
-	} else {
-		ret = devm_gpio_request_one(dev, exynos_pcie->perst_gpio,
-					    GPIOF_OUT_INIT_LOW, dev_name(dev));
-		if (ret)
-			return -EINVAL;
+		return -EINVAL;
 	}
+
 	/* Get pin state */
 	exynos_pcie->pcie_pinctrl = devm_pinctrl_get(&pdev->dev);
 	if (IS_ERR(exynos_pcie->pcie_pinctrl)) {
@@ -2535,11 +2531,12 @@ retry:
 	/* EQ Off */
 	exynos_pcie_rc_wr_own_conf(pp, 0x890, 4, 0x12000);
 
-	/* set #PERST high */
-	gpio_set_value(exynos_pcie->perst_gpio, 1);
+	/* set #PERST logical 0 */
+	gpiod_set_value(exynos_pcie->perst_gpio, 0);
 
-	dev_dbg(dev, "%s: Set PERST to HIGH, gpio val = %d\n",
-		__func__, gpio_get_value(exynos_pcie->perst_gpio));
+	dev_info(dev, "%s: Set PERST to logical 0, gpio(%d) val=(%d)\n",
+		__func__, desc_to_gpio(exynos_pcie->perst_gpio),
+		gpiod_get_value(exynos_pcie->perst_gpio));
 	if (exynos_pcie->ep_device_type == EP_BCM_WIFI) {
 		usleep_range(20000, 22000);
 	} else {
@@ -2607,9 +2604,10 @@ retry:
 			try_cnt, LINK_STATE_DISP(val), val);
 
 		if (try_cnt < 10) {
-			gpio_set_value(exynos_pcie->perst_gpio, 0);
-			dev_dbg(dev, "%s: Set PERST to LOW, gpio val = %d\n", __func__,
-				gpio_get_value(exynos_pcie->perst_gpio));
+			gpiod_set_value(exynos_pcie->perst_gpio, 1);
+			dev_info(dev, "%s: Set PERST to logical 1 gpio(%d) val=(%d)\n",
+				 __func__, desc_to_gpio(exynos_pcie->perst_gpio),
+				 gpiod_get_value(exynos_pcie->perst_gpio));
 			/* LTSSM disable */
 			exynos_elbi_write(exynos_pcie, PCIE_ELBI_LTSSM_DISABLE,
 					  PCIE_APP_LTSSM_ENABLE);
@@ -2650,9 +2648,10 @@ retry:
 			dev_err(dev, "%s: Link is up. But not max speed, try count: %d\n",
 				__func__, try_cnt);
 			if (try_cnt < 10) {
-				gpio_set_value(exynos_pcie->perst_gpio, 0);
-				dev_dbg(dev, "Set PERST LOW, gpio val = %d\n",
-					gpio_get_value(exynos_pcie->perst_gpio));
+				gpiod_set_value(exynos_pcie->perst_gpio, 1);
+				dev_info(dev, "Set PERST logical 1, gpio(%d) val=(%d)\n",
+					 desc_to_gpio(exynos_pcie->perst_gpio),
+					 gpiod_get_value(exynos_pcie->perst_gpio));
 				/* LTSSM disable */
 				exynos_elbi_write(exynos_pcie, PCIE_ELBI_LTSSM_DISABLE,
 						  PCIE_APP_LTSSM_ENABLE);
@@ -2915,9 +2914,10 @@ void exynos_pcie_rc_poweroff(int ch_num)
 		val &= ~HISTORY_BUFFER_ENABLE;
 		exynos_elbi_write(exynos_pcie, val, PCIE_STATE_HISTORY_CHECK);
 
-		gpio_set_value(exynos_pcie->perst_gpio, 0);
-		dev_dbg(dev, "%s: Set PERST to LOW, gpio val = %d\n",
-			__func__, gpio_get_value(exynos_pcie->perst_gpio));
+		gpiod_set_value(exynos_pcie->perst_gpio, 1);
+		dev_info(dev, "%s: Set PERST to logical 1, gpio(%d) val=(%d)\n",
+			 __func__, desc_to_gpio(exynos_pcie->perst_gpio),
+			 gpiod_get_value(exynos_pcie->perst_gpio));
 
 		/* LTSSM disable */
 		exynos_elbi_write(exynos_pcie, PCIE_ELBI_LTSSM_DISABLE, PCIE_APP_LTSSM_ENABLE);

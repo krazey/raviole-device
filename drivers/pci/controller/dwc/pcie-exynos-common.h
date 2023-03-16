@@ -238,7 +238,7 @@ struct exynos_pcie {
 	struct regmap		*pmureg;
 	phys_addr_t		pmu_alive_pa;
 	struct regmap		*sysreg;
-	int			perst_gpio;
+	struct gpio_desc	*perst_gpio;
 	int			num_lanes;
 	int			ch_num;
 	int			pcie_clk_num;
@@ -292,8 +292,8 @@ struct exynos_pcie {
 	struct pcie_eom_result **eom_result;
 	struct notifier_block	itmon_nb;
 
-	int wlan_gpio;
-	int ssd_gpio;
+	struct gpio_desc *wlan_gpio;
+	struct gpio_desc *ssd_gpio;
 	u32 pmu_offset;
 	u32 linkup_offset;
 	/* evt0 : 0, evt1: 1 .. */
