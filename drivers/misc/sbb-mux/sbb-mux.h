@@ -311,10 +311,6 @@ struct sbb_gpio_tracker {
 	 */
 	const char *name;
 	/*
-	 * The GPIO id returned when calling get_gpio.
-	 */
-	int system_id;
-	/*
 	 * The GPIO's descriptor.
 	 */
 	struct gpio_desc *gd;

@@ -6,11 +6,11 @@
  */
 
 #include <linux/bitops.h>
+#include <linux/gpio/consumer.h>
 #include <linux/kobject.h>
 #include <linux/module.h>
 #include <linux/mod_devicetable.h>
 #include <linux/of_device.h>
-#include <linux/of_gpio.h>
 #include <linux/platform_device.h>
 
 #include "sbb-mux.h"
@@ -455,13 +455,11 @@ static ssize_t sbb_gpio_value_show(struct kobject *kobj,
 static int sbb_mux_initialize_gpio_tracker(struct sbb_gpio_tracker *tracker,
 					   int gpio_id)
 {
-	int gpio_system_id;
 	const char *default_signal_name;
 	int default_signal_id;
+	struct gpio_desc *gpio_gd;
 
 	tracker->id = gpio_id;
-
-	tracker->system_id = -1;
 
 	mutex_init(&tracker->lock);
 
@@ -472,28 +470,14 @@ static int sbb_mux_initialize_gpio_tracker(struct sbb_gpio_tracker *tracker,
 		return -EINVAL;
 	}
 
-	gpio_system_id = of_get_gpio(platform_dev->dev.of_node, gpio_id);
-	if (gpio_system_id < 0) {
-		pr_err("sbb-mux: of_get_gpio failed for %d!\n", gpio_id);
-		return gpio_system_id;
-	}
-
-	pr_info("sbb-mux: GPIO system id: %d.\n", gpio_system_id);
-
-	if (devm_gpio_request_one(&platform_dev->dev, gpio_system_id,
-				  GPIOF_OUT_INIT_LOW, tracker->name)) {
+	gpio_gd = devm_gpiod_get_index(&platform_dev->dev, NULL,
+					gpio_id, GPIOD_OUT_LOW);
+	if (IS_ERR(gpio_gd)) {
 		pr_err("sbb-mux: GPIO request failed for %d!\n", gpio_id);
 		return -EPROBE_DEFER;
 	}
 
-	tracker->gd = gpio_to_desc(gpio_system_id);
-	if (!tracker->gd) {
-		pr_err("sbb-mux: GPIO descriptor for %d not available!\n",
-		       gpio_system_id);
-		return -EINVAL;
-	}
-
-	tracker->system_id = gpio_system_id;
+	tracker->gd = gpio_gd;
 
 	tracker->sysfs_folder =
 		kobject_create_and_add(tracker->name, gpios_sysfs_folder);
@@ -545,16 +529,13 @@ static int sbb_mux_initialize_gpio_tracker(struct sbb_gpio_tracker *tracker,
 	}
 
 	pr_info("Correctly initialized GPIO tracker #%d for GPIO %s!\n",
-		gpio_system_id, tracker->name);
+		desc_to_gpio(gpio_gd), tracker->name);
 
 	return 0;
 }
 
 static void sbb_mux_cleanup_gpio_tracker(struct sbb_gpio_tracker *tracker)
 {
-	if (tracker->system_id != -1) {
-		tracker->system_id = -1;
-	}
 
 	if (!tracker->sysfs_folder)
 		return;
@@ -586,7 +567,7 @@ static int sbb_mux_drv_probe(struct platform_device *dev)
 
 	pr_info("sbb-mux: Calling %s!\n", __func__);
 
-	num_gpios = of_gpio_count(dev->dev.of_node);
+	num_gpios = gpiod_count(&dev->dev, NULL);
 	pr_info("sbb-mux: Num GPIOs: %d.\n", num_gpios);
 
 	if (num_gpios <= 0) {
