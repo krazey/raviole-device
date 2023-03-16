@@ -8,13 +8,11 @@
 #include <linux/debugfs.h>
 #include <linux/extcon.h>
 #include <linux/extcon-provider.h>
-#include <linux/gpio.h>
 #include <linux/gpio/consumer.h>
 #include <linux/interrupt.h>
 #include <linux/i2c.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
-#include <linux/of_gpio.h>
 #include <linux/power_supply.h>
 #include <linux/regmap.h>
 #include <linux/regulator/consumer.h>
@@ -411,6 +409,7 @@ static void ext_bst_en_gpio_set(struct gpio_chip *gpio, unsigned int offset, int
 static int ext_bst_en_gpio_init(struct max77759_plat *chip)
 {
 	int ret;
+	struct device_node *dp;
 
 	/* Setup GPIO controller */
 	chip->gpio.owner = THIS_MODULE;
@@ -422,11 +421,10 @@ static int ext_bst_en_gpio_init(struct max77759_plat *chip)
 	chip->gpio.base = -1;
 	chip->gpio.ngpio = 1;
 	chip->gpio.can_sleep = true;
-	chip->gpio.of_node = of_find_node_by_name(chip->dev->of_node, chip->gpio.label);
-
-	if (!chip->gpio.of_node)
+	dp = of_find_node_by_name(chip->dev->of_node, chip->gpio.label);
+	if (!dp)
 		dev_err(chip->dev, "Failed to find %s DT node\n", chip->gpio.label);
-
+	chip->gpio.fwnode = of_node_to_fwnode(dp);
 	ret = devm_gpiochip_add_data(chip->dev, &chip->gpio, chip);
 	if (ret)
 		dev_err(chip->dev, "Failed to initialize gpio chip\n");
@@ -1015,9 +1013,9 @@ static void reset_ovp_work(struct kthread_work *work)
 	if (vbus_mv > VBUS_PRESENT_THRESHOLD_MV)
 		return;
 
-	gpio_set_value_cansleep(chip->in_switch_gpio, !chip->in_switch_gpio_active_high);
+	gpiod_set_raw_value_cansleep(chip->in_switch_gpio, !chip->in_switch_gpio_active_high);
 	mdelay(10);
-	gpio_set_value_cansleep(chip->in_switch_gpio, chip->in_switch_gpio_active_high);
+	gpiod_set_raw_value_cansleep(chip->in_switch_gpio, chip->in_switch_gpio_active_high);
 	chip->reset_ovp_retry++;
 
 	logbuffer_log(chip->log, "ovp reset done [%d]", chip->reset_ovp_retry);
@@ -1341,11 +1339,12 @@ static irqreturn_t max77759_isr(int irq, void *dev_id)
 static int max77759_init_alert(struct max77759_plat *chip,
 			       struct i2c_client *client)
 {
-	int ret, irq_gpio;
+	int ret;
+	struct gpio_desc *irq_gpio;
 
-	irq_gpio = of_get_named_gpio(client->dev.of_node, "usbpd,usbpd_int", 0);
-	client->irq = gpio_to_irq(irq_gpio);
-	if (!client->irq)
+	irq_gpio = devm_gpiod_get_optional(&client->dev, "usbpd,usbpd_int", GPIOD_ASIS);
+	client->irq = gpiod_to_irq(irq_gpio);
+	if (client->irq < 0)
 		return -ENODEV;
 
 	ret = devm_request_threaded_irq(chip->dev, client->irq, max77759_isr,
@@ -1429,11 +1428,13 @@ static int max77759_start_toggling(struct tcpci *tcpci,
 		goto unlock;
 
 	/* Kick debug accessory state machine when enabling toggling for the first time */
-	if (chip->first_toggle && chip->in_switch_gpio >= 0) {
+	if (chip->first_toggle && !IS_ERR(chip->in_switch_gpio)) {
 		logbuffer_log(chip->log, "[%s]: Kick Debug accessory FSM", __func__);
-		gpio_set_value_cansleep(chip->in_switch_gpio, !chip->in_switch_gpio_active_high);
+		gpiod_set_raw_value_cansleep(chip->in_switch_gpio,
+					     !chip->in_switch_gpio_active_high);
 		mdelay(10);
-		gpio_set_value_cansleep(chip->in_switch_gpio, chip->in_switch_gpio_active_high);
+		gpiod_set_raw_value_cansleep(chip->in_switch_gpio,
+					     chip->in_switch_gpio_active_high);
 		chip->first_toggle = false;
 	}
 
@@ -1770,8 +1771,8 @@ static int max77759_toggle_disable_votable_callback(struct gvotable_election *el
 		update_contaminant_detection_locked(chip, CONTAMINANT_DETECT_DISABLE);
 		disable_contaminant_detection(chip);
 		max77759_enable_toggling_locked(chip, false);
-		if (chip->in_switch_gpio >= 0) {
-			gpio_set_value_cansleep(chip->in_switch_gpio,
+		if (!IS_ERR(chip->in_switch_gpio)) {
+			gpiod_set_raw_value_cansleep(chip->in_switch_gpio,
 						!chip->in_switch_gpio_active_high);
 			logbuffer_log(chip->log, "[%s]: Disable in-switch set %s / active %s",
 				      __func__, !chip->in_switch_gpio_active_high ? "high" : "low",
@@ -1783,8 +1784,8 @@ static int max77759_toggle_disable_votable_callback(struct gvotable_election *el
 							    chip->contaminant_detection_userspace);
 		else
 			max77759_enable_toggling_locked(chip, true);
-		if (chip->in_switch_gpio >= 0) {
-			gpio_set_value_cansleep(chip->in_switch_gpio,
+		if (!IS_ERR(chip->in_switch_gpio)) {
+			gpiod_set_raw_value_cansleep(chip->in_switch_gpio,
 						chip->in_switch_gpio_active_high);
 			logbuffer_log(chip->log, "[%s]: Enable in-switch set %s / active %s",
 				      __func__, chip->in_switch_gpio_active_high ? "high" : "low",
@@ -1940,7 +1941,6 @@ static int max77759_probe(struct i2c_client *client,
 	u16 device_id;
 	u32 ovp_handle;
 	const char *ovp_status;
-	enum of_gpio_flags flags;
 
 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
 	if (!chip)
@@ -1967,26 +1967,28 @@ static int max77759_probe(struct i2c_client *client,
 		return -EINVAL;
 	}
 
-	chip->in_switch_gpio = -EINVAL;
 	if (of_property_read_bool(dn, "ovp-present")) {
-		chip->in_switch_gpio = of_get_named_gpio_flags(dn, "in-switch-gpio", 0, &flags);
-		if (chip->in_switch_gpio < 0) {
+		chip->in_switch_gpio = devm_gpiod_get(&client->dev, "in-switch",
+						      GPIOD_ASIS | GPIOD_FLAGS_BIT_NONEXCLUSIVE);
+		if (IS_ERR(chip->in_switch_gpio)) {
 			dev_err(&client->dev, "in-switch-gpio not found\n");
 			return -EPROBE_DEFER;
 		}
-		chip->in_switch_gpio_active_high = (flags & OF_GPIO_ACTIVE_LOW) ? 0 : 1;
+		chip->in_switch_gpio_active_high
+			= gpiod_is_active_low(chip->in_switch_gpio) ? 0 : 1;
 	} else if (!of_property_read_u32(dn, "max20339,ovp", &ovp_handle)) {
 		ovp_dn = of_find_node_by_phandle(ovp_handle);
 		if (!IS_ERR_OR_NULL(ovp_dn) &&
 		    !of_property_read_string(ovp_dn, "status", &ovp_status) &&
 		    strncmp(ovp_status, "disabled", strlen("disabled"))) {
-			chip->in_switch_gpio = of_get_named_gpio_flags(dn, "in-switch-gpio", 0,
-								       &flags);
-			if (chip->in_switch_gpio < 0) {
+			chip->in_switch_gpio
+				= devm_gpiod_get(&client->dev, "in-switch", GPIOD_ASIS);
+			if (IS_ERR(chip->in_switch_gpio)) {
 				dev_err(&client->dev, "in-switch-gpio not found\n");
 				return -EPROBE_DEFER;
 			}
-			chip->in_switch_gpio_active_high = (flags & OF_GPIO_ACTIVE_LOW) ? 0 : 1;
+			chip->in_switch_gpio_active_high
+				= gpiod_is_active_low(chip->in_switch_gpio) ? 0 : 1;
 		}
 	}
 
