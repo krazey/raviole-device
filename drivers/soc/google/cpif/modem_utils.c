@@ -1193,7 +1193,7 @@ int board_gpio_export(struct device *dev,
 		return ret;
 	}
 
-	ret = gpio_export_link(dev, name, gpio);
+	ret = gpiod_export_link(dev, name, gpio_to_desc(gpio));
 	if (ret) {
 		mif_err("%s: failed to export link_gpio (%d)\n", name, ret);
 		return ret;
