@@ -10,7 +10,7 @@
 
 #include <linux/module.h>
 #include <linux/workqueue.h>
-#include <linux/gpio.h>
+#include <linux/gpio/consumer.h>
 #include <linux/kernel.h>
 #include <linux/interrupt.h>
 #include <linux/io.h>
@@ -18,7 +18,6 @@
 #include <linux/err.h>
 #include <linux/of.h>
 #include <linux/of_address.h>
-#include <linux/of_gpio.h>
 #include <linux/of_irq.h>
 #include <linux/of_platform.h>
 #include <linux/platform_device.h>
@@ -237,16 +236,16 @@ static int triggered_read_level(void *data, int *val, int id)
 	struct bcl_device *bcl_dev = data;
 	bool state = true;
 	int polarity = (id == SMPL_WARN) ? 0 : 1;
-	int gpio_pin = bcl_dev->vdroop1_pin;
-	int gpio_level = (id >= UVLO1 && id <= BATOILO) ? gpio_get_value(gpio_pin) :
-			gpio_get_value(bcl_dev->bcl_pin[id]);
+	int gpio_level = ((id >= UVLO1 && id <= BATOILO)
+			  ? gpiod_get_raw_value(bcl_dev->vdroop1_pin)
+			  : gpiod_get_raw_value(bcl_dev->bcl_pin[id]));
 
 	if (id >= UVLO2 && id <= BATOILO) {
 		if (bcl_cb_vdroop_ok(bcl_dev, &state) < 0) {
 			*val = 0;
 			return -EINVAL;
-		} else
-			gpio_level = (state) ? 0 : 1;
+		}
+		gpio_level = (state) ? 0 : 1;
 	}
 	/* Check polarity */
 	if ((gpio_level == polarity) || (bcl_dev->bcl_tz_cnt[id] == 1)) {
@@ -3121,8 +3120,8 @@ static int google_set_sub_pmic(struct bcl_device *bcl_dev)
 			(pdata_sub->b2_soft_ocp_warn_lvl * B2S_STEP);
 	bcl_dev->bcl_pin[OCP_WARN_GPU] = pdata_sub->b2_ocp_warn_pin;
 	bcl_dev->bcl_pin[SOFT_OCP_WARN_GPU] = pdata_sub->b2_soft_ocp_warn_pin;
-	bcl_dev->bcl_irq[OCP_WARN_GPU] = gpio_to_irq(pdata_sub->b2_ocp_warn_pin);
-	bcl_dev->bcl_irq[SOFT_OCP_WARN_GPU] = gpio_to_irq(pdata_sub->b2_soft_ocp_warn_pin);
+	bcl_dev->bcl_irq[OCP_WARN_GPU] = gpiod_to_irq(pdata_sub->b2_ocp_warn_pin);
+	bcl_dev->bcl_irq[SOFT_OCP_WARN_GPU] = gpiod_to_irq(pdata_sub->b2_soft_ocp_warn_pin);
 	bcl_dev->bcl_ops[OCP_WARN_GPU].get_temp = ocp_gpu_read_current;
 	bcl_dev->bcl_ops[SOFT_OCP_WARN_GPU].get_temp = soft_ocp_gpu_read_current;
 	S2MPG1X_READ(SUB, bcl_dev, ret, SUB_CHIPID, &val);
@@ -3398,8 +3397,9 @@ static int google_set_main_pmic(struct bcl_device *bcl_dev)
 	}
 	pdata_main = dev_get_platdata(main_dev->dev);
 	/* request smpl_warn interrupt */
-	if (!gpio_is_valid(pdata_main->smpl_warn_pin)) {
-		dev_err(bcl_dev->device, "smpl_warn GPIO NOT VALID\n");
+	if (IS_ERR(pdata_main->smpl_warn_pin)) {
+		dev_err(bcl_dev->device, "smpl_warn GPIO NOT VALID: %ld\n",
+			PTR_ERR(pdata_main->smpl_warn_pin));
 		devm_free_irq(bcl_dev->device, bcl_dev->bcl_irq[SMPL_WARN], bcl_dev);
 		bypass_smpl_warn = true;
 	}
@@ -3416,7 +3416,7 @@ static int google_set_main_pmic(struct bcl_device *bcl_dev)
 	bcl_dev->pwronsrc = val;
 	S2MPG1X_WRITE(MAIN, bcl_dev, ret, S2MPG10_PM_OFFSRC, 0);
 	S2MPG1X_WRITE(MAIN, bcl_dev, ret, S2MPG10_PM_PWRONSRC, 0);
-	bcl_dev->bcl_irq[SMPL_WARN] = gpio_to_irq(pdata_main->smpl_warn_pin);
+	bcl_dev->bcl_irq[SMPL_WARN] = gpiod_to_irq(pdata_main->smpl_warn_pin);
 	irq_set_status_flags(bcl_dev->bcl_irq[SMPL_WARN], IRQ_DISABLE_UNLAZY);
 	bcl_dev->bcl_pin[SMPL_WARN] = pdata_main->smpl_warn_pin;
 	bcl_dev->bcl_lvl[SMPL_WARN] = SMPL_BATTERY_VOLTAGE -
@@ -3439,12 +3439,12 @@ static int google_set_main_pmic(struct bcl_device *bcl_dev)
 	bcl_dev->bcl_pin[SOFT_OCP_WARN_CPUCL2] = pdata_main->b2_soft_ocp_warn_pin;
 	bcl_dev->bcl_pin[OCP_WARN_TPU] = pdata_main->b10_ocp_warn_pin;
 	bcl_dev->bcl_pin[SOFT_OCP_WARN_TPU] = pdata_main->b10_soft_ocp_warn_pin;
-	bcl_dev->bcl_irq[OCP_WARN_CPUCL1] = gpio_to_irq(pdata_main->b3_ocp_warn_pin);
-	bcl_dev->bcl_irq[OCP_WARN_CPUCL2] = gpio_to_irq(pdata_main->b2_ocp_warn_pin);
-	bcl_dev->bcl_irq[SOFT_OCP_WARN_CPUCL1] = gpio_to_irq(pdata_main->b3_soft_ocp_warn_pin);
-	bcl_dev->bcl_irq[SOFT_OCP_WARN_CPUCL2] = gpio_to_irq(pdata_main->b2_soft_ocp_warn_pin);
-	bcl_dev->bcl_irq[OCP_WARN_TPU] = gpio_to_irq(pdata_main->b10_ocp_warn_pin);
-	bcl_dev->bcl_irq[SOFT_OCP_WARN_TPU] = gpio_to_irq(pdata_main->b10_soft_ocp_warn_pin);
+	bcl_dev->bcl_irq[OCP_WARN_CPUCL1] = gpiod_to_irq(pdata_main->b3_ocp_warn_pin);
+	bcl_dev->bcl_irq[OCP_WARN_CPUCL2] = gpiod_to_irq(pdata_main->b2_ocp_warn_pin);
+	bcl_dev->bcl_irq[SOFT_OCP_WARN_CPUCL1] = gpiod_to_irq(pdata_main->b3_soft_ocp_warn_pin);
+	bcl_dev->bcl_irq[SOFT_OCP_WARN_CPUCL2] = gpiod_to_irq(pdata_main->b2_soft_ocp_warn_pin);
+	bcl_dev->bcl_irq[OCP_WARN_TPU] = gpiod_to_irq(pdata_main->b10_ocp_warn_pin);
+	bcl_dev->bcl_irq[SOFT_OCP_WARN_TPU] = gpiod_to_irq(pdata_main->b10_soft_ocp_warn_pin);
 	bcl_dev->bcl_ops[SMPL_WARN].get_temp = smpl_warn_read_voltage;
 	bcl_dev->bcl_ops[OCP_WARN_CPUCL1].get_temp = ocp_cpu1_read_current;
 	bcl_dev->bcl_ops[OCP_WARN_CPUCL2].get_temp = ocp_cpu2_read_current;
@@ -3607,8 +3607,18 @@ static int google_bcl_parse_dtree(struct bcl_device *bcl_dev)
 	bcl_dev->cpu1_clkdivstep = ret ? 0 : val;
 	ret = of_property_read_u32(np, "cpu0_clkdivstep", &val);
 	bcl_dev->cpu0_clkdivstep = ret ? 0 : val;
-	bcl_dev->vdroop1_pin = of_get_gpio(np, 0);
-	bcl_dev->vdroop2_pin = of_get_gpio(np, 1);
+	bcl_dev->vdroop1_pin = devm_gpiod_get_index_optional(bcl_dev->device,
+							     NULL, 0,
+							     GPIOD_ASIS);
+	if (!bcl_dev->vdroop1_pin)
+		dev_notice(bcl_dev->device,
+			   "no vdroop1_pin in DT, continuing without\n");
+	bcl_dev->vdroop2_pin = devm_gpiod_get_index_optional(bcl_dev->device,
+							     NULL, 1,
+							     GPIOD_ASIS);
+	if (!bcl_dev->vdroop2_pin)
+		dev_notice(bcl_dev->device,
+			   "no vdroop2_pin in DT, continuing without\n");
 	if (google_bcl_init_clk_div(bcl_dev, CPU2, bcl_dev->cpu2_clkdivstep) != 0)
 		dev_err(bcl_dev->device, "CPU2 Address is NULL\n");
 	if (google_bcl_init_clk_div(bcl_dev, CPU1, bcl_dev->cpu1_clkdivstep) != 0)
