@@ -19,6 +19,7 @@
  */
 
 #include <arm64/exynos/exynos-pinctrl.h>
+#include <dt-bindings/gpio/gpio.h>
 #include "gs101-pinctrl.h"
 
 &pinctrl_0 {
@@ -59,8 +60,8 @@
 		reg = <0>;
 
 		st,irq-gpio = <&gpa9 0 0>;
-		st,reset-gpio = <&gpp26 0 0>;
-		st,switch_gpio = <&gpp26 1 0>;	// Low: AP, High: SLPI
+		st,reset-gpio = <&gpp26 0 GPIO_ACTIVE_LOW>;
+		st,switch-gpio = <&gpp26 1 GPIO_ACTIVE_HIGH>;	// Low: AP, High: SLPI
 		st,disp-rate-gpio = <&gpp22 1 0>;
 
 		vdd-supply = <&m_ldo25_reg>;
