@@ -967,12 +967,11 @@ static int exynos_cpu_pm_notify_callback(struct notifier_block *self,
 
 	switch (action) {
 	case CPU_PM_ENTER:
-		/* disable CPU_PM_ENTER event in reboot sequence */
-		if (system_rebooting)
-			return NOTIFY_BAD;
-
-		/* ignore CPU_PM_ENTER event in suspend sequence */
-		if (system_suspended)
+		/*
+		 * Ignore CPU_PM_ENTER event in reboot sequence or
+		 * in suspend sequence.
+		 */
+		if (system_suspended || system_rebooting)
 			return NOTIFY_OK;
 
 		/* ignore CPU_PM_ENTER event in itmon sequence */
@@ -990,6 +989,9 @@ static int exynos_cpu_pm_notify_callback(struct notifier_block *self,
 		exynos_cpupm_enter(cpu);
 		break;
 	case CPU_PM_EXIT:
+		if (system_rebooting)
+			return NOTIFY_OK;
+
 		cpu_state = readl_relaxed(nscode_base + CPU_STATE_OFFSET(cpu));
 		exynos_cpupm_exit(cpu, cpu_state & CANCEL_FLAG);
 		break;
