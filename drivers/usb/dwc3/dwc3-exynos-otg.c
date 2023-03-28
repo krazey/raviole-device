@@ -550,6 +550,7 @@ static int dwc3_otg_start_gadget(struct otg_fsm *fsm, int on)
 			goto err1;
 		}
 
+		exynos->gadget_state = true;
 		dwc3_otg_set_peripheral_mode(dotg);
 
 		dev_dbg(dev, "%s: start check usb configuration timer\n", __func__);
@@ -571,6 +572,7 @@ static int dwc3_otg_start_gadget(struct otg_fsm *fsm, int on)
 		if (exynos->extra_delay)
 			msleep(100);
 
+		exynos->gadget_state = false;
 		ret = dwc3_otg_phy_enable(fsm, 0, on);
 err1:
 		__pm_relax(dotg->wakelock);
