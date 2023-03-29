@@ -480,7 +480,7 @@ static int gs1010_tmu_set_trip_temp(struct thermal_zone_device *tz, int trip_id,
 	int i, ret;
 	unsigned char threshold[8] = {0, };
 
-	ret = thermal_zone_get_trip(tz, trip_id, &trip);
+	ret = __thermal_zone_get_trip(tz, trip_id, &trip);
 	if (ret) {
 		pr_err("Failed to get trip %d\n", trip_id);
 		return ret;
@@ -490,7 +490,7 @@ static int gs1010_tmu_set_trip_temp(struct thermal_zone_device *tz, int trip_id,
 		return 0;
 
 	for (i = (thermal_zone_get_num_trips(tz) - 1); i >= 0; i--) {
-		ret = thermal_zone_get_trip(tz, i, &trip);
+		ret = __thermal_zone_get_trip(tz, i, &trip);
 		if (ret) {
 			pr_err("Failed to get trip %d\n", i);
 			return ret;
