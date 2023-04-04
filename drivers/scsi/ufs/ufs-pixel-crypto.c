@@ -348,7 +348,7 @@ int pixel_ufs_crypto_init(struct ufs_hba *hba)
 	/* Advertise crypto quirks to ufshcd-core. */
 
 	/*
-	 * We need to override the blk_keyslot_manager, firstly in order to
+	 * We need to override the blk_crypto_profile, firstly in order to
 	 * override the UFSHCI standand blk_crypto_ll_ops with operations that
 	 * program/evict wrapped keys via the KDN, and secondly in order to
 	 * declare wrapped key support rather than standard key support.
@@ -363,7 +363,7 @@ int pixel_ufs_crypto_init(struct ufs_hba *hba)
 	hba->android_quirks |= UFSHCD_ANDROID_QUIRK_BROKEN_CRYPTO_ENABLE;
 
 	/* Override the PRDT entry size to include the extra crypto fields. */
-	hba->sg_entry_size = sizeof(struct pixel_ufs_prdt_entry);
+	ufshcd_set_sg_entry_size(hba, sizeof(struct pixel_ufs_prdt_entry));
 
 	/* Advertise crypto capabilities to the block layer. */
 	err = devm_blk_crypto_profile_init(hba->dev, &hba->crypto_profile, KDN_SLOT_NUM);
