@@ -28,7 +28,6 @@
 #include <host/xhci.h> /* $(srctree)/drivers/usb/host/xhci.h */
 #include <host/xhci-plat.h> /* $(srctree)/drivers/usb/host/xhci-plat.h */
 #include <host/xhci-mvebu.h> /* $(srctree)/drivers/usb/host/xhci-mvebu.h */
-#include <host/xhci-rcar.h> /* $(srctree)/drivers/usb/host/xhci-rcar.h */
 #include "xhci-exynos.h"
 #include "../dwc3/dwc3-exynos.h"
 #include <soc/google/exynos-cpupm.h>
