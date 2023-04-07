@@ -1930,8 +1930,7 @@ static void max77759_teardown_data_notifier(struct max77759_plat *chip)
 		usb_role_switch_unregister(chip->usb_sw);
 }
 
-static int max77759_probe(struct i2c_client *client,
-			  const struct i2c_device_id *i2c_id)
+static int max77759_probe(struct i2c_client *client)
 {
 	int ret, i;
 	struct max77759_plat *chip;
@@ -2271,7 +2270,7 @@ static struct i2c_driver max77759_i2c_driver = {
 		.name = "max77759tcpc",
 		.of_match_table = of_match_ptr(max77759_of_match),
 	},
-	.probe = max77759_probe,
+	.probe_new = max77759_probe,
 	.remove = max77759_remove,
 	.id_table = max77759_id,
 	.shutdown = max77759_shutdown,

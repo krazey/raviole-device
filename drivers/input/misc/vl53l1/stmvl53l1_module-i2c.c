@@ -498,8 +498,7 @@ static void stmvl53l1_release_gpios(struct i2c_data *i2c_data)
 	}
 }
 
-static int stmvl53l1_probe(struct i2c_client *client,
-			const struct i2c_device_id *id)
+static int stmvl53l1_probe(struct i2c_client *client)
 {
 	int rc = 0;
 	struct stmvl53l1_data *vl53l1_data = NULL;
@@ -622,7 +621,7 @@ static struct i2c_driver stmvl53l1_driver = {
 		.of_match_table = st_stmvl53l1_dt_match,
 		.pm	= &stmvl53l1_pm_ops,
 	},
-	.probe	= stmvl53l1_probe,
+	.probe_new = stmvl53l1_probe,
 	.remove	= stmvl53l1_remove,
 	.id_table = stmvl53l1_id,
 
