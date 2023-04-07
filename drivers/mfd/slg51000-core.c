@@ -554,8 +554,7 @@ static const struct regmap_config slg51000_regmap_config = {
 	.reg_write = slg51000_reg_write,
 };
 
-static int slg51000_i2c_probe(struct i2c_client *client,
-			      const struct i2c_device_id *id)
+static int slg51000_i2c_probe(struct i2c_client *client)
 {
 	struct slg51000_dev *slg51000;
 	int gpio, ret;
@@ -788,7 +787,7 @@ static struct i2c_driver slg51000_i2c_driver = {
 		.of_match_table = of_match_ptr(slg51000_of_match),
 #endif /* CONFIG_OF */
 	},
-	.probe = slg51000_i2c_probe,
+	.probe_new = slg51000_i2c_probe,
 	.remove = slg51000_i2c_remove,
 	.id_table = slg51000_i2c_id,
 };

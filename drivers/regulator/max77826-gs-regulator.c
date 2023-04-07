@@ -535,8 +535,7 @@ err_nomem:
 	return err;
 }
 
-static int max77826_i2c_probe(struct i2c_client *i2c,
-			    const struct i2c_device_id *id)
+static int max77826_i2c_probe(struct i2c_client *i2c)
 {
 	struct max77826_dev *max77826;
 	struct max77826_platform_data *pdata;
@@ -654,7 +653,7 @@ static struct i2c_driver max77826_i2c_driver = {
 		.owner = THIS_MODULE,
 		.of_match_table = max77826_match_table,
 	},
-	.probe    = max77826_i2c_probe,
+	.probe_new    = max77826_i2c_probe,
 	.remove   = max77826_i2c_remove,
 	.id_table = max77826_i2c_id,
 };

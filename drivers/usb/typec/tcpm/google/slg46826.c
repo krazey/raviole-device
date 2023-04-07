@@ -43,8 +43,7 @@ int enable_ls(struct i2c_client *client)
 }
 EXPORT_SYMBOL_GPL(enable_ls);
 
-static int slg46826_probe(struct i2c_client *client,
-			  const struct i2c_device_id *i2c_id)
+static int slg46826_probe(struct i2c_client *client)
 {
 	struct regmap *regmap;
 
@@ -79,7 +78,7 @@ static struct i2c_driver slg46826_i2c_driver = {
 		.name = "slg46826",
 		.of_match_table = of_match_ptr(slg46826_of_match),
 	},
-	.probe = slg46826_probe,
+	.probe_new = slg46826_probe,
 	.id_table = slg46826_id,
 };
 module_i2c_driver(slg46826_i2c_driver);
