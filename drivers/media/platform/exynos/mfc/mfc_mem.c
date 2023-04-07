@@ -1,13 +1,10 @@
+// SPDX-License-Identifier: GPL-2.0
 /*
  * drivers/media/platform/exynos/mfc/mfc_mem.c
  *
  * Copyright (c) 2016 Samsung Electronics Co., Ltd.
  *		http://www.samsung.com/
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * Copyright (C) 2023 Google, Inc.
  */
 
 #include <linux/property.h>
@@ -535,7 +532,8 @@ int mfc_iommu_map_firmware(struct mfc_core *core, struct mfc_special_buf *fw_buf
 	fw_buf->map_size = iommu_map_sg(core->domain, reserved_base,
 			fw_buf->sgt->sgl,
 			fw_buf->sgt->orig_nents,
-			IOMMU_READ|IOMMU_WRITE);
+			IOMMU_READ|IOMMU_WRITE,
+			GFP_KERNEL);
 	if (!fw_buf->map_size) {
 		mfc_core_err("Failed to map iova (err VA: %pad, PA: %pap)\n",
 				&reserved_base, &fw_buf->paddr);
