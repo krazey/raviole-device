@@ -935,6 +935,7 @@ static struct iommu_device *samsung_sysmmu_probe_device(struct device *dev)
 				dev_name(client->sysmmus[i]->dev));
 			while (i-- > 0)
 				device_link_del(client->dev_link[i]);
+			kfree(client->dev_link);
 			return ERR_PTR(-EINVAL);
 		}
 		dev_dbg(dev, "device link to %s\n",
