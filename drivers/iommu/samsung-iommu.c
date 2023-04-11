@@ -1349,7 +1349,7 @@ static int samsung_sysmmu_device_probe(struct platform_device *pdev)
 	struct sysmmu_drvdata *data;
 	struct device *dev = &pdev->dev;
 	struct resource *res;
-	int irq, ret, err = 0;
+	int irq, ret;
 
 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
 	if (!data)
@@ -1399,6 +1399,14 @@ static int samsung_sysmmu_device_probe(struct platform_device *pdev)
 	if (ret)
 		return ret;
 
+	if (!sysmmu_global_init_done) {
+		ret = samsung_sysmmu_init_global();
+		if (ret) {
+			dev_err(dev, "failed to initialize global data\n");
+			return ret;
+		}
+	}
+
 	ret = iommu_device_sysfs_add(&data->iommu, data->dev,
 				     NULL, dev_name(dev));
 	if (ret) {
@@ -1406,22 +1414,15 @@ static int samsung_sysmmu_device_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-	err = iommu_device_register(&data->iommu, &samsung_sysmmu_ops, dev);
-	if (err) {
-		dev_err(dev, "failed to register iommu\n");
-		goto err_iommu_register;
-	}
-
-	if (!sysmmu_global_init_done) {
-		err = samsung_sysmmu_init_global();
-		if (err) {
-			dev_err(dev, "failed to initialize global data\n");
-			goto err_global_init;
-		}
-	}
 	pm_runtime_enable(dev);
 
 	platform_set_drvdata(pdev, data);
+
+	ret = iommu_device_register(&data->iommu, &samsung_sysmmu_ops, dev);
+	if (ret) {
+		dev_err(dev, "failed to register iommu\n");
+		goto out_sysfs_remove;
+	}
 
 	dev_info(dev, "initialized IOMMU. Ver %d.%d.%d, %sgate clock\n",
 		 MMU_MAJ_VER(data->version),
@@ -1430,11 +1431,9 @@ static int samsung_sysmmu_device_probe(struct platform_device *pdev)
 		 data->clk ? "" : "no ");
 	return 0;
 
-err_global_init:
-	iommu_device_unregister(&data->iommu);
-err_iommu_register:
+out_sysfs_remove:
 	iommu_device_sysfs_remove(&data->iommu);
-	return err;
+	return ret;
 }
 
 static void samsung_sysmmu_device_shutdown(struct platform_device *pdev)
