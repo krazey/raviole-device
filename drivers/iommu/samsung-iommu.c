@@ -489,31 +489,6 @@ err_drvdata_add:
 	return ret;
 }
 
-static void samsung_sysmmu_detach_dev(struct iommu_domain *dom,
-				      struct device *dev)
-{
-	struct sysmmu_clientdata *client;
-	struct samsung_sysmmu_domain *domain;
-	struct list_head *group_list;
-	struct sysmmu_drvdata *drvdata;
-	struct iommu_group *group = dev->iommu_group;
-	phys_addr_t page_table;
-	unsigned int i;
-
-	domain = to_sysmmu_domain(dom);
-	group_list = iommu_group_get_iommudata(group);
-
-	client = dev_iommu_priv_get(dev);
-	for (i = 0; i < client->sysmmu_count; i++) {
-		drvdata = client->sysmmus[i];
-
-		samsung_sysmmu_detach_drvdata(drvdata);
-	}
-
-	page_table = virt_to_phys(domain->page_table);
-	dev_info(dev, "detached from pgtable %pap\n", &page_table);
-}
-
 static inline sysmmu_pte_t make_sysmmu_pte(phys_addr_t paddr,
 					   unsigned int pgsize, unsigned int attr)
 {
@@ -1200,7 +1175,6 @@ static struct iommu_ops samsung_sysmmu_ops = {
 	.owner						= THIS_MODULE,
 	.default_domain_ops	= &(const struct iommu_domain_ops) {
 		.attach_dev		= samsung_sysmmu_attach_dev,
-		.detach_dev		= samsung_sysmmu_detach_dev,
 		.map			= samsung_sysmmu_map,
 		.unmap			= samsung_sysmmu_unmap,
 		.unmap_pages		= samsung_sysmmu_unmap_pages,
