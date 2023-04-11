@@ -946,19 +946,13 @@ static struct iommu_device *samsung_sysmmu_probe_device(struct device *dev)
 
 static void samsung_sysmmu_release_device(struct device *dev)
 {
-	struct iommu_fwspec *fwspec = dev_iommu_fwspec_get(dev);
 	struct sysmmu_clientdata *client;
 	unsigned int i;
-
-	if (!fwspec || fwspec->ops != &samsung_sysmmu_ops)
-		return;
 
 	client = (struct sysmmu_clientdata *) dev_iommu_priv_get(dev);
 	for (i = 0; i < client->sysmmu_count; i++)
 		device_link_del(client->dev_link[i]);
 	kfree(client->dev_link);
-
-	iommu_fwspec_free(dev);
 }
 
 static void samsung_sysmmu_group_data_release(void *iommu_data)
