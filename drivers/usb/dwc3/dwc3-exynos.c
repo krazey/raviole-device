@@ -66,9 +66,8 @@ static int dwc3_exynos_clk_get(struct dwc3_exynos *exynos)
 		return -EINVAL;
 	}
 
-	clk_ids = devm_kmalloc(dev,
-			       (clk_count + 1) * sizeof(const char *),
-				GFP_KERNEL);
+	clk_ids = devm_kcalloc(dev, clk_count + 1, sizeof(*clk_ids),
+			       GFP_KERNEL);
 	if (!clk_ids) {
 		dev_err(dev, "failed to alloc for clock ids");
 		return -ENOMEM;
@@ -94,10 +93,9 @@ static int dwc3_exynos_clk_get(struct dwc3_exynos *exynos)
 				clk_count--;
 		}
 	}
-	clk_ids[clk_count] = NULL;
 
-	exynos->clocks = devm_kmalloc(exynos->dev,
-				      clk_count * sizeof(struct clk *), GFP_KERNEL);
+	exynos->clocks = devm_kcalloc(exynos->dev, clk_count + 1, sizeof(*exynos->clocks),
+				      GFP_KERNEL);
 	if (!exynos->clocks)
 		return -ENOMEM;
 
@@ -108,7 +106,6 @@ static int dwc3_exynos_clk_get(struct dwc3_exynos *exynos)
 
 		exynos->clocks[i] = clk;
 	}
-	exynos->clocks[i] = NULL;
 
 	return 0;
 
@@ -443,9 +440,6 @@ void dwc3_exynos_gadget_disconnect_proc(struct dwc3 *dwc)
 	reg &= ~DWC3_DCTL_INITU2ENA;
 	dwc3_exynos_writel(dwc->regs, DWC3_DCTL, reg);
 
-	if (dwc->gadget_driver && dwc->gadget_driver->disconnect)
-		dwc->gadget_driver->disconnect(dwc->gadget);
-
 	dwc->gadget->speed = USB_SPEED_UNKNOWN;
 	dwc->setup_packet_pending = false;
 	usb_gadget_set_state(dwc->gadget, USB_STATE_NOTATTACHED);
@@ -534,7 +528,7 @@ int dwc3_exynos_set_bus_clock(struct device *dev, int clk_level)
 			dev_dbg(dev, "Unsupported clock level");
 		}
 
-		dev_dbg(dev, "Changed USB Bus clock %d\n",
+		dev_dbg(dev, "Changed USB Bus clock %lu\n",
 			 clk_get_rate(exynos->bus_clock));
 	}
 
@@ -677,6 +671,57 @@ static int dwc3_exynos_remove_child(struct device *dev, void *unused)
 	return 0;
 }
 
+static void dwc3_exynos_host_fill_xhci_irq_res(struct dwc3 *dwc,
+					int irq, char *name)
+{
+	struct platform_device *pdev = to_platform_device(dwc->dev);
+	struct device_node *np = dev_of_node(&pdev->dev);
+
+	dwc->xhci_resources[1].start = irq;
+	dwc->xhci_resources[1].end = irq;
+	dwc->xhci_resources[1].flags = IORESOURCE_IRQ | irq_get_trigger_type(irq);
+	if (!name && np)
+		dwc->xhci_resources[1].name = of_node_full_name(pdev->dev.of_node);
+	else
+		dwc->xhci_resources[1].name = name;
+}
+
+static int dwc3_exynos_host_get_irq(struct dwc3 *dwc)
+{
+	struct platform_device	*dwc3_pdev = to_platform_device(dwc->dev);
+	int irq;
+
+	irq = platform_get_irq_byname_optional(dwc3_pdev, "host");
+	if (irq > 0) {
+		dwc3_exynos_host_fill_xhci_irq_res(dwc, irq, "host");
+		goto out;
+	}
+
+	if (irq == -EPROBE_DEFER)
+		goto out;
+
+	irq = platform_get_irq_byname_optional(dwc3_pdev, "dwc_usb3");
+	if (irq > 0) {
+		dwc3_exynos_host_fill_xhci_irq_res(dwc, irq, "dwc_usb3");
+		goto out;
+	}
+
+	if (irq == -EPROBE_DEFER)
+		goto out;
+
+	irq = platform_get_irq(dwc3_pdev, 0);
+	if (irq > 0) {
+		dwc3_exynos_host_fill_xhci_irq_res(dwc, irq, NULL);
+		goto out;
+	}
+
+	if (!irq)
+		irq = -EINVAL;
+
+out:
+	return irq;
+}
+
 int dwc3_exynos_host_init(struct dwc3_exynos *exynos)
 {
 	struct dwc3		*dwc = exynos->dwc;
@@ -687,6 +732,7 @@ int dwc3_exynos_host_init(struct dwc3_exynos *exynos)
 	struct platform_device	*dwc3_pdev = to_platform_device(dwc->dev);
 	int			prop_idx = 0;
 	int			ret = 0;
+	int			irq;
 
 	/* Configuration xhci resources */
 	res = platform_get_resource(dwc3_pdev, IORESOURCE_MEM, 0);
@@ -700,16 +746,9 @@ int dwc3_exynos_host_init(struct dwc3_exynos *exynos)
 	dwc->xhci_resources[0].flags = res->flags;
 	dwc->xhci_resources[0].name = res->name;
 
-	res = platform_get_resource(dwc3_pdev, IORESOURCE_IRQ, 0);
-	if (!res) {
-		dev_err(dev, "missing irq resource\n");
-		return -ENODEV;
-	}
-
-	dwc->xhci_resources[1].start = dwc->irq_gadget;
-	dwc->xhci_resources[1].end = dwc->irq_gadget;
-	dwc->xhci_resources[1].flags = res->flags;
-	dwc->xhci_resources[1].name = res->name;
+	irq = dwc3_exynos_host_get_irq(dwc);
+	if (irq < 0)
+		return irq;
 
 	xhci = platform_device_alloc("xhci-hcd-exynos", PLATFORM_DEVID_AUTO);
 	if (!xhci) {
@@ -1187,6 +1226,9 @@ static int dwc3_exynos_probe(struct platform_device *pdev)
 
 	otg_set_peripheral(&exynos->dotg->otg, exynos->dwc->gadget);
 
+	ret = usb_gadget_deactivate(exynos->dwc->gadget);
+	if (ret < 0)
+		dev_err(dev, "USB gadget deactivate failed with %d\n", ret);
 	/*
 	 * To avoid missing notification in kernel booting check extcon
 	 * state to run state machine.
@@ -1272,8 +1314,10 @@ static int dwc3_exynos_runtime_suspend(struct device *dev)
 
 	dwc = exynos->dwc;
 	spin_lock_irqsave(&dwc->lock, flags);
-	if (pm_runtime_suspended(dev))
+	if (pm_runtime_suspended(dev)) {
+		spin_unlock_irqrestore(&dwc->lock, flags);
 		return 0;
+	}
 
 	dwc3_exynos_clk_disable(exynos);
 

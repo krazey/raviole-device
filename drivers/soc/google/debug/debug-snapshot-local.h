@@ -51,6 +51,7 @@ struct dbg_snapshot_desc {
 	int sjtag_status;
 	bool in_reboot;
 	bool in_panic;
+	bool in_warm;
 	int panic_action;
 };
 
@@ -123,6 +124,7 @@ extern struct itmon_logs *dss_itmon;
 #define DSS_SIGN_PANIC			0xBABA
 #define DSS_SIGN_UNKNOWN_REBOOT	0xCACA
 #define DSS_SIGN_EMERGENCY_REBOOT	0xCACB
+#define DSS_SIGN_WARM_REBOOT		0xCACC
 #define DSS_SIGN_SAFE_FAULT		0xFAFA
 #define DSS_SIGN_NORMAL_REBOOT		0xCAFE
 #define DSS_SIGN_LOCKUP			0xDEADBEEF
@@ -151,6 +153,7 @@ extern struct itmon_logs *dss_itmon;
 #define DSS_OFFSET_DUMP_GPR_WAIT	(0x380)
 #define DSS_OFFSET_WAKEUP_WAIT		(0x390)
 #define DSS_OFFSET_CORE_POWER_STAT	(0x400)
+#define DSS_OFFSET_CORE_PMU_VAL		(0x440)
 #define DSS_OFFSET_CORE_EHLD_STAT	(0x460)
 #define DSS_OFFSET_GPR_POWER_STAT	(0x480)
 #define DSS_OFFSET_PANIC_STAT		(0x500)

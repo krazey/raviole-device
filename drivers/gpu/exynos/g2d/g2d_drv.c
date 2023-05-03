@@ -758,6 +758,7 @@ static int g2d_probe(struct platform_device *pdev)
 	struct resource *res;
 	__u32 version;
 	int ret;
+	int irq;
 
 	g2d_dev = devm_kzalloc(&pdev->dev, sizeof(*g2d_dev), GFP_KERNEL);
 	if (!g2d_dev)
@@ -771,20 +772,18 @@ static int g2d_probe(struct platform_device *pdev)
 	if (IS_ERR(g2d_dev->reg))
 		return PTR_ERR(g2d_dev->reg);
 
-	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
-	if (!res) {
-		perrdev(g2d_dev, "Failed to get IRQ resource");
-		return -ENOENT;
+	irq = platform_get_irq(pdev, 0);
+	if (irq < 0) {
+		perrdev(g2d_dev, "Failed to get IRQ");
+		return irq;
 	}
 
-	ret = devm_request_irq(&pdev->dev, res->start,
+	ret = devm_request_irq(&pdev->dev, irq,
 			       g2d_irq_handler, 0, pdev->name, g2d_dev);
 	if (ret) {
 		perrdev(g2d_dev, "Failed to install IRQ handler");
 		return ret;
 	}
-
-	dma_set_mask(&pdev->dev, DMA_BIT_MASK(36));
 
 	g2d_dev->clock = devm_clk_get(&pdev->dev, "gate");
 	if (PTR_ERR(g2d_dev->clock) == -ENOENT) {
@@ -797,7 +796,7 @@ static int g2d_probe(struct platform_device *pdev)
 	}
 
 	/* it is okay if fault handler is not registered since it is just for debugging */
-	ret = iommu_register_device_fault_handler(&pdev->dev, g2d_fault_handler, &pdev->dev);
+	ret = iommu_register_device_fault_handler(&pdev->dev, g2d_fault_handler, g2d_dev);
 	if (ret)
 		perrdev(g2d_dev, "Failed to register IOMMU fault handler (%d)", ret);
 

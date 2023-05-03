@@ -14,6 +14,7 @@
 #include <linux/mfd/core.h>
 #include <linux/mfd/slg51000.h>
 #include <linux/of_gpio.h>
+#include <linux/pinctrl/consumer.h>
 #include <linux/regmap.h>
 
 #define SLG51000_CHIP_ID_LEN            3
@@ -727,7 +728,7 @@ out:
 	return ret;
 }
 
-static int slg51000_i2c_remove(struct i2c_client *client)
+static void slg51000_i2c_remove(struct i2c_client *client)
 {
 	struct slg51000_dev *slg51000 = i2c_get_clientdata(client);
 	struct gpio_desc *desc;
@@ -762,7 +763,8 @@ static int slg51000_i2c_remove(struct i2c_client *client)
 		usleep_range(1000, 1020);
 	}
 
-	return ret ? -EIO : 0;
+	if (ret)
+		pr_err("Failed to update the gpiod direction on remove\n");
 }
 
 static const struct i2c_device_id slg51000_i2c_id[] = {

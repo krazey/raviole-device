@@ -15,6 +15,7 @@
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/delay.h>
+#include <linux/pinctrl/consumer.h>
 #include <linux/regulator/driver.h>
 #include <linux/slab.h>
 #include <linux/of_gpio.h>
@@ -620,7 +621,7 @@ static int max77826_i2c_probe(struct i2c_client *i2c,
 	return ret;
 }
 
-static int max77826_i2c_remove(struct i2c_client *i2c)
+static void max77826_i2c_remove(struct i2c_client *i2c)
 {
 	struct max77826_dev *max77826 = i2c_get_clientdata(i2c);
 	struct pinctrl_state *state;
@@ -634,8 +635,6 @@ static int max77826_i2c_remove(struct i2c_client *i2c)
 		pinctrl_select_state(max77826->pinctrl, state);
 	gpio_set_value(max77826->enable_gpio, 0);
 	gpio_direction_input(max77826->enable_gpio);
-
-	return 0;
 }
 
 static const struct i2c_device_id max77826_i2c_id[] = {

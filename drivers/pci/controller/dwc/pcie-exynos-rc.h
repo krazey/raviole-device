@@ -48,8 +48,10 @@
 #define APP_INIT_RST			0x100
 #define XMIT_PME_TURNOFF		0x118
 #define PCIE_ELBI_RDLH_LINKUP		0x2C8
+#define PCIE_ELBI_LTSSM_STATE_MASK	0x003F
 #define PCIE_CXPL_DEBUG_INFO_H		0x2CC
 #define PCIE_PM_DSTATE			0x2E8
+#define PCIE_PM_DSTATE_MASK		0x0003
 #define PCIE_LINKDOWN_RST_CTRL_SEL	0x3A0
 #define PCIE_LINKDOWN_RST_MANUAL	(0x1 << 1)
 #define PCIE_LINKDOWN_RST_FSM		(0x1 << 0)
@@ -181,7 +183,6 @@
 #define TARGET_LINK_WIDTH_MASK		0xffffffc0
 #define DIRECT_LINK_WIDTH_CHANGE_SET	0x40
 
-#define PCIE_ATU_VIEWPORT		0x900
 #define EXYNOS_PCIE_ATU_REGION_INBOUND	(0x1 << 31)
 #define EXYNOS_PCIE_ATU_REGION_OUTBOUND	(0x0 << 31)
 #define EXYNOS_PCIE_ATU_REGION_INDEX2	(0x2 << 0)
@@ -195,14 +196,9 @@
 #define PCIE_ATU_CR2			0x908
 #define EXYNOS_PCIE_ATU_ENABLE		(0x1 << 31)
 #define EXYNOS_PCIE_ATU_BAR_MODE_ENABLE	(0x1 << 30)
-#define PCIE_ATU_LOWER_BASE		0x90C
-#define PCIE_ATU_UPPER_BASE		0x910
-#define PCIE_ATU_LIMIT			0x914
-#define PCIE_ATU_LOWER_TARGET		0x918
 #define EXYNOS_PCIE_ATU_BUS(x)		(((x) & 0xff) << 24)
 #define EXYNOS_PCIE_ATU_DEV(x)		(((x) & 0x1f) << 19)
 #define EXYNOS_PCIE_ATU_FUNC(x)		(((x) & 0x7) << 16)
-#define PCIE_ATU_UPPER_TARGET		0x91C
 
 #define PCIE_MSI_ADDR_LO		0x820
 #define PCIE_MSI_ADDR_HI		0x824
@@ -332,7 +328,7 @@ struct pcie_eom_result {
 	unsigned long err_cnt;
 };
 
-void exynos_pcie_rc_phy_init(struct pcie_port *pp);
+void exynos_pcie_rc_phy_init(struct dw_pcie_rp *pp);
 
 #if IS_ENABLED(CONFIG_EXYNOS_PCIE_IOMMU)
 void pcie_sysmmu_enable(int ch_num);

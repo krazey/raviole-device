@@ -27,11 +27,11 @@
 #include <soc/google/exynos-cpupm.h>
 #include <soc/google/exynos_cpu_cooling.h>
 #include <soc/google/debug-snapshot.h>
+#include <trace/hooks/systrace.h>
 
 #include <trace/events/power.h>
 
 #include "exynos-acme.h"
-#include "../soc/google/vh/kernel/systrace.h"
 /*
  * list head of cpufreq domain
  */
@@ -204,22 +204,6 @@ static int exynos_cpufreq_init(struct cpufreq_policy *policy)
 	return 0;
 }
 
-/* TODO: do we need this???
-static unsigned int exynos_cpufreq_resolve_freq(struct cpufreq_policy *policy,
-						unsigned int target_freq)
-{
-	unsigned int index;
-
-	index = cpufreq_frequency_table_target(policy, target_freq, CPUFREQ_RELATION_L);
-	if (index < 0) {
-		pr_err("target frequency(%d) out of range\n", target_freq);
-		return 0;
-	}
-
-	return policy->freq_table[index].frequency;
-}
-*/
-
 static int exynos_cpufreq_online(struct cpufreq_policy *policy)
 {
 	struct exynos_cpufreq_domain *domain;
@@ -308,8 +292,7 @@ static int exynos_cpufreq_verify(struct cpufreq_policy_data *new_policy)
 }
 
 static int __exynos_cpufreq_target(struct cpufreq_policy *policy,
-				   unsigned int target_freq,
-				   unsigned int relation)
+				   unsigned int target_freq)
 {
 	struct exynos_cpufreq_domain *domain = find_domain(policy->cpu);
 	int ret = 0;
@@ -343,12 +326,11 @@ out:
 	return ret;
 }
 
-static int exynos_cpufreq_target(struct cpufreq_policy *policy,
-				 unsigned int target_freq,
-				 unsigned int relation)
+static int exynos_cpufreq_target_index(struct cpufreq_policy *policy,
+				 unsigned int index)
 {
 	struct exynos_cpufreq_domain *domain = find_domain(policy->cpu);
-	unsigned long freq;
+	unsigned long target_freq;
 	int ret = 0;
 
 	ATRACE_BEGIN(__func__);
@@ -357,23 +339,19 @@ static int exynos_cpufreq_target(struct cpufreq_policy *policy,
 		goto out;
 	}
 
-	mutex_lock(&domain->lock);
-	freq = cpufreq_driver_resolve_freq(policy, target_freq);
+	target_freq = policy->freq_table[index].frequency;
+
 	// Always go to DM_CALL even with `domain->old == freq` to update dm->governor_freq
-	if (!freq) {
-		mutex_unlock(&domain->lock);
+	if (!target_freq) {
 		goto out;
 	}
-	mutex_unlock(&domain->lock);
 
 	if (list_empty(&domain->dm_list)) {
-		ret = __exynos_cpufreq_target(policy, target_freq, relation);
+		ret = __exynos_cpufreq_target(policy, target_freq);
 		goto out;
 	}
 
-	freq = (unsigned long)target_freq;
-
-	ret = DM_CALL(domain->dm_type, &freq);
+	ret = DM_CALL(domain->dm_type, &target_freq);
 
 out:
 	ATRACE_END();
@@ -467,13 +445,12 @@ static struct notifier_block exynos_cpufreq_pm = {
 
 static struct cpufreq_driver exynos_driver = {
 	.name		= "exynos_cpufreq",
-	.flags		= CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
+	.flags		= CPUFREQ_HAVE_GOVERNOR_PER_POLICY | CPUFREQ_ASYNC_NOTIFICATION |
 				CPUFREQ_NEED_UPDATE_LIMITS, // force update dm->governor_freq
 	.init		= exynos_cpufreq_init,
 	.verify		= exynos_cpufreq_verify,
-	.target		= exynos_cpufreq_target,
+	.target_index   = exynos_cpufreq_target_index,
 	.get		= exynos_cpufreq_get,
-	//.resolve_freq	= exynos_cpufreq_resolve_freq,
 	.online		= exynos_cpufreq_online,
 	.offline	= exynos_cpufreq_offline,
 	.suspend	= exynos_cpufreq_suspend,
@@ -740,7 +717,7 @@ static int dm_scaler(int dm_type, void *devdata, unsigned int target_freq,
 	struct exynos_cpufreq_domain *domain = devdata;
 	struct cpufreq_policy *policy;
 	struct cpumask mask;
-	int ret;
+	int ret, target_index;
 
 	/* Skip scaling if all cpus of domain are hotplugged out */
 	cpumask_and(&mask, &domain->cpus, cpu_online_mask);
@@ -753,7 +730,10 @@ static int dm_scaler(int dm_type, void *devdata, unsigned int target_freq,
 		return -ENODEV;
 	}
 
-	ret = __exynos_cpufreq_target(policy, target_freq, relation);
+
+	target_index = cpufreq_frequency_table_target(policy, target_freq, relation);
+	target_freq = policy->freq_table[target_index].frequency;
+	ret = __exynos_cpufreq_target(policy, target_freq);
 
 	cpufreq_cpu_put(policy);
 
@@ -942,7 +922,8 @@ init_freq_qos(struct exynos_cpufreq_domain *domain, struct cpufreq_policy *polic
 	/* booting boost, it is expired after 40s */
 	INIT_DELAYED_WORK(&domain->work, freq_qos_release);
 	schedule_delayed_work(&domain->work, msecs_to_jiffies(40000));
-	pr_info("Set boot pm_qos domain%d to %d for %d\n", domain->id, boot_qos, 40 * USEC_PER_SEC);
+	pr_info("Set boot pm_qos domain%d to %d for %ld\n", domain->id,
+		boot_qos, 40 * USEC_PER_SEC);
 	return 0;
 }
 

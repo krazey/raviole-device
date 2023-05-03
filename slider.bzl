@@ -1,32 +1,4 @@
-# Copyright (C) 2022 The Android Open Source Project
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
-load("//build/bazel_common_rules/dist:dist.bzl", "copy_to_dist_dir")
-load(
-    "//build/kernel/kleaf:kernel.bzl",
-    "kernel_build_abi",
-    "kernel_build_abi_dist",
-    "kernel_images",
-    "kernel_module",
-    "kernel_modules_install",
-    "kernel_unstripped_modules_archive",
-    "merged_kernel_uapi_headers",
-)
-load("@kernel_toolchain_info//:dict.bzl", "BRANCH", "CLANG_VERSION")
-
-DEFINE_ABI_TARGETS = False
+# SPDX-License-Identifier: GPL-2.0
 
 SLIDER_DTBOS = [
     "gs101-oriole.dtbo",
@@ -48,6 +20,7 @@ SLIDER_DTBOS = [
     "gs101-whitefin2v2.dtbo",
     "gs101-whitefin.dtbo",
 ]
+<<<<<<< HEAD   (15f998 kleaf: Add slider_tests.)
 
 def define_slider():
     native.filegroup(
@@ -401,3 +374,5 @@ def define_slider():
             ":slider_modules_test",
         ] + [m + "_test" for m in _slider_modules],
     )
+=======
+>>>>>>> BRANCH (892242 kleaf: add generic kernel labels)

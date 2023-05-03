@@ -17,11 +17,13 @@
 #include <linux/module.h>
 #include <linux/scatterlist.h>
 #include <linux/slab.h>
+#include <linux/trusty/trusty.h>
 #include <linux/platform_device.h>
 #include <linux/iommu.h>
 #include <linux/device.h>
 
-#include "../deferred-free-helper.h"
+/* This header is in ACK under drivers/dma-buf/heaps. */
+#include <heaps/deferred-free-helper.h>
 
 /* the number of pages that allocated from heaps and currently used */
 static atomic64_t inuse_pages = ATOMIC_INIT(0);
@@ -39,7 +41,7 @@ static inline void dma_heap_dec_inuse(unsigned long pages)
 }
 
 unsigned long dma_heap_inuse_pages(void);
-unsigned long dma_heap_pool_pages(void);
+unsigned long dma_heap_pool_bytes(void);
 
 struct samsung_dma_buffer {
 	struct samsung_dma_heap *heap;
@@ -54,6 +56,7 @@ struct samsung_dma_buffer {
 	int vmap_cnt;
 	struct deferred_freelist_item deferred_free;
 	unsigned long ino;
+	trusty_shared_mem_id_t mem_id;
 };
 
 struct samsung_dma_heap {
@@ -64,6 +67,7 @@ struct samsung_dma_heap {
 	unsigned long flags;
 	unsigned int alignment;
 	unsigned int protection_id;
+	struct device *trusty_dev;
 };
 
 extern const struct dma_buf_ops samsung_dma_buf_ops;
@@ -152,18 +156,20 @@ struct buffer_prot_info {
 };
 
 #if IS_ENABLED(CONFIG_EXYNOS_CONTENT_PATH_PROTECTION)
-void *samsung_dma_buffer_protect(struct samsung_dma_heap *heap, unsigned int chunk_size,
-				 unsigned int nr_pages, unsigned long paddr);
-int samsung_dma_buffer_unprotect(void *priv, struct samsung_dma_heap *heap);
+void *samsung_dma_buffer_protect(struct samsung_dma_buffer *buffer,
+				 unsigned int chunk_size, unsigned int nr_pages,
+				 unsigned long paddr);
+int samsung_dma_buffer_unprotect(struct samsung_dma_buffer *buffer);
 #else
-static inline void *samsung_dma_buffer_protect(struct samsung_dma_heap *heap,
-					       unsigned int chunk_size, unsigned int nr_pages,
+static inline void *samsung_dma_buffer_protect(struct samsung_dma_buffer *buffer,
+					       unsigned int chunk_size,
+					       unsigned int nr_pages,
 					       unsigned long paddr)
 {
 	return NULL;
 }
 
-static inline int samsung_dma_buffer_unprotect(void *priv, struct samsung_dma_heap *heap)
+static inline int samsung_dma_buffer_unprotect(struct samsung_dma_buffer *buffer)
 {
 	return 0;
 }

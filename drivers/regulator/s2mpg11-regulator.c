@@ -345,6 +345,24 @@ static int s2mpg11_pmic_dt_parse_pdata(struct s2mpg11_dev *iodev,
 	ret = of_property_read_u32(pmic_np, "buck_ocp_ctrl1", &val);
 	pdata->buck_ocp_ctrl1 = ret ? 0 : val;
 
+	ret = of_property_read_u32(pmic_np, "buck_ocp_ctrl2", &val);
+	pdata->buck_ocp_ctrl2 = ret ? 0 : val;
+
+	ret = of_property_read_u32(pmic_np, "buck_ocp_ctrl3", &val);
+	pdata->buck_ocp_ctrl3 = ret ? 0 : val;
+
+	ret = of_property_read_u32(pmic_np, "buck_ocp_ctrl4", &val);
+	pdata->buck_ocp_ctrl4 = ret ? 0 : val;
+
+	ret = of_property_read_u32(pmic_np, "buck_ocp_ctrl5", &val);
+	pdata->buck_ocp_ctrl5 = ret ? 0 : val;
+
+	ret = of_property_read_u32(pmic_np, "buck_ocp_ctrl6", &val);
+	pdata->buck_ocp_ctrl6 = ret ? 0 : val;
+
+	ret = of_property_read_u32(pmic_np, "buck_ocp_ctrl7", &val);
+	pdata->buck_ocp_ctrl7 = ret ? 0 : val;
+
 	ret = of_property_read_u32(pmic_np, "b2_ocp_warn_en", &val);
 	pdata->b2_ocp_warn_en = ret ? 0 : val;
 
@@ -470,7 +488,7 @@ static ssize_t s2mpg11_pmic_write_store(struct device *dev,
 		return size;
 	}
 
-	ret = sscanf(buf, "%x %x", &reg, &data);
+	ret = sscanf(buf, "%hx %hhx", &reg, &data);
 	if (ret != 2) {
 		pr_err("%s: input error\n", __func__);
 		return size;
@@ -564,10 +582,33 @@ void s2mpg11_ocp_detection_config(struct s2mpg11_pmic *s2mpg11,
 {
 	int ret;
 
-	pr_info("OCP BUCK_OCP_CTRL1: 0x%x\n", pdata->buck_ocp_ctrl1);
 	ret = s2mpg11_write_reg(s2mpg11->i2c, S2MPG11_PM_BUCK_OCP_CTRL1, pdata->buck_ocp_ctrl1);
 	if (ret)
 		pr_err("i2c write error setting BUCK_OCP_CTRL1: %d\n", ret);
+
+	ret = s2mpg11_write_reg(s2mpg11->i2c, S2MPG11_PM_BUCK_OCP_CTRL2, pdata->buck_ocp_ctrl2);
+	if (ret)
+		pr_err("i2c write error setting BUCK_OCP_CTRL2: %d\n", ret);
+
+	ret = s2mpg11_write_reg(s2mpg11->i2c, S2MPG11_PM_BUCK_OCP_CTRL3, pdata->buck_ocp_ctrl3);
+	if (ret)
+		pr_err("i2c write error setting BUCK_OCP_CTRL3: %d\n", ret);
+
+	ret = s2mpg11_write_reg(s2mpg11->i2c, S2MPG11_PM_BUCK_OCP_CTRL4, pdata->buck_ocp_ctrl4);
+	if (ret)
+		pr_err("i2c write error setting BUCK_OCP_CTRL4: %d\n", ret);
+
+	ret = s2mpg11_write_reg(s2mpg11->i2c, S2MPG11_PM_BUCK_OCP_CTRL5, pdata->buck_ocp_ctrl5);
+	if (ret)
+		pr_err("i2c write error setting BUCK_OCP_CTRL5: %d\n", ret);
+
+	ret = s2mpg11_write_reg(s2mpg11->i2c, S2MPG11_PM_BUCK_OCP_CTRL6, pdata->buck_ocp_ctrl6);
+	if (ret)
+		pr_err("i2c write error setting BUCK_OCP_CTRL6: %d\n", ret);
+
+	ret = s2mpg11_write_reg(s2mpg11->i2c, S2MPG11_PM_BUCK_OCP_CTRL7, pdata->buck_ocp_ctrl7);
+	if (ret)
+		pr_err("i2c write error setting BUCK_OCP_CTRL7: %d\n", ret);
 }
 
 void s2mpg11_ocp_warn(struct s2mpg11_pmic *s2mpg11,
@@ -648,8 +689,8 @@ static int s2mpg11_pmic_probe(struct platform_device *pdev)
 	s2mpg11->need_sync = devm_kzalloc(&pdev->dev,
 					  sizeof(atomic_t) * S2MPG11_REGULATOR_MAX,
 					  GFP_KERNEL);
-	s2mpg11->turn_off_on_sync = devm_kzalloc(&pdev->dev,
-						 sizeof(bool) * S2MPG11_REGULATOR_MAX,
+	s2mpg11->turn_off_on_sync = devm_kcalloc(&pdev->dev, S2MPG11_REGULATOR_MAX,
+						 sizeof(*s2mpg11->turn_off_on_sync),
 						 GFP_KERNEL);
 	s2mpg11->opmode =
 		devm_kzalloc(&pdev->dev,
@@ -676,18 +717,19 @@ static int s2mpg11_pmic_probe(struct platform_device *pdev)
 		config.of_node = pdata->regulators[i].reg_node;
 		s2mpg11->opmode[id] = regulators[id].enable_mask;
 
-		s2mpg11->rdev[i] = regulator_register(&regulators[id], &config);
-		if (s2m_is_enabled(s2mpg11->rdev[i]))
-			atomic_set(&s2mpg11->need_sync[id], 1);
-		else
-			atomic_set(&s2mpg11->need_sync[id], 0);
+		s2mpg11->rdev[i] = devm_regulator_register(&pdev->dev,
+							   &regulators[id], &config);
 		if (IS_ERR(s2mpg11->rdev[i])) {
 			ret = PTR_ERR(s2mpg11->rdev[i]);
 			dev_err(&pdev->dev, "regulator init failed for %d\n",
 				i);
-			s2mpg11->rdev[i] = NULL;
-			goto err;
+			return ret;
 		}
+
+		if (s2m_is_enabled(s2mpg11->rdev[i]))
+			atomic_set(&s2mpg11->need_sync[id], 1);
+		else
+			atomic_set(&s2mpg11->need_sync[id], 0);
 	}
 
 	s2mpg11->num_regulators = pdata->num_regulators;
@@ -724,22 +766,13 @@ static int s2mpg11_pmic_probe(struct platform_device *pdev)
 			   DCTRLSEL_AP_ACTIVE_N, GENMASK(3, 0));
 
 	return 0;
-err:
-	for (i = 0; i < S2MPG11_REGULATOR_MAX; i++)
-		regulator_unregister(s2mpg11->rdev[i]);
-
-	return ret;
 }
 
 static int s2mpg11_pmic_remove(struct platform_device *pdev)
 {
-	struct s2mpg11_pmic *s2mpg11 = platform_get_drvdata(pdev);
-	int i;
-
-	for (i = 0; i < S2MPG11_REGULATOR_MAX; i++)
-		regulator_unregister(s2mpg11->rdev[i]);
-
 #if IS_ENABLED(CONFIG_DRV_SAMSUNG_PMIC)
+	struct s2mpg11_pmic *s2mpg11 = platform_get_drvdata(pdev);
+
 	pmic_device_destroy(s2mpg11->dev->devt);
 #endif
 	return 0;
