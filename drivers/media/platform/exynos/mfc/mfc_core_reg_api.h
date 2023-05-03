@@ -217,6 +217,10 @@
 	((MFC_CORE_READL(MFC_REG_E_NAL_DONE_INFO)		\
 	>> MFC_REG_E_NAL_DONE_INFO_IDR_SHIFT)			\
 	& MFC_REG_E_NAL_DONE_INFO_IDR_MASK)
+#define mfc_core_get_enc_comp_err()					\
+	((MFC_CORE_READL(MFC_REG_E_NAL_DONE_INFO)		\
+	>> MFC_REG_E_NAL_DONE_INFO_COMP_ERR_SHIFT)			\
+	& MFC_REG_E_NAL_DONE_INFO_COMP_ERR_MASK)
 #define mfc_core_get_chroma_format()		(MFC_CORE_READL(MFC_REG_D_CHROMA_FORMAT)		\
 						& MFC_REG_D_CHROMA_FORMAT_MASK)
 #define mfc_core_get_color_range()		((MFC_CORE_READL(MFC_REG_D_CHROMA_FORMAT)	\
@@ -363,8 +367,8 @@ static inline void mfc_core_set_migration_addr(struct mfc_core *core, struct mfc
 	MFC_CORE_WRITEL(fw_addr, MFC0_REG_RISC_BASE_ADDR);
 	MFC_CORE_WRITEL(common_ctx_addr, MFC0_REG_COMMON_CONTEXT_MEM_ADDR);
 	MFC_CORE_WRITEL(ctx_buf->daddr, MFC1_REG_COMMON_CONTEXT_MEM_ADDR);
-	mfc_core_debug(2, "migration MFC0 FW base: %#x, context: %#x, MFC1 context: %#x\n",
-			fw_addr, common_ctx_addr, ctx_buf->daddr);
+	mfc_core_debug(2, "migration MFC0 FW base: %pad, context: %pad, MFC1 context: %pad\n",
+			&fw_addr, &common_ctx_addr, &ctx_buf->daddr);
 }
 
 void mfc_core_enc_save_regression_result(struct mfc_core *core);

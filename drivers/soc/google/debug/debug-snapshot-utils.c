@@ -19,9 +19,11 @@
 #include <linux/kdebug.h>
 #include <linux/arm-smccc.h>
 #include <linux/panic_notifier.h>
+#include <linux/sysfs.h>
 
 #include <asm/cputype.h>
 #include <asm/smp_plat.h>
+#include <asm/sysreg.h>
 #include <asm/system_misc.h>
 #include "system-regs.h"
 
@@ -148,6 +150,40 @@ static void dbg_snapshot_set_core_panic_stat(unsigned int val, unsigned int cpu)
 		__raw_writel(val, header + DSS_OFFSET_PANIC_STAT + cpu * 4);
 }
 
+void dbg_snapshot_set_core_pmu_val(unsigned int val, unsigned int cpu)
+{
+	void __iomem *header = dbg_snapshot_get_header_vaddr();
+
+	if (header)
+		 __raw_writel(val, header + DSS_OFFSET_CORE_PMU_VAL + cpu * 4);
+}
+EXPORT_SYMBOL_GPL(dbg_snapshot_set_core_pmu_val);
+
+unsigned int dbg_snapshot_get_core_pmu_val(unsigned int cpu)
+{
+	void __iomem *header = dbg_snapshot_get_header_vaddr();
+
+	return header ? __raw_readl(header + DSS_OFFSET_CORE_PMU_VAL + cpu * 4) : 0;
+}
+EXPORT_SYMBOL_GPL(dbg_snapshot_get_core_pmu_val);
+
+void dbg_snapshot_set_core_ehld_stat(unsigned int val, unsigned int cpu)
+{
+	void __iomem *header = dbg_snapshot_get_header_vaddr();
+
+	if (header)
+		 __raw_writel(val, header + DSS_OFFSET_CORE_EHLD_STAT + cpu * 4);
+}
+EXPORT_SYMBOL_GPL(dbg_snapshot_set_core_ehld_stat);
+
+unsigned int dbg_snapshot_get_core_ehld_stat(unsigned int cpu)
+{
+	void __iomem *header = dbg_snapshot_get_header_vaddr();
+
+	return header ? __raw_readl(header + DSS_OFFSET_CORE_EHLD_STAT + cpu * 4) : 0;
+}
+EXPORT_SYMBOL_GPL(dbg_snapshot_get_core_ehld_stat);
+
 static void dbg_snapshot_report_reason(unsigned int val)
 {
 	void __iomem *header = dbg_snapshot_get_header_vaddr();
@@ -176,7 +212,14 @@ EXPORT_SYMBOL_GPL(dbg_snapshot_start_watchdog);
 int dbg_snapshot_emergency_reboot_timeout(const char *str, int tick)
 {
 	void *addr;
-	char reboot_msg[DSS_PANIC_LOG_SIZE] = "Emergency Reboot";
+	char *reboot_msg;
+
+	reboot_msg = kmalloc(DSS_PANIC_LOG_SIZE, GFP_ATOMIC);
+	if (!reboot_msg) {
+		dev_emerg(dss_desc.dev,
+			  "Out of memory! Couldn't allocate reboot message\n");
+		return -ENOMEM;
+	}
 
 	if (!dss_soc_ops.expire_watchdog) {
 		dev_emerg(dss_desc.dev, "There is no wdt functions!\n");
@@ -192,7 +235,7 @@ int dbg_snapshot_emergency_reboot_timeout(const char *str, int tick)
 
 	dbg_snapshot_set_wdt_caller((unsigned long)addr);
 	if (str)
-		scnprintf(reboot_msg, sizeof(reboot_msg), str);
+		scnprintf(reboot_msg, DSS_PANIC_LOG_SIZE, str);
 
 	dev_emerg(dss_desc.dev, "WDT Caller: %pS %s\n", addr, str ? str : "");
 
@@ -200,6 +243,7 @@ int dbg_snapshot_emergency_reboot_timeout(const char *str, int tick)
 	dump_stack();
 
 	dss_soc_ops.expire_watchdog(tick, 0);
+	kfree(reboot_msg);
 	return 0;
 }
 EXPORT_SYMBOL_GPL(dbg_snapshot_emergency_reboot_timeout);
@@ -228,7 +272,7 @@ static void dbg_snapshot_dump_one_task_info(struct task_struct *tsk, bool is_mai
 	unsigned char idx = 0;
 	unsigned long state, pc = 0;
 
-	if ((!tsk) || !try_get_task_stack(tsk) || (tsk->flags & PF_FROZEN) ||
+	if ((!tsk) || !try_get_task_stack(tsk) || (tsk->__state & TASK_FROZEN) ||
 			!(tsk->__state == TASK_RUNNING ||
 				tsk->__state == TASK_UNINTERRUPTIBLE ||
 				tsk->__state == TASK_KILLABLE))
@@ -247,10 +291,10 @@ static void dbg_snapshot_dump_one_task_info(struct task_struct *tsk, bool is_mai
 	 */
 	touch_softlockup_watchdog();
 
-	pr_info("%8d %16llu %16llu %16llu %c(%ld) %3d %16pK %16pK %c %16s\n",
+	pr_info("%8d %16llu %16llu %16llu %c(%u) %3d %16pK %16pK %c %16s\n",
 		tsk->pid, tsk->utime, tsk->stime,
 		tsk->se.exec_start, state_array[idx], (tsk->__state),
-		task_cpu(tsk), pc, tsk, is_main ? '*' : ' ', tsk->comm);
+		task_cpu(tsk), (void *) pc, tsk, is_main ? '*' : ' ', tsk->comm);
 
 	sched_show_task(tsk);
 }
@@ -349,7 +393,7 @@ void dbg_snapshot_ecc_dump(void)
 	case ARM_CPU_PART_CORTEX_X1:
 		asm volatile ("HINT #16");
 		erridr_el1.reg = read_erridr_el1();
-		dev_emerg(dss_desc.dev, "ECC error check erridr_el1.num = 0x%llx\n",
+		dev_emerg(dss_desc.dev, "ECC error check erridr_el1.num = 0x%x\n",
 				erridr_el1.field.num);
 
 		for (i = 0; i < (int)erridr_el1.field.num; i++) {
@@ -385,7 +429,7 @@ void dbg_snapshot_ecc_dump(void)
 				erxmisc0_el1.reg = read_erxmisc0_el1();
 				erxmisc1_el1.reg = read_erxmisc1_el1();
 				dev_emerg(dss_desc.dev,
-					"ERXMISC0_EL1 = 0x%llx ERXMISC1_EL1 = 0x%llx ERXSTATUS_EL1[15:8] = 0x%llx, [7:0] = 0x%llx\n",
+					"ERXMISC0_EL1 = 0x%llx ERXMISC1_EL1 = 0x%llx ERXSTATUS_EL1[15:8] = 0x%x, [7:0] = 0x%x\n",
 					erxmisc0_el1.reg, erxmisc1_el1.reg,
 					erxstatus_el1.field.ierr, erxstatus_el1.field.serr);
 			}
@@ -428,6 +472,8 @@ static inline void dbg_snapshot_save_core(struct pt_regs *regs)
 		core_reg->sp = core_reg->regs[29];
 		core_reg->pc =
 			(unsigned long)(core_reg->regs[30] - sizeof(unsigned int));
+		/* We don't know other bits but mode is definitely CurrentEL. */
+		core_reg->pstate = read_sysreg(CurrentEL);
 	} else {
 		memcpy(core_reg, regs, sizeof(struct user_pt_regs));
 	}
@@ -505,11 +551,18 @@ static struct die_args *tombstone;
 static int dbg_snapshot_panic_handler(struct notifier_block *nb,
 				   unsigned long l, void *buf)
 {
-	char kernel_panic_msg[DSS_PANIC_LOG_SIZE] = "Kernel Panic";
+	char *kernel_panic_msg;
 	unsigned long cpu;
 
 	if (!dbg_snapshot_get_enable())
 		return 0;
+
+	kernel_panic_msg = kmalloc(DSS_PANIC_LOG_SIZE, GFP_ATOMIC);
+	if (!kernel_panic_msg) {
+		dev_emerg(dss_desc.dev,
+			  "Out of memory! Couldn't allocate panic string\n");
+		return -ENOMEM;
+	}
 
 	dss_desc.in_panic = true;
 
@@ -524,11 +577,11 @@ static int dbg_snapshot_panic_handler(struct notifier_block *nb,
 		sprint_symbol(pc_symn, tombstone->regs->pc);
 		sprint_symbol(lr_symn, tombstone->regs->regs[30]);
 #endif
-		scnprintf(kernel_panic_msg, sizeof(kernel_panic_msg),
+		scnprintf(kernel_panic_msg, DSS_PANIC_LOG_SIZE,
 				"KP: %s: comm:%s PC:%s LR:%s", (char *)buf,
 				current->comm, pc_symn, lr_symn);
 	} else {
-		scnprintf(kernel_panic_msg, sizeof(kernel_panic_msg), "KP: %s",
+		scnprintf(kernel_panic_msg, DSS_PANIC_LOG_SIZE, "KP: %s",
 				(char *)buf);
 	}
 
@@ -554,6 +607,7 @@ static int dbg_snapshot_panic_handler(struct notifier_block *nb,
 	if (num_online_cpus() > 1)
 		dbg_snapshot_emergency_reboot(kernel_panic_msg);
 
+	kfree(kernel_panic_msg);
 	return 0;
 }
 
@@ -596,7 +650,11 @@ static int dbg_snapshot_restart_handler(struct notifier_block *nb,
 	if (dss_desc.in_panic)
 		return NOTIFY_DONE;
 
-	if (dss_desc.in_reboot) {
+	if (dss_desc.in_warm) {
+		dev_emerg(dss_desc.dev, "warm reset\n");
+		dbg_snapshot_report_reason(DSS_SIGN_WARM_REBOOT);
+		dbg_snapshot_dump_task_info();
+	} else if (dss_desc.in_reboot) {
 		dev_emerg(dss_desc.dev, "normal reboot starting\n");
 		dbg_snapshot_report_reason(DSS_SIGN_NORMAL_REBOOT);
 	} else {
@@ -678,10 +736,35 @@ static void dbg_snapshot_ipi_stop(void *ignore, struct pt_regs *regs)
 		dbg_snapshot_save_context(regs, true);
 }
 
+static ssize_t in_warm_store(struct kobject *kobj,
+				struct kobj_attribute *attr,
+				const char *buf, size_t count)
+{
+	unsigned long val;
+	int ret;
+
+	ret = kstrtoul(buf, 10, &val);
+
+	if (!ret)
+		dss_desc.in_warm = !!val;
+
+	return count;
+}
+
+static ssize_t in_warm_show(struct kobject *kobj,
+				struct kobj_attribute *attr, char *buf)
+{
+	return scnprintf(buf, PAGE_SIZE, "%sable\n",
+			dss_desc.in_warm ? "en" : "dis");
+}
+
+static struct kobj_attribute in_warm_attr = __ATTR_RW_MODE(in_warm, 0660);
+
 void dbg_snapshot_init_utils(void)
 {
 	size_t vaddr;
 	uintptr_t i;
+	struct kobject *dbg_snapshot_kobj;
 
 	vaddr = dss_items[DSS_ITEM_HEADER_ID].entry.vaddr;
 
@@ -706,6 +789,17 @@ void dbg_snapshot_init_utils(void)
 
 	smp_call_function(dbg_snapshot_save_system, NULL, 1);
 	dbg_snapshot_save_system(NULL);
+
+	dbg_snapshot_kobj = kobject_create_and_add("dbg_snapshot", kernel_kobj);
+	if (!dbg_snapshot_kobj) {
+		dev_emerg(dss_desc.dev, "cannot create kobj for dbg_snapshot!\n");
+		return;
+	}
+
+	if (sysfs_create_file(dbg_snapshot_kobj, &in_warm_attr.attr)) {
+		dev_emerg(dss_desc.dev, "cannot create file in ../dbg_snapshot!\n");
+		kobject_put(dbg_snapshot_kobj);
+	}
 }
 
 int dbg_snapshot_stop_all_cpus(void)

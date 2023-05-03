@@ -14,18 +14,20 @@
 #include <linux/of.h>
 #include <linux/of_address.h>
 #include <linux/clk.h>
-#include <linux/smc.h>
-#include "ufshcd.h"
-#include "ufshci.h"
-#include "unipro.h"
-#include "ufshcd-pltfrm.h"
-#include "ufs_quirks.h"
-#include "ufs-exynos-gs.h"
 #include <linux/mfd/syscon.h>
 #include <linux/regmap.h>
+#include <linux/smc.h>
 #include <linux/spinlock.h>
+#include <scsi/scsi_cmnd.h>
 #include <soc/google/exynos-pmu-if.h>
 #include <soc/google/exynos-cpupm.h>
+#include <ufs/ufshcd.h>
+#include <ufs/ufshci.h>
+#include <ufs/unipro.h>
+#include <ufs/ufs_quirks.h>
+#include <ufshcd-pltfrm.h>
+
+#include "ufs-exynos-gs.h"
 
 #define IS_C_STATE_ON(h) ((h)->c_state == C_ON)
 #define PRINT_STATES(h)						\
@@ -274,7 +276,7 @@ static void exynos_ufs_set_unipro_mclk(struct exynos_ufs *ufs)
 {
 	ufs->mclk_rate = (u32)clk_get_rate(ufs->clk_unipro);
 	if (!ufs->hba->clk_gating.is_suspended)
-		dev_info(ufs->dev, "mclk: %u\n", ufs->mclk_rate);
+		dev_info(ufs->dev, "mclk: %lu\n", ufs->mclk_rate);
 }
 
 static void exynos_ufs_fit_aggr_timeout(struct exynos_ufs *ufs)
@@ -453,7 +455,8 @@ static void exynos_ufs_set_features(struct ufs_hba *hba)
 			UFSHCI_QUIRK_BROKEN_REQ_LIST_CLR |
 			UFSHCD_QUIRK_BROKEN_OCS_FATAL_ERROR |
 			UFSHCI_QUIRK_SKIP_MANUAL_WB_FLUSH_CTRL |
-			UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING;
+			UFSHCD_QUIRK_SKIP_DEF_UNIPRO_TIMEOUT_SETTING |
+			UFSHCD_QUIRK_4KB_DMA_ALIGNMENT;
 
 	if (of_find_property(np, "fixed-prdt-req_list-ocs", NULL))
 		hba->quirks &= ~(UFSHCD_QUIRK_PRDT_BYTE_GRAN |
@@ -501,6 +504,8 @@ static int exynos_ufs_init(struct ufs_hba *hba)
 	pixel_init_manual_gc(hba);
 
 	pixel_init_slowio(hba);
+
+	pixel_init_io_stats(hba);
 
 	return 0;
 }
@@ -614,6 +619,14 @@ static int exynos_ufs_hce_enable_notify(struct ufs_hba *hba,
 
 	switch (notify) {
 	case PRE_CHANGE:
+		/*
+		 * The maximum segment size must be set after scsi_host_alloc()
+		 * has been called and before LUN scanning starts
+		 * (ufshcd_async_scan()). Note: this callback may also be called
+		 * from other functions than ufshcd_init().
+		 */
+		hba->host->max_segment_size = 4096;
+
 		/*
 		 * This function is called in ufshcd_hba_enable,
 		 * maybe boot, wake-up or link start-up failure cases.
@@ -1155,11 +1168,11 @@ static int exynos_ufs_ioremap(struct exynos_ufs *ufs, struct platform_device *pd
 			ret = -ENOMEM;
 			break;
 		}
-		dev_info(dev, "%-10s 0x%llx\n", ufs_region_names[i], *p);
+		dev_info(dev, "%-10s %pK\n", ufs_region_names[i], *p);
 	}
 
 	if (ret)
-		dev_err(dev, "%s ioremap for %s, 0x%llx\n",
+		dev_err(dev, "%s ioremap for %s\n",
 			ufs_s_str_token[UFS_S_TOKEN_FAIL], ufs_region_names[i]);
 	dev_info(dev, "\n");
 	return ret;
@@ -1276,7 +1289,7 @@ static ssize_t exynos_ufs_sysfs_show_h8_delay(struct exynos_ufs *ufs,
 					      char *buf,
 					      enum exynos_ufs_param_id id)
 {
-	return snprintf(buf, PAGE_SIZE, "%u\n", ufs->hba->clk_gating.delay_ms);
+	return snprintf(buf, PAGE_SIZE, "%lu\n", ufs->hba->clk_gating.delay_ms);
 }
 
 static struct exynos_ufs_sysfs_attr ufs_s_h8_delay_ms = {

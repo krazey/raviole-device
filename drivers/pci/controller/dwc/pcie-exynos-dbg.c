@@ -38,6 +38,10 @@ static int chk_pcie_dislink(struct exynos_pcie *exynos_pcie)
 
 	pcie_ops->poweroff(exynos_pcie->ch_num);
 
+	if (exynos_pcie->use_phy_isol_con &&
+	    exynos_pcie->phy_control == PCIE_PHY_ISOLATION)
+		return test_result;
+
 	val = exynos_elbi_read(exynos_pcie, linkup_offset) & 0x1f;
 	if (val == 0x15) {
 		pr_info("PCIe link Down test Success.\n");
@@ -110,7 +114,7 @@ static int chk_epmem_access(struct exynos_pcie *exynos_pcie)
 	u32 val;
 	int test_result = 0;
 	struct dw_pcie *pci = exynos_pcie->pci;
-	struct pcie_port *pp = &pci->pp;
+	struct dw_pcie_rp *pp = &pci->pp;
 	struct exynos_pcie_ops *pcie_ops = &exynos_pcie->exynos_pcie_ops;
 
 	struct pci_bus *ep_pci_bus;
@@ -154,7 +158,7 @@ static int chk_epconf_access(struct exynos_pcie *exynos_pcie)
 	u32 val;
 	int test_result = 0;
 	struct dw_pcie *pci = exynos_pcie->pci;
-	struct pcie_port *pp = &pci->pp;
+	struct dw_pcie_rp *pp = &pci->pp;
 	struct pci_bus *ep_pci_bus;
 	struct exynos_pcie_ops *pcie_ops = &exynos_pcie->exynos_pcie_ops;
 
@@ -194,7 +198,7 @@ static int chk_dbi_access(struct exynos_pcie *exynos_pcie)
 	u32 val;
 	int test_result = 0;
 	struct dw_pcie *pci = exynos_pcie->pci;
-	struct pcie_port *pp = &pci->pp;
+	struct dw_pcie_rp *pp = &pci->pp;
 	struct exynos_pcie_ops *pcie_ops = &exynos_pcie->exynos_pcie_ops;
 
 	if (!pcie_ops->rd_own_conf) {

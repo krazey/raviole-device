@@ -101,7 +101,7 @@ struct exynos_ufs {
 	enum exynos_host_state h_state_prev;
 	enum exynos_clk_state c_state;
 
-	u32 mclk_rate;
+	unsigned long mclk_rate;
 
 	int num_lanes;
 
@@ -154,7 +154,9 @@ struct exynos_ufs {
 	u64 peak_reqs[REQ_TYPE_MAX];
 	u64 peak_queue_depth;
 	/* pixel ufs I/O quatity statistics */
-	struct pixel_io_stats io_stats[IO_TYPE_MAX];
+	struct pixel_io_stats __percpu *io_stats;
+	struct pixel_io_stats curr_io_stats;
+	struct pixel_io_stats prev_io_stats;
 
 	/* To monitor slow UFS I/O requests. */
 	u64 slowio_min_us;
@@ -169,9 +171,6 @@ struct exynos_ufs {
 	/* ufs command logging */
 	u8 enable_cmd_log;
 	struct pixel_cmd_log cmd_log;
-
-	/* security_out write counter */
-	u32 security_out_wc;
 };
 
 static inline struct exynos_ufs *to_exynos_ufs(struct ufs_hba *hba)

@@ -572,7 +572,7 @@ static void cmd_init_start_handler(struct mem_link_device *mld)
 #endif
 
 #if IS_ENABLED(CONFIG_EXYNOS_DIT)
-	err = dit_init(ld, DIT_INIT_NORMAL);
+	err = dit_init(ld, DIT_INIT_NORMAL, DIT_STORE_NONE);
 	if ((err < 0) && (err != -EPERM)) {
 		mif_err("dit_init() error %d\n", err);
 		return;
@@ -3823,7 +3823,7 @@ struct link_device *create_link_device(struct platform_device *pdev, u32 link_ty
 	 * Retrieve modem-specific attributes value
 	 */
 	mld->attrs = modem->link_attrs;
-	mif_info("link_attrs:0x%08x\n", mld->attrs);
+	mif_info("link_attrs:0x%08lx\n", mld->attrs);
 
 	/*====================================================================
 	 *	Initialize "memory snapshot buffer (MSB)" framework
@@ -3998,7 +3998,7 @@ struct link_device *create_link_device(struct platform_device *pdev, u32 link_ty
 	ld->handover_block_info = update_handover_block_info;
 
 	init_dummy_netdev(&mld->dummy_net);
-	netif_napi_add(&mld->dummy_net, &mld->mld_napi, mld_rx_int_poll, NAPI_POLL_WEIGHT);
+	netif_napi_add(&mld->dummy_net, &mld->mld_napi, mld_rx_int_poll);
 	napi_enable(&mld->mld_napi);
 	atomic_set(&mld->stop_napi_poll, 0);
 

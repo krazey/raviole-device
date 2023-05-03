@@ -952,8 +952,6 @@ static void exynos_serial_rx_dma_complete(void *args)
 	s3c64xx_start_rx_dma(ourport);
 
 	spin_unlock_irqrestore(&port->lock, flags);
-
-	flush_workqueue(system_unbound_wq);
 }
 
 static void s3c64xx_start_rx_dma(struct exynos_uart_port *ourport)
@@ -1078,8 +1076,6 @@ finish:
 	wr_regl(port, S3C2410_UTRSTAT, S3C2410_UTRSTAT_TIMEOUT);
 
 	spin_unlock_irqrestore(&port->lock, flags);
-
-	flush_workqueue(system_unbound_wq);
 
 	return IRQ_HANDLED;
 }
@@ -1211,8 +1207,6 @@ exynos_serial_rx_chars_pio(void *dev_id)
 	spin_lock_irqsave(&port->lock, flags);
 	exynos_serial_rx_drain_fifo(ourport);
 	spin_unlock_irqrestore(&port->lock, flags);
-
-	flush_workqueue(system_unbound_wq);
 
 	return IRQ_HANDLED;
 }
@@ -1760,7 +1754,7 @@ static u16 udivslot_table[16] = {
 
 static void exynos_serial_set_termios(struct uart_port *port,
 				      struct ktermios *termios,
-				      struct ktermios *old)
+				      const struct ktermios *old)
 {
 	struct s3c2410_uartcfg *cfg = exynos_port_to_cfg(port);
 	struct exynos_uart_port *ourport = to_ourport(port);
@@ -2211,7 +2205,7 @@ static void exynos_serial_resetport(struct uart_port *port,
 	ucon &= ucon_mask;
 	if (ourport->dbg_mode & UART_LOOPBACK_MODE) {
 		dev_err(port->dev, "Change Loopback mode!\n");
-		ucon |= S3C2443_UCON_LOOPBACK;
+		ucon |= S3C2410_UCON_LOOPBACK;
 	}
 
 	/* Disable RTS when RX FIFO contains 63 bytes */

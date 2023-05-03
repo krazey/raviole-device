@@ -37,7 +37,9 @@ void exynos_pcie_rc_phy_check_rx_elecidle(void *phy_pcs_base_regs, int val, int 
 void exynos_pcie_rc_phy_all_pwrdn(struct exynos_pcie *exynos_pcie, int ch_num)
 {
 	void __iomem *phy_base_regs = exynos_pcie->phy_base;
+	u32 val;
 
+	writel(0xA8, phy_base_regs + 0x404);
 	writel(0x20, phy_base_regs + 0x408);
 	writel(0x0A, phy_base_regs + 0x40C);
 
@@ -56,6 +58,11 @@ void exynos_pcie_rc_phy_all_pwrdn(struct exynos_pcie *exynos_pcie, int ch_num)
 	writel(0xAA, phy_base_regs + 0x1248);
 	writel(0xA8, phy_base_regs + 0x124C);
 	writel(0x80, phy_base_regs + 0x1250);
+
+	/* Disable PHY PMA */
+	val = readl(phy_base_regs + 0x400);
+	val &= ~(0x1 << 7);
+	writel(val, phy_base_regs + 0x400);
 }
 
 /* PHY all power down clear */
@@ -66,6 +73,7 @@ void exynos_pcie_rc_phy_all_pwrdn_clear(struct exynos_pcie *exynos_pcie, int ch_
 	writel(0x28, phy_base_regs + 0xD8);
 	mdelay(1);
 
+	writel(0x00, phy_base_regs + 0x404);
 	writel(0x00, phy_base_regs + 0x408);
 	writel(0x00, phy_base_regs + 0x40C);
 
@@ -103,7 +111,6 @@ void exynos_pcie_rc_pcie_phy_config(struct exynos_pcie *exynos_pcie, int ch_num)
 	int num_lanes = exynos_pcie->num_lanes;
 	u32 val;
 	u32 i;
-	u32 pll_lock = 0, cdr_lock = 0, oc_done = 0;
 
 	/* init. input clk path */
 	writel(0x28, phy_base_regs + 0xD8);
@@ -304,32 +311,14 @@ void exynos_pcie_rc_pcie_phy_config(struct exynos_pcie *exynos_pcie, int ch_num)
 	writel(val, phy_base_regs + 0x5D0);
 	pr_debug("XO clock configuration : 0x%x\n", readl(phy_base_regs + 0x5D0));
 
-	/* check pll & cdr lock */
-	phy_base_regs = exynos_pcie->phy_base;
-	for (i = 0; i < 1000; i++) {
-		udelay(1);
-		pll_lock = readl(phy_base_regs + 0x3F0) & (1 << 3);
-		cdr_lock = readl(phy_base_regs + 0xFC0) & (1 << 4);
-
-		if (pll_lock != 0 && cdr_lock != 0)
-			break;
-	}
-
-	/* check offset calibration */
-	for (i = 0; i < 2000; i++) {
-		usleep_range(10, 12);
-		oc_done = readl(phy_base_regs + 0xE18) & (1 << 7);
-
-		if (oc_done != 0)
-			break;
-	}
-	if (oc_done == 0) {
-		pll_lock = readl(phy_base_regs + 0x3F0) & (1 << 3);
-		cdr_lock = readl(phy_base_regs + 0xFC0) & (1 << 4);
-		oc_done = readl(phy_base_regs + 0xE18) & (1 << 7);
-		pr_err("OC Fail : PLL_LOCK : 0x%x, CDR_LOCK : 0x%x, OC : 0x%x\n",
-		       pll_lock, cdr_lock, oc_done);
-	}
+	/* AFC cal mode by default uses the calibrated value from a previous
+	 * run. However on some devices this causes a CDR failure because
+	 * the AFC done status is set prematurely. Setting the cal mode to
+	 * always start from an initial value (determined through simulation)
+	 * ensures that AFC has enough time to complete.
+	 */
+	dev_info(exynos_pcie->pci->dev, "AFC cal mode set to restart\n");
+	writel(0x4, phy_base_regs + 0xBF4);
 }
 EXPORT_SYMBOL_GPL(exynos_pcie_rc_pcie_phy_config);
 
@@ -338,7 +327,7 @@ int exynos_pcie_rc_eom(struct device *dev, void *phy_base_regs)
 	struct exynos_pcie *exynos_pcie = dev_get_drvdata(dev);
 	struct exynos_pcie_ops *pcie_ops = &exynos_pcie->exynos_pcie_ops;
 	struct dw_pcie *pci = exynos_pcie->pci;
-	struct pcie_port *pp = &pci->pp;
+	struct dw_pcie_rp *pp = &pci->pp;
 	struct device_node *np = dev->of_node;
 	unsigned int val;
 	unsigned int speed_rate, num_of_smpl;
@@ -471,7 +460,7 @@ int exynos_pcie_rc_eom(struct device *dev, void *phy_base_regs)
 	return 0;
 }
 
-void exynos_pcie_rc_phy_init(struct pcie_port *pp)
+void exynos_pcie_rc_phy_init(struct dw_pcie_rp *pp)
 {
 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
 	struct exynos_pcie *exynos_pcie = to_exynos_pcie(pci);

@@ -50,7 +50,7 @@ enum acpm_framework_debug_commands {
 	ACPM_FRAMEWORK_COMMAND_DEBUG_MAX,
 };
 
-#if IS_ENABLED(CONFIG_GS_ACPM_MODULE)
+#if IS_ENABLED(CONFIG_GS_ACPM)
 int acpm_ipc_request_channel(struct device_node *np,
 			     ipc_callback handler,
 			     unsigned int *id, unsigned int *size);
@@ -67,7 +67,7 @@ int acpm_ipc_get_buffer(const char *name, char **addr, u32 *size);
 void exynos_acpm_reboot(void);
 void acpm_stop_log_and_dumpram(void);
 u64 get_frc_time(void);
-bool is_acpm_ipc_busy(void);
+bool is_acpm_ipc_flushed(void);
 #else
 
 static inline int acpm_ipc_request_channel(struct device_node *np,
@@ -119,14 +119,14 @@ static inline void acpm_stop_log_and_dumpram(void)
 {
 }
 
-static u64 get_frc_time(void)
+static inline u64 get_frc_time(void)
 {
 	return 0;
 }
 
-static bool is_acpm_ipc_busy(void)
+static inline bool is_acpm_ipc_flushed(void)
 {
-	return false;
+	return true;
 }
 #endif
 

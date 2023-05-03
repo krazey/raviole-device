@@ -176,8 +176,8 @@ int mfc_core_sysmmu_fault_handler(struct iommu_fault *fault, void *param)
 	core->logging_data->fault_addr = (unsigned int)(fault->event.addr);
 
 	snprintf(core->crash_info, MFC_CRASH_INFO_LEN,
-		"MFC-%d SysMMU PAGE FAULT at %pK (AxID: %#x)\n",
-		core->id, (unsigned int)(fault->event.addr), core->logging_data->fault_trans_info);
+		"MFC-%d SysMMU PAGE FAULT at %#010llx (AxID: %#x)\n",
+		core->id, fault->event.addr, core->logging_data->fault_trans_info);
 	mfc_core_err("%s", core->crash_info);
 	MFC_TRACE_CORE("%s", core->crash_info);
 
@@ -306,6 +306,7 @@ static int __mfc_core_register_resource(struct platform_device *pdev,
 #endif
 	struct resource *res;
 	int ret;
+	int irq;
 
 	mfc_perf_register(core);
 
@@ -400,12 +401,12 @@ static int __mfc_core_register_resource(struct platform_device *pdev,
 	}
 #endif
 
-	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
-	if (res == NULL) {
-		dev_err(&pdev->dev, "failed to get irq resource\n");
+	irq = platform_get_irq(pdev, 0);
+	if (irq < 0) {
+		dev_err(&pdev->dev, "failed to get irq\n");
 		goto err_res_irq;
 	}
-	core->irq = res->start;
+	core->irq = irq;
 	ret = request_threaded_irq(core->irq, mfc_core_top_half_irq,
 			mfc_core_irq, IRQF_ONESHOT, pdev->name, core);
 	if (ret != 0) {
@@ -686,12 +687,14 @@ static int mfc_core_probe(struct platform_device *pdev)
 		goto err_sysmmu_fault_handler;
 	}
 
+#if IS_ENABLED(CONFIG_EXYNOS_CONTENT_PATH_PROTECTION)
 	/* allocate Secure-DVA region */
+	core->drm_fw_buf.buftype = MFCBUF_DRM_FW;
 	core->drm_fw_buf.size = dev->variant->buf_size->firmware_code;
-	core->drm_fw_buf.daddr = secure_iova_alloc(core->drm_fw_buf.size,
-			EXYNOS_SECBUF_PROT_ALIGNMENTS);
-	if (!core->drm_fw_buf.daddr)
-		mfc_core_err("DRM F/W buffer can not get IOVA!\n");
+	if (mfc_mem_special_buf_alloc(dev, &core->drm_fw_buf)) {
+		mfc_core_err("[F/W] Allocating DRM firmware buffer failed\n");
+	}
+#endif
 
 	/* vOTF 1:1 mapping */
 	core->domain = iommu_get_domain_for_dev(core->device);
@@ -744,7 +747,9 @@ static int mfc_core_probe(struct platform_device *pdev)
 	return 0;
 
 err_alloc_debug:
-	secure_iova_free(core->drm_fw_buf.daddr, core->drm_fw_buf.size);
+#if IS_ENABLED(CONFIG_EXYNOS_CONTENT_PATH_PROTECTION)
+	mfc_mem_special_buf_free(dev, &core->drm_fw_buf);
+#endif
 	iommu_unregister_device_fault_handler(&pdev->dev);
 err_sysmmu_fault_handler:
 	destroy_workqueue(core->butler_wq);

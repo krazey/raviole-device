@@ -13,8 +13,8 @@
 #include <linux/platform_device.h>
 #include <linux/regmap.h>
 #include <linux/soc/samsung/exynos-smc.h>
+#include <ufs/ufshcd.h>
 
-#include "ufshcd.h"
 #include "ufshcd-crypto.h"
 #include "ufs-exynos-gs.h"
 
@@ -161,21 +161,20 @@ static int pixel_ufs_keyslot_evict(struct blk_crypto_profile *profile,
 }
 
 static int pixel_ufs_derive_sw_secret(struct blk_crypto_profile *profile,
-				       const u8 *wrapped_key,
-				       unsigned int wrapped_key_size,
-				       u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
+				      const u8 *eph_key, size_t eph_key_size,
+				      u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
 {
 	struct ufs_hba *hba = container_of(profile, struct ufs_hba, crypto_profile);
 	struct exynos_ufs *ufs = to_exynos_ufs(hba);
 	int ret;
 
 	dev_info(ufs->dev,
-		 "kdn: deriving sw secret from %u-byte wrapped key\n",
-		 wrapped_key_size);
+		 "kdn: deriving sw secret from %zu-byte wrapped key\n",
+		 eph_key_size);
 
 	ret = gsa_kdn_derive_raw_secret(ufs->gsa_dev, sw_secret,
 					BLK_CRYPTO_SW_SECRET_SIZE,
-					wrapped_key, wrapped_key_size);
+					eph_key, eph_key_size);
 	if (ret != BLK_CRYPTO_SW_SECRET_SIZE) {
 		dev_err(ufs->dev, "kdn: failed to derive raw secret; ret=%d\n",
 			ret);
@@ -354,14 +353,14 @@ int pixel_ufs_crypto_init(struct ufs_hba *hba)
 	 * program/evict wrapped keys via the KDN, and secondly in order to
 	 * declare wrapped key support rather than standard key support.
 	 */
-	hba->quirks |= UFSHCD_QUIRK_CUSTOM_CRYPTO_PROFILE;
+	hba->android_quirks |= UFSHCD_ANDROID_QUIRK_CUSTOM_CRYPTO_PROFILE;
 
 	/*
 	 * This host controller doesn't support the standard
 	 * CRYPTO_GENERAL_ENABLE bit in REG_CONTROLLER_ENABLE.  Instead it just
 	 * always has crypto support enabled.
 	 */
-	hba->quirks |= UFSHCD_QUIRK_BROKEN_CRYPTO_ENABLE;
+	hba->android_quirks |= UFSHCD_ANDROID_QUIRK_BROKEN_CRYPTO_ENABLE;
 
 	/* Override the PRDT entry size to include the extra crypto fields. */
 	hba->sg_entry_size = sizeof(struct pixel_ufs_prdt_entry);
