@@ -1280,6 +1280,9 @@ static int samsung_pinctrl_probe(struct platform_device *pdev)
 
 	platform_set_drvdata(pdev, drvdata);
 
+	/* Add to the global list */
+	list_add_tail(&drvdata->node, &drvdata_list);
+
 	return 0;
 
 err_unregister:
