@@ -59,6 +59,13 @@ config DEBUG_SNAPSHOT_QUICKDUMP
 	  If you access text symbol and stack data, you could get them.
 	  But in GKI, we can't access section symbol and stack symbol.
 
+config DEBUG_SNAPSHOT_VENDOR_HOOKS
+	bool "Debug Snapshot vendor hooks"
+	depends on DEBUG_SNAPSHOT
+	default n
+	help
+	  This config is used to enable/disable the debug snapshot vendor hooks.
+
 config DEBUG_SNAPSHOT_DEBUG_KINFO
 	tristate "Debug Kernel Information Support"
 	depends on DEBUG_SNAPSHOT

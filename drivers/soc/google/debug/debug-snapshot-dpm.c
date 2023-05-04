@@ -17,8 +17,10 @@
 
 #include <asm/stacktrace.h>
 
+#ifdef CONFIG_DEBUG_SNAPSHOT_VENDOR_HOOKS
 #include <trace/hooks/fault.h>
 #include <trace/hooks/traps.h>
+#endif
 #include <soc/google/debug-snapshot.h>
 #include "debug-snapshot-local.h"
 
@@ -46,7 +48,7 @@ bool dbg_snapshot_get_enabled_debug_kinfo(void)
 }
 EXPORT_SYMBOL(dbg_snapshot_get_enabled_debug_kinfo);
 
-#if 0
+#ifdef CONFIG_DEBUG_SNAPSHOT_VENDOR_HOOKS
 static void dbg_snapshot_do_dpm(struct pt_regs *regs, unsigned int esr)
 {
 	unsigned int val = 0;
@@ -188,7 +190,7 @@ static void register_dbg_snapshot_do_dpm_vendor_hooks(void)
 
 	hook_registered = true;
 }
-#endif
+#endif /* CONFIG_DEBUG_SNAPSHOT_VENDOR_HOOKS */
 
 static void dbg_snapshot_dt_scan_dpm_feature(struct device_node *node)
 {
@@ -374,7 +376,7 @@ void dbg_snapshot_init_dpm(void)
 	if (dbg_snapshot_get_dpm_none_dump_mode() > 0)
 		dss_dpm.dump_mode_none = 1;
 
-#if 0
+#ifdef CONFIG_DEBUG_SNAPSHOT_VENDOR_HOOKS
 	register_dbg_snapshot_do_dpm_vendor_hooks();
 #endif
 }
