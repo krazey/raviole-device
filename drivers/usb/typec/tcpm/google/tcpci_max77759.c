@@ -142,8 +142,6 @@ static unsigned int sink_discovery_delay_ms;
 void (*data_active_callback)(void *data_active_payload);
 void *data_active_payload;
 
-static bool hooks_installed;
-
 struct tcpci {
 	struct device *dev;
 	struct tcpm_port *port;
@@ -2002,6 +2000,7 @@ static int max77759_set_vbus_voltage_max_mv(struct i2c_client *tcpc_client,
 	return 0;
 }
 
+#ifdef CONFIG_TCPCI_VENDOR_HOOKS
 static void max77759_get_vbus(void *unused, struct tcpci *tcpci, struct tcpci_data *data, int *vbus,
 			      int *bypass)
 {
@@ -2019,6 +2018,7 @@ static void max77759_get_vbus(void *unused, struct tcpci *tcpci, struct tcpci_da
 	*vbus = chip->vbus_present;
 	*bypass = 1;
 }
+#endif /* CONFIG_TCPCI_VENDOR_HOOKS */
 
 static int max77759_usb_set_role(struct usb_role_switch *sw, enum usb_role role)
 {
@@ -2082,6 +2082,7 @@ static int max77759_usb_set_role(struct usb_role_switch *sw, enum usb_role role)
 	return 0;
 }
 
+#ifdef CONFIG_TCPCI_VENDOR_HOOKS
 static void max77759_store_partner_src_caps(void *unused, unsigned int *nr_source_caps,
 					    u32 (*source_caps)[PDO_MAX_OBJECTS])
 {
@@ -2097,6 +2098,7 @@ static void max77759_store_partner_src_caps(void *unused, unsigned int *nr_sourc
 
 	spin_unlock(&g_caps_lock);
 }
+#endif /* CONFIG_TCPCI_VENDOR_HOOKS */
 
 /*
  * Don't call this function in interrupt context. Caller needs to free the
@@ -2369,6 +2371,7 @@ static void max77759_teardown_data_notifier(struct max77759_plat *chip)
 		usb_role_switch_unregister(chip->usb_sw);
 }
 
+#ifdef CONFIG_TCPCI_VENDOR_HOOKS
 static void max77759_typec_tcpci_override_toggling(void *unused, struct tcpci *tcpci,
 						   struct tcpci_data *data,
 						   int *override_toggling)
@@ -2407,6 +2410,7 @@ static void max77759_tcpm_log(void *unused, const char *log, bool *bypass)
 
 static int max77759_register_vendor_hooks(struct i2c_client *client)
 {
+	static bool hooks_installed = 0;
 	int ret = 0;
 
 	if (hooks_installed)
@@ -2457,6 +2461,7 @@ static int max77759_register_vendor_hooks(struct i2c_client *client)
 
 	return ret;
 }
+#endif /* CONFIG_TCPCI_VENDOR_HOOKS */
 
 static void reenable_auto_ultra_low_power_mode_work_item(struct kthread_work *work)
 {
@@ -2523,9 +2528,11 @@ static int max77759_probe(struct i2c_client *client)
 	const char *ovp_status;
 	u32 first_src_pdo = 0;
 
+#ifdef CONFIG_TCPCI_VENDOR_HOOKS
 	ret = max77759_register_vendor_hooks(client);
 	if (ret)
 		return ret;
+#endif
 
 	chip = devm_kzalloc(&client->dev, sizeof(*chip), GFP_KERNEL);
 	if (!chip)

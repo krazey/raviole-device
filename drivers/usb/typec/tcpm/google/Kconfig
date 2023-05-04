@@ -31,5 +31,12 @@ config TYPEC_MAX77759
 	help
 	  MAX77759 TCPCI driver to interface with TCPM.
 
+config TCPCI_VENDOR_HOOKS
+	bool "Enable TCPCI vendor hooks"
+	depends on TYPEC_MAX77759
+	default n
+	help
+	  This config is used to enable/disable the TCPCI vendor hooks.
+
 endif # TYPEC_TCPCI
 endif # TYPEC_TCPM
