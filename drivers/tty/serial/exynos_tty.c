@@ -55,6 +55,7 @@
 #include <linux/pinctrl/consumer.h>
 #include <misc/logbuffer.h>
 
+
 /* Debug logging */
 #define DATA_BYTES_PER_LINE     (16)
 
@@ -64,6 +65,8 @@
 
 #define EXYNOS_SERIAL_CTRL_NUM			0x4
 #define EXYNOS_SERIAL_BAUD_NUM			0x2
+
+#define S5PV210_UMCON_RTSTRIG_SHIFT		(5)
 
 struct exynos_uart_info {
 	char			*name;
@@ -181,6 +184,7 @@ struct exynos_uart_port {
 	unsigned int			uart_logging;
 	struct uart_local_buf		uart_local_buf;
 	struct logbuffer *log;
+	bool show_uart_logging_packets;
 };
 
 /* conversion functions */
@@ -832,6 +836,31 @@ static void exynos_serial_start_tx(struct uart_port *port)
 	}
 }
 
+/* Throttle is called in n_tty_receive_buf_common */
+static void exynos_serial_throttle(struct uart_port *port)
+{
+	unsigned long flags;
+
+	spin_lock_irqsave(&port->lock, flags);
+
+	__set_bit(S3C64XX_UINTM_RXD, portaddrl(port, S3C64XX_UINTM));
+	wr_regl(port, S3C64XX_UINTP, S3C64XX_UINTM_RXD_MSK);
+
+	spin_unlock_irqrestore(&port->lock, flags);
+}
+
+/* Unthrottle is called in n_tty_read */
+static void exynos_serial_unthrottle(struct uart_port *port)
+{
+	unsigned long flags;
+
+	spin_lock_irqsave(&port->lock, flags);
+
+	__clear_bit(S3C64XX_UINTM_RXD, portaddrl(port, S3C64XX_UINTM));
+
+	spin_unlock_irqrestore(&port->lock, flags);
+}
+
 static void exynos_uart_copy_rx_to_tty(struct exynos_uart_port *ourport, struct
 				       tty_port * tty, int count)
 {
@@ -1184,9 +1213,18 @@ static void exynos_serial_rx_drain_fifo(struct exynos_uart_port *ourport)
 
 	if (ourport->uart_logging && trace_cnt) {
 		if (!IS_ERR_OR_NULL(ourport->log)) {
-			hex_dump_to_buffer(trace_buf, trace_cnt, DATA_BYTES_PER_LINE,
-				1, buf, sizeof(buf), false);
-			logbuffer_log(ourport->log, "RX: len: %d, buf: %s", trace_cnt, buf);
+			if (ourport->show_uart_logging_packets) {
+				// skip saving the BQR controller debug dump packets to logbuffer
+				if (trace_buf[0]==0x04 && trace_buf[1]==0xff
+					&& trace_buf[3]==0x58 && trace_buf[4]==0x13) {
+					ourport->show_uart_logging_packets = false;
+				} else {
+					hex_dump_to_buffer(trace_buf, trace_cnt,
+						DATA_BYTES_PER_LINE, 1, buf, sizeof(buf), false);
+					logbuffer_log(ourport->log,
+						"RX: len: %d, buf: %s", trace_cnt, buf);
+				}
+			}
 		}
 		uart_copy_to_local_buf(1, &ourport->uart_local_buf, trace_buf, trace_cnt);
 	}
@@ -1305,9 +1343,16 @@ out:
 
 	if (ourport->uart_logging && trace_cnt) {
 		if (!IS_ERR_OR_NULL(ourport->log)) {
-			hex_dump_to_buffer(trace_buf, trace_cnt, DATA_BYTES_PER_LINE,
-				1, buf, sizeof(buf), false);
-			logbuffer_log(ourport->log, "TX: len: %d, buf: %s", trace_cnt, buf);
+			// reset the show_uart_logging_packets flag after HCI_RESET TX packet
+			if (trace_buf[0]==0x01 && trace_buf[1]==0x03
+				&& trace_buf[2]==0x0c && trace_buf[3]==0x00) {
+				ourport->show_uart_logging_packets = true;
+			}
+			if (ourport->show_uart_logging_packets) {
+				hex_dump_to_buffer(trace_buf, trace_cnt,
+					DATA_BYTES_PER_LINE, 1, buf, sizeof(buf), false);
+				logbuffer_log(ourport->log, "TX: len: %d, buf: %s", trace_cnt, buf);
+			}
 		}
 		uart_copy_to_local_buf(0, &ourport->uart_local_buf, trace_buf, trace_cnt);
 	}
@@ -1896,7 +1941,7 @@ static void exynos_serial_set_termios(struct uart_port *port,
 	port->status &= ~UPSTAT_AUTOCTS;
 
 	umcon = rd_regl(port, S3C2410_UMCON);
-	if (termios->c_cflag & CRTSCTS) {
+	if ((termios->c_cflag & CRTSCTS) && (!ourport->dbg_uart_ch)) {
 		umcon |= S3C2410_UMCOM_AFC;
 		port->status = UPSTAT_AUTOCTS;
 		if (ourport->uart_logging && !IS_ERR_OR_NULL(ourport->log))
@@ -2028,6 +2073,8 @@ static const struct uart_ops exynos_serial_ops = {
 	.set_mctrl	= exynos_serial_set_mctrl,
 	.stop_tx	= exynos_serial_stop_tx,
 	.start_tx	= exynos_serial_start_tx,
+	.throttle       = exynos_serial_throttle,
+	.unthrottle     = exynos_serial_unthrottle,
 	.stop_rx	= exynos_serial_stop_rx,
 	.break_ctl	= exynos_serial_break_ctl,
 	.startup	= exynos_serial_startup,
@@ -2471,10 +2518,12 @@ static int exynos_serial_notifier(struct notifier_block *self,
 
 			spin_lock_irqsave(&port->lock, flags);
 
-			/* enable auto flow control */
-			umcon = rd_regl(port, S3C2410_UMCON);
-			umcon |= S3C2410_UMCOM_AFC;
-			wr_regl(port, S3C2410_UMCON, umcon);
+			if (!ourport->dbg_uart_ch) {
+				/* enable auto flow control */
+				umcon = rd_regl(port, S3C2410_UMCON);
+				umcon |= S3C2410_UMCOM_AFC;
+				wr_regl(port, S3C2410_UMCON, umcon);
+			}
 
 			spin_unlock_irqrestore(&port->lock, flags);
 
@@ -3126,6 +3175,7 @@ static struct exynos_serial_drv_data exynos_serial_drv_data = {
 		.tx_fifofull	= S5PV210_UFSTAT_TXFULL,
 		.tx_fifomask	= S5PV210_UFSTAT_TXMASK,
 		.tx_fifoshift	= S5PV210_UFSTAT_TXSHIFT,
+		.rts_trig_shift = S5PV210_UMCON_RTSTRIG_SHIFT,
 		.def_clk_sel	= S3C2410_UCON_CLKSEL0,
 		.num_clks	= 1,
 		.clksel_mask	= 0,

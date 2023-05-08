@@ -45,6 +45,11 @@ struct dbg_snapshot_log_item {
 	struct dbg_snapshot_info entry;
 };
 
+struct dbg_snapshot_suspend_diag_item {
+	const char *action;
+	unsigned long long timeout;
+};
+
 struct dbg_snapshot_desc {
 	struct device *dev;
 	raw_spinlock_t ctrl_lock;
@@ -76,6 +81,7 @@ struct dbg_snapshot_dpm {
 extern void dbg_snapshot_init_log(void);
 extern void dbg_snapshot_init_dpm(void);
 extern void dbg_snapshot_init_utils(void);
+extern void dbg_snapshot_start_log(void);
 extern int dbg_snapshot_dt_scan_dpm(void);
 extern int dbg_snapshot_get_enable(void);
 extern void __iomem *dbg_snapshot_get_header_vaddr(void);
@@ -148,6 +154,7 @@ extern struct itmon_logs *dss_itmon;
 #define DSS_OFFSET_PMIC_REG_INT_5	(0x288)
 #define DSS_OFFSET_PMIC_REG_INT_6	(0x289)
 #define DSS_OFFSET_PMIC_REASON		(0x290)
+#define DSS_OFFSET_ABL_DUMP_STAT	(0x2C8)
 #define DSS_OFFSET_EMERGENCY_REASON	(0x300)
 #define DSS_OFFSET_WDT_CALLER		(0x310)
 #define DSS_OFFSET_DUMP_GPR_WAIT	(0x380)
@@ -158,9 +165,14 @@ extern struct itmon_logs *dss_itmon;
 #define DSS_OFFSET_GPR_POWER_STAT	(0x480)
 #define DSS_OFFSET_PANIC_STAT		(0x500)
 #define DSS_OFFSET_CORE_LAST_PC		(0x600)
-#define DSS_OFFSET_QD_ENTRY		(0x660)
+#define DSS_OFFSET_QD_ENTRY		(0x680)
 #define DSS_OFFSET_PANIC_STRING		(0xC00)
 
 #define ARM_CPU_PART_CORTEX_A78		0xD41
 #define ARM_CPU_PART_CORTEX_X1		0xD44
+
+/* PMU register access */
+#define PMU_GSA_INFORM0_OFFS		0x0830
+#define PMU_GSA_INFORM0_APC_EARLY_WD	(1 << 5)
+
 #endif

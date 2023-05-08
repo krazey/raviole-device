@@ -12,6 +12,9 @@
 #define DEF_UTIL_THRESHOLD  1280
 #define DEF_UTIL_POST_INIT_SCALE  512
 #define C1_EXIT_LATENCY     1
+#define PREFER_IDLE_PRIO_HIGH 110
+#define PRIO_BACKGROUND     130
+
 /*
  * For cpu running normal tasks, its uclamp.min will be 0 and uclamp.max will be 1024,
  * and the sum will be 1024. We use this as index that cpu is not running important tasks.
@@ -70,9 +73,23 @@ struct vendor_group_property {
 	bool prefer_idle;
 	bool prefer_high_cap;
 	bool task_spreading;
+#if !IS_ENABLED(CONFIG_USE_VENDOR_GROUP_UTIL)
 	unsigned int group_throttle;
+#endif
+	cpumask_t preferred_idle_mask_low;
+	cpumask_t preferred_idle_mask_mid;
+	cpumask_t preferred_idle_mask_high;
 	struct uclamp_se uc_req[UCLAMP_CNT];
 };
+
+#if IS_ENABLED(CONFIG_USE_VENDOR_GROUP_UTIL)
+struct vendor_util_group_property {
+#if IS_ENABLED(CONFIG_USE_GROUP_THROTTLE)
+	unsigned int group_throttle;
+#endif
+	struct uclamp_se uc_req[UCLAMP_CNT];
+};
+#endif
 
 struct uclamp_stats {
 	spinlock_t lock;
@@ -92,6 +109,14 @@ struct uclamp_stats {
 	u64 effect_time_in_state_max[UCLAMP_STATS_SLOTS];
 };
 
+#if IS_ENABLED(CONFIG_USE_VENDOR_GROUP_UTIL)
+struct vendor_cfs_util {
+	raw_spinlock_t lock;
+	struct sched_avg avg;
+	unsigned long util_removed;
+	unsigned long util_est;
+};
+#endif
 
 struct vendor_group_list {
 	struct list_head list;
@@ -107,16 +132,55 @@ enum vendor_group_attribute {
 	VTA_PROC_GROUP,
 };
 
+#if !IS_ENABLED(CONFIG_USE_VENDOR_GROUP_UTIL)
 struct vendor_task_group_struct {
 	enum vendor_group group;
 };
 
 ANDROID_VENDOR_CHECK_SIZE_ALIGN(u64 android_vendor_data1[4], struct vendor_task_group_struct t);
+#endif
 
+extern bool vendor_sched_reduce_prefer_idle;
+extern struct vendor_group_property vg[VG_MAX];
+
+/*****************************************************************************/
+/*                       Upstream Code Section                               */
+/*****************************************************************************/
+/*
+ * This part of code is copied from Android common GKI kernel and unmodified.
+ * Any change for these functions in upstream GKI would require extensive review
+ * to make proper adjustment in vendor hook.
+ */
+
+static inline unsigned long task_util(struct task_struct *p)
+{
+	return READ_ONCE(p->se.avg.util_avg);
+}
+
+static inline unsigned long _task_util_est(struct task_struct *p)
+{
+	struct util_est ue = READ_ONCE(p->se.avg.util_est);
+
+	return max(ue.ewma, (ue.enqueued & ~UTIL_AVG_UNCHANGED));
+}
+
+static inline unsigned long task_util_est(struct task_struct *p)
+{
+	return max(task_util(p), _task_util_est(p));
+}
+
+/*****************************************************************************/
+/*                       New Code Section                                    */
+/*****************************************************************************/
+/*
+ * This part of code is new for this kernel, which are mostly helper functions.
+ */
+#if !IS_ENABLED(CONFIG_USE_VENDOR_GROUP_UTIL)
 static inline struct vendor_task_group_struct *get_vendor_task_group_struct(struct task_group *tg)
 {
 	return (struct vendor_task_group_struct *)tg->android_vendor_data1;
 }
+#endif
 
 struct vendor_rq_struct {
 	raw_spinlock_t lock;
@@ -128,6 +192,23 @@ ANDROID_VENDOR_CHECK_SIZE_ALIGN(u64 android_vendor_data1[96], struct vendor_rq_s
 static inline struct vendor_rq_struct *get_vendor_rq_struct(struct rq *rq)
 {
 	return (struct vendor_rq_struct *)rq->android_vendor_data1;
+}
+
+static inline bool get_prefer_idle(struct task_struct *p)
+{
+	// For group based prefer_idle vote, filter our smaller or low prio or
+	// have throttled uclamp.max settings
+	// Ignore all checks, if the prefer_idle is from per-task API.
+
+	struct vendor_task_struct *vp = get_vendor_task_struct(p);
+	struct vendor_binder_task_struct *vbinder = get_vendor_binder_task_struct(p);
+
+	if (vendor_sched_reduce_prefer_idle && !vp->uclamp_fork_reset)
+		return (vg[vp->group].prefer_idle && p->prio <= DEFAULT_PRIO &&
+			uclamp_eff_value(p, UCLAMP_MAX) == SCHED_CAPACITY_SCALE) ||
+			vp->prefer_idle || vbinder->prefer_idle;
+	else
+		return vg[vp->group].prefer_idle || vp->prefer_idle || vbinder->prefer_idle;
 }
 
 int acpu_init(void);

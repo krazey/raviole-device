@@ -15,9 +15,17 @@
 			       __stringify(_new) );
 
 // Maximum size: u64[2] for ANDROID_VENDOR_DATA_ARRAY(1, 2) in task_struct
+#if IS_ENABLED(CONFIG_USE_VENDOR_GROUP_UTIL)
+enum vendor_util_group {
+	VUG_BG = 0,
+	// VUG_FG must be the last one so that we could skip it.
+	VUG_FG,
+	VUG_MAX,
+};
+#endif
 
 enum vendor_group {
-	VG_SYSTEM=0,
+	VG_SYSTEM = 0,
 	VG_TOPAPP,
 	VG_FOREGROUND,
 	VG_CAMERA,
@@ -32,6 +40,12 @@ enum vendor_group {
 	VG_MAX,
 };
 
+struct vendor_binder_task_struct {
+	unsigned int uclamp[UCLAMP_CNT];
+	bool prefer_idle;
+	bool active;
+};
+
 struct vendor_task_struct {
 	raw_spinlock_t lock;
 	enum vendor_group group;
@@ -40,6 +54,9 @@ struct vendor_task_struct {
 	bool queued_to_list;
 	bool uclamp_fork_reset;
 	bool prefer_idle;
+
+	/* parameters for binder inheritance */
+	struct vendor_binder_task_struct binder_task;
 };
 
 ANDROID_VENDOR_CHECK_SIZE_ALIGN(u64 android_vendor_data1[64], struct vendor_task_struct t);
@@ -48,6 +65,11 @@ ANDROID_VENDOR_CHECK_SIZE_ALIGN(u64 android_vendor_data1[64], struct vendor_task
 static inline struct vendor_task_struct *get_vendor_task_struct(struct task_struct *p)
 {
 	return (struct vendor_task_struct *)p->android_vendor_data1;
+}
+
+static inline struct vendor_binder_task_struct *get_vendor_binder_task_struct(struct task_struct *p)
+{
+	return &get_vendor_task_struct(p)->binder_task;
 }
 
 static inline int get_vendor_group(struct task_struct *p)
