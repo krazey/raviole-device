@@ -3155,8 +3155,9 @@ retry:
 			dev_dbg(dev, "%s: Set PERST to logical 1 gpio(%d) val=(%d)\n",
 				 __func__, desc_to_gpio(exynos_pcie->perst_gpio),
 				 gpiod_get_value(exynos_pcie->perst_gpio));
-			logbuffer_log(exynos_pcie->log, "%s: Set PERST to LOW, gpio val = %d",
-				      __func__, gpiod_get_value(exynos_pcie->perst_gpio));
+			logbuffer_log(exynos_pcie->log, "%s: Set PERST to LOW, gpio(%d) val = %d",
+				      __func__, desc_to_gpio(exynos_pcie->perst_gpio),
+				      gpiod_get_value(exynos_pcie->perst_gpio));
 			/* LTSSM disable */
 			exynos_elbi_write(exynos_pcie, PCIE_ELBI_LTSSM_DISABLE,
 					  PCIE_APP_LTSSM_ENABLE);
@@ -3504,7 +3505,8 @@ void exynos_pcie_rc_poweroff(int ch_num)
 		dev_dbg(dev, "%s: Set PERST to logical 1, gpio(%d) val=(%d)\n",
 			 __func__, desc_to_gpio(exynos_pcie->perst_gpio),
 			 gpiod_get_value(exynos_pcie->perst_gpio));
-		logbuffer_log(exynos_pcie->log, "%s: Set PERST to LOW, gpio val = %d", __func__,
+		logbuffer_log(exynos_pcie->log, "%s: Set PERST to LOW, gpio(%d) val = %d",
+			      __func__, desc_to_gpio(exynos_pcie->perst_gpio),
 			      gpiod_get_value(exynos_pcie->perst_gpio));
 
 		/* LTSSM disable */
