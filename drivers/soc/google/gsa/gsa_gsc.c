@@ -437,7 +437,7 @@ static int __init gsa_gsc_driver_init(void)
 		return ret;
 	}
 
-	gsc_class = class_create(THIS_MODULE, KBUILD_MODNAME);
+	gsc_class = class_create(KBUILD_MODNAME);
 	if (IS_ERR(gsc_class)) {
 		ret = PTR_ERR(gsc_class);
 		pr_err("%s: failed (%d) to device class\n", __func__, ret);

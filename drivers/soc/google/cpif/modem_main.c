@@ -715,7 +715,7 @@ static int cpif_cdev_alloc_region(struct modem_data *pdata, struct modem_shared 
 		return ret;
 	}
 
-	msd->cdev_class = class_create(THIS_MODULE, "cpif");
+	msd->cdev_class = class_create("cpif");
 	if (IS_ERR(msd->cdev_class)) {
 		mif_err("class_create() failed:%ld\n", PTR_ERR(msd->cdev_class));
 		ret = -ENOMEM;
