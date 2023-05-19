@@ -647,13 +647,15 @@ ATTRIBUTE_GROUPS(sscd_dev);
 /**
  * class attributes
  */
-static ssize_t enabled_show(struct class *class, struct class_attribute *attr,
+static ssize_t enabled_show(const struct class *class,
+			    const struct class_attribute *attr,
 			    char *buf)
 {
 	return scnprintf(buf, PAGE_SIZE, "%d\n", sscd_enabled);
 }
 
-static ssize_t enabled_store(struct class *class, struct class_attribute *attr,
+static ssize_t enabled_store(const struct class *class,
+			     const struct class_attribute *attr,
 			     const char *buf, size_t count)
 {
 	int status;
@@ -666,13 +668,15 @@ static ssize_t enabled_store(struct class *class, struct class_attribute *attr,
 	return status ? status : count;
 }
 
-static ssize_t level_show(struct class *class, struct class_attribute *attr,
+static ssize_t level_show(const struct class *class,
+			  const struct class_attribute *attr,
 			  char *buf)
 {
 	return scnprintf(buf, PAGE_SIZE, "%d\n", sscd_level);
 }
 
-static ssize_t level_store(struct class *class, struct class_attribute *attr,
+static ssize_t level_store(const struct class *class,
+			   const struct class_attribute *attr,
 			   const char *buf, size_t count)
 {
 	int status;
@@ -685,7 +689,8 @@ static ssize_t level_store(struct class *class, struct class_attribute *attr,
 	return status ? status : count;
 }
 
-static ssize_t clients_show(struct class *class, struct class_attribute *attr,
+static ssize_t clients_show(const struct class *class,
+			    const struct class_attribute *attr,
 			    char *buf)
 {
 	int n = 0;
