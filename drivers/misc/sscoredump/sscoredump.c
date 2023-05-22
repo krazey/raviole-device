@@ -720,7 +720,6 @@ static struct attribute *class_sscd_attrs[] = {
 ATTRIBUTE_GROUPS(class_sscd);
 
 static struct class sscd_class = {
-	.owner		= THIS_MODULE,
 	.name		= SSCD_NAME,
 	.class_groups	= class_sscd_groups,
 };
