@@ -57,9 +57,14 @@
 			no-map;
 		};
 
-		ramoops_mem@fd3ff000 {
+		suspend_diag_log_reserved: suspend_diag_log_reserved@fd90c000 {
+			reg = <0 0xfd90c000 0x00001000>;
+			no-map;
+		};
+
+		ramoops_mem@fd400000 {
 			compatible = "ramoops";
-			reg = <0 0xfd3ff000 0x400000>;
+			reg = <0 0xfd400000 0x400000>;
 			console-size = <0x200000>;
 			pmsg-size = <0x200000>;
 		};
