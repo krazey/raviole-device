@@ -901,7 +901,8 @@ static const struct smfc_device_data smfc_8890_data = {
 			| V4L2_CAP_EXYNOS_JPEG_HWFC
 			| V4L2_CAP_EXYNOS_JPEG_NO_STREAMBASE_ALIGN
 			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN
-			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION,
+			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION
+			| V4L2_CAP_STREAMING,
 	.burstlenth_bits = 4, /* 16 bytes: 1 burst */
 };
 
@@ -909,7 +910,8 @@ static const struct smfc_device_data smfc_7870_data = {
 	.device_caps = V4L2_CAP_EXYNOS_JPEG_B2B_COMPRESSION
 			| V4L2_CAP_EXYNOS_JPEG_NO_STREAMBASE_ALIGN
 			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN
-			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION,
+			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION
+			| V4L2_CAP_STREAMING,
 	.burstlenth_bits = 4, /* 16 bytes: 1 burst */
 };
 
@@ -918,13 +920,15 @@ static const struct smfc_device_data smfc_7420_data = {
 			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN
 			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION
 			| V4L2_CAP_EXYNOS_JPEG_DOWNSCALING
-			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION_CROP,
+			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION_CROP
+			| V4L2_CAP_STREAMING,
 	.burstlenth_bits = 5, /* 32 bytes: 2 bursts */
 };
 
 static const struct smfc_device_data smfc_3475_data = {
 	.device_caps = V4L2_CAP_EXYNOS_JPEG_NO_STREAMBASE_ALIGN
-			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN,
+			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN
+			| V4L2_CAP_STREAMING,
 	.burstlenth_bits = 5, /* 32 bytes: 2 bursts */
 };
 
