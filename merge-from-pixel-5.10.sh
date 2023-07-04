@@ -1,7 +1,11 @@
-#! /bin/sh
+#! /bin/sh -u
 # SPDX-License-Identifier: Apache-2.0
 #
-# (c) 2020, Google
+# (c) 2020,2023, Google
+
+# set BUG=xxx in the environment to autoamtically add a
+#   Bug: xxx
+# tag to each (merge) commit message
 progname="${0##*/}"
 
 [ "USAGE: repo_sync_rebase_prune
@@ -34,6 +38,8 @@ AUTHOR_NAME="`git config user.name`"
 AUTHOR_EMAIL="`git config user.email`"
 
 do_merge() {
+  local orev
+
   dir=${1}
   shift
   from_repo=${1}
@@ -60,10 +66,20 @@ do_merge() {
             sort -u |
             grep -v '^$' |
             sed 's/.*/Bug: &/'`"
+
+    orev=$(git rev-parse HEAD)
     git fetch ${from_repo} ${from_branch} && \
     git merge --no-ff --commit --signoff --log=100 ${from_repo}/${from_branch} --m "Merge ${from_repo}/${from_branch} into ${branch}
 ${@}
-"
+" || exit 1
+    # add the Bug: tag only if the merge wasn't a noop
+    if [ "${orev}" != "$(git rev-parse HEAD)" ] \
+        && [ -n "${BUG:-}" ] ; then
+      git show -s --format=%B HEAD \
+      | git -c trailer.where=before interpret-trailers --trailer "Bug: ${BUG}" \
+      | git commit --amend -F - || exit 1
+    fi
+    echo
   ) ||
     echo Failed merge of ${dir} >&2
 }
