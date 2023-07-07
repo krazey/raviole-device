@@ -323,6 +323,7 @@ static void dbg_snapshot_sched_switch(void *ignore, bool preempt,
 	dbg_snapshot_task(raw_smp_processor_id(), next);
 }
 
+#ifdef DEBUG_SNAPSHOT_LOGGING_USING_EXTRA_TRACEPOINTS
 void dbg_snapshot_work(work_func_t fn, int en)
 {
 	int cpu = raw_smp_processor_id();
@@ -348,6 +349,7 @@ static void dbg_snapshot_wq_end(void *ignore, struct work_struct *work,
 {
 	dbg_snapshot_work(func, DSS_FLAG_OUT);
 }
+#endif /* DEBUG_SNAPSHOT_LOGGING_USING_EXTRA_TRACEPOINTS */
 
 void dbg_snapshot_cpuidle_mod(char *modes, unsigned int state, s64 diff, int en)
 {
@@ -368,6 +370,7 @@ void dbg_snapshot_cpuidle_mod(char *modes, unsigned int state, s64 diff, int en)
 }
 EXPORT_SYMBOL_GPL(dbg_snapshot_cpuidle_mod);
 
+#ifdef DEBUG_SNAPSHOT_LOGGING_USING_EXTRA_TRACEPOINTS
 void dbg_snapshot_irq(int irq, void *fn, int en)
 {
 	unsigned long flags, i;
@@ -427,6 +430,7 @@ static void dbg_snapshot_hrtimer_exit(void *ignore, struct hrtimer *timer)
 {
 	dbg_snapshot_hrtimer(timer, 0, timer->function, DSS_FLAG_OUT);
 }
+#endif /* DEBUG_SNAPSHOT_LOGGING_USING_EXTRA_TRACEPOINTS */
 
 void dbg_snapshot_regulator(unsigned long long timestamp, char *f_name,
 			unsigned int addr, unsigned int volt,
@@ -850,6 +854,7 @@ void dbg_snapshot_register_vh_log(void)
 			pr_err("dss task log VH register failed\n");
 	}
 
+#ifdef DEBUG_SNAPSHOT_LOGGING_USING_EXTRA_TRACEPOINTS
 	if (dss_log_items[DSS_LOG_WORK_ID].entry.enabled) {
 		if (register_trace_workqueue_execute_start(dbg_snapshot_wq_start, NULL))
 			pr_err("dss wq start log VH register failed\n");
@@ -871,6 +876,7 @@ void dbg_snapshot_register_vh_log(void)
 		if (register_trace_hrtimer_expire_exit(dbg_snapshot_hrtimer_exit, NULL))
 			pr_err("dss hrtimer exit log VH register failed\n");
 	}
+#endif /* DEBUG_SNAPSHOT_LOGGING_USING_EXTRA_TRACEPOINTS */
 }
 
 void dbg_snapshot_start_log(void)

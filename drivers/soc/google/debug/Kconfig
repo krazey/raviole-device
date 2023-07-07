@@ -66,6 +66,17 @@ config DEBUG_SNAPSHOT_VENDOR_HOOKS
 	help
 	  This config is used to enable/disable the debug snapshot vendor hooks.
 
+config DEBUG_SNAPSHOT_LOGGING_USING_EXTRA_TRACEPOINTS
+	bool "Debug Snapshot logging using extra trace points"
+	depends on DEBUG_SNAPSHOT
+	default n
+	help
+	  This config is used to enable/disable dss logging using extra trace
+	  points.
+	  Enable this if trace points for irq_handler_exit(),
+	  workqueue_execute_start()/end(), and hrtimer_expire_entry()/exit()
+	  are available to kernel modules.
+
 config DEBUG_SNAPSHOT_DEBUG_KINFO
 	tristate "Debug Kernel Information Support"
 	depends on DEBUG_SNAPSHOT
