@@ -2632,7 +2632,7 @@ static inline u16 pcie_read_ap2cp_irq(struct mem_link_device *mld)
 
 struct shmem_srinfo {
 	unsigned int size;
-	char buf[0];
+	char buf[];
 };
 
 /* not in use */
