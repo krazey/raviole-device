@@ -858,7 +858,7 @@ struct pt_driver *pt_driver_register(struct device_node *node,
 		+ cnt * sizeof(struct device_node *);
 	driver = kmalloc(size, GFP_KERNEL);
 	if (driver == NULL)
-		return NULL;
+		return ERR_PTR(-ENOMEM);
 	memset(driver, 0, size);
 	mutex_init(&driver->mt);
 	driver->ops = ops;
@@ -917,8 +917,10 @@ struct pt_driver *pt_driver_register(struct device_node *node,
 
 	driver->sysctl_header = register_sysctl_table(
 					&driver->sysctl_table[0]);
-	if (IS_ERR(driver->sysctl_header))
-		driver->sysctl_header = NULL;
+	if (IS_ERR(driver->sysctl_header)) {
+		kfree(driver);
+		return ERR_CAST(driver->sysctl_header);
+	}
 
 	spin_lock_irqsave(&pt_internal_data.sl, flags);
 	list_add(&driver->list,  &pt_internal_data.driver_list);

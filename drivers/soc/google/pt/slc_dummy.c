@@ -9,6 +9,7 @@
  * Author: cozette@google.com
  */
 
+#include <linux/err.h>
 #include <linux/list.h>
 #include <linux/of_platform.h>
 #include <linux/module.h>
@@ -189,6 +190,9 @@ static int slc_dummy_probe(struct platform_device *pdev)
 		pt_driver_register(pdev->dev.of_node,
 				   &slc_dummy_ops,
 				   driver_data);
+	if (IS_ERR(driver_data->driver))
+		return PTR_ERR(driver_data->driver);
+
 	return 0;
 }
 

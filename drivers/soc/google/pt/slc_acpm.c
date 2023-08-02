@@ -22,6 +22,7 @@
 #include "../cal-if/acpm_dvfs.h"
 #include <soc/google/acpm_ipc_ctrl.h>
 #include <linux/errno.h>
+#include <linux/err.h>
 #include <linux/debugfs.h>
 
 #define PT_PTID_MAX 64
@@ -495,7 +496,8 @@ static int slc_acpm_probe(struct platform_device *pdev)
 
 	driver_data->driver = pt_driver_register(pdev->dev.of_node,
 			&slc_acpm_ops, driver_data);
-	WARN_ON(driver_data->driver == NULL);
+	if (IS_ERR(driver_data->driver))
+		return PTR_ERR(driver_data->driver);
 
 	slc_debugfs_init(driver_data);
 
