@@ -11,6 +11,7 @@
 
 #include <soc/google/pt.h>
 #include "pt_trace.h"
+#include <linux/err.h>
 #include <linux/list.h>
 #include <linux/of_platform.h>
 #include <linux/module.h>
@@ -483,7 +484,7 @@ static void pt_handle_check(struct pt_handle *handle, int id)
 		panic("%s %s %d unknown\n", __func__, handle->node->name, id);
 }
 
-static void pt_handle_sysctl_register(struct pt_handle *handle)
+static int pt_handle_sysctl_register(struct pt_handle *handle)
 {
 	int id;
 	struct ctl_table *sysctl_table;
@@ -492,7 +493,7 @@ static void pt_handle_sysctl_register(struct pt_handle *handle)
 	sysctl_table = kmalloc_array(entry_cnt, sizeof(*sysctl_table),
 					GFP_KERNEL);
 	if (!sysctl_table)
-		return;
+		return -ENOMEM;
 	memset(sysctl_table, 0, sizeof(*sysctl_table) * entry_cnt);
 	sysctl_table[0].procname = "dev";
 	sysctl_table[0].mode = 0550;
@@ -524,6 +525,8 @@ static void pt_handle_sysctl_register(struct pt_handle *handle)
 		kfree(sysctl_table);
 	} else
 		handle->sysctl_table = sysctl_table;
+
+	return 0;
 }
 
 static void pt_handle_sysctl_unregister(struct pt_handle *handle)
@@ -777,7 +780,7 @@ void pt_client_unregister(struct pt_handle *handle)
 struct pt_handle *pt_client_register(struct device_node *node, void *data,
 	pt_resize_callback_t resize_callback)
 {
-	int id;
+	int id, ret;
 	unsigned long flags;
 	struct pt_handle *handle;
 	const char *propname = "pt_id";
@@ -803,11 +806,7 @@ struct pt_handle *pt_client_register(struct device_node *node, void *data,
 		const char *name;
 		struct pt_driver *driver;
 		int index;
-		int ret = of_property_read_string_index(node,
-						propname,
-						id,
-						&name);
-
+		ret = of_property_read_string_index(node, propname, id, &name);
 		if (ret != 0) {
 			kfree(handle);
 			return ERR_PTR(-ENOENT);
@@ -822,7 +821,9 @@ struct pt_handle *pt_client_register(struct device_node *node, void *data,
 		handle->pts[id].enabled = false;
 		handle->pts[id].ptid = PT_PTID_INVALID;
 	}
-	pt_handle_sysctl_register(handle);
+	ret = pt_handle_sysctl_register(handle);
+	if (ret)
+		return ERR_PTR(ret);
 
 	// Check if the node was not registered
 	spin_lock_irqsave(&pt_internal_data.sl, flags);
