@@ -1663,7 +1663,7 @@ static ssize_t _name##_show(struct device *dev,			\
 	struct ufs_hba *hba = dev_get_drvdata(dev);			\
 	u32 value;						\
 	pm_runtime_get_sync(hba->dev);			\
-	ufshcd_hold(hba, false);			\
+	ufshcd_hold(hba);				\
 	value = ufshcd_readl(hba, REG##_uname);			\
 	ufshcd_release(hba);			\
 	pm_runtime_put(hba->dev);			\
