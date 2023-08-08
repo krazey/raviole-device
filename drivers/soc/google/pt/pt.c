@@ -846,8 +846,10 @@ struct pt_handle *pt_client_register(struct device_node *node, void *data,
 		handle->pts[id].ptid = PT_PTID_INVALID;
 	}
 	ret = pt_handle_sysctl_register(handle);
-	if (ret)
+	if (ret) {
+		kfree(handle);
 		return ERR_PTR(ret);
+	}
 
 	// Check if the node was not registered
 	spin_lock_irqsave(&pt_internal_data.sl, flags);
