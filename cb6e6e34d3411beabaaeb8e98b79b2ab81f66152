@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e27cde11_9c52059a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1945845
+      },
+      "writtenOn": "2023-08-17T19:06:01Z",
+      "side": 1,
+      "message": "Heh. Don\u0027t know how I got to be an owner for trusty.\n\nShould this be marked as a cherry pick from the 5.10 branch somehow? Its odd Gerrit isn\u0027t noticing the same Change-Id here.\n\nBut no objection from me here.",
+      "revId": "cb6e6e34d3411beabaaeb8e98b79b2ab81f66152",
+      "serverId": "85c56323-6fa9-3386-8a01-6480fb634889"
+    }
+  ]
+}
