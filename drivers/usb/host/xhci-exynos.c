@@ -749,7 +749,7 @@ static int __maybe_unused xhci_exynos_resume(struct device *dev)
 	if (ret)
 		return ret;
 
-	return xhci_resume(xhci, 0);
+	return xhci_resume(xhci, PMSG_RESUME);
 }
 
 static const struct dev_pm_ops xhci_exynos_pm_ops = {
