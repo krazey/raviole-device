@@ -19,6 +19,7 @@
 #include <linux/pm_qos.h>
 #include <linux/slab.h>
 #include <linux/cpu.h>
+#include <linux/units.h>
 
 #include <soc/google/tmu.h>
 #include <soc/google/cal-if.h>
@@ -390,7 +391,7 @@ static u32 cpu_freq_to_power(struct exynos_cpu_cooling_device *cpufreq_cdev,
 				if (freq <= pd->table[i].frequency)
 					break;
 
-			return pd->table[i].power;
+			return pd->table[i].power / MICROWATT_PER_MILLIWATT;
 		}
 	}
 #endif
@@ -418,7 +419,7 @@ static u32 cpu_power_to_freq(struct exynos_cpu_cooling_device *cpufreq_cdev,
 			struct em_perf_domain *pd = cpu_to_em_pd[first_cpu];
 
 			for (i = 0; i < (pd->nr_perf_states - 1); i++)
-				if (power <= pd->table[i].power)
+				if (power <= pd->table[i].power / MICROWATT_PER_MILLIWATT)
 					break;
 
 			return pd->table[i].frequency;
