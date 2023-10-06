@@ -19,6 +19,10 @@
 
 #define EXYNOS_EINT_PEND(b, x)      ((b) + 0xA00 + (((x) >> 3) * 4))
 #define SHARED_SR0 0x80
+#define WS_BIT_MAILBOX_AOC2AP		(7)
+#define WS2_BIT_MAILBOX_AOCA322AP	(5)
+#define WS2_BIT_MAILBOX_AOCF12AP	(6)
+#define WS2_BIT_VGPIO2PMU_EINT		(13)
 
 static struct exynos_pm_info *pm_info;
 static struct exynos_pm_dbg *pm_dbg;
@@ -101,7 +105,8 @@ static void exynos_show_wakeup_registers(unsigned int wakeup_stat)
 }
 
 static void exynos_show_wakeup_reason_sysint(unsigned int stat,
-					     struct wakeup_stat_name *ws_names)
+					     struct wakeup_stat_name *ws_names,
+					     int wakeup_stat_id)
 {
 	int bit;
 	unsigned long lstat = stat;
@@ -112,17 +117,32 @@ static void exynos_show_wakeup_reason_sysint(unsigned int stat,
 	for_each_set_bit(bit, &lstat, 32) {
 		if (!ws_names->name[bit])
 			continue;
+
+		/*
+		 * Ignore logging VGPIO2PMU_EINT wakeup reasons because they
+		 * will get logged in "drivers/mfd/s2mpg12-irq.c".
+		 */
+		if (wakeup_stat_id == 1 && bit == WS2_BIT_VGPIO2PMU_EINT)
+			continue;
+
 		if (str_idx) {
 			str_idx += strscpy(wake_reason + str_idx, ",",
 					   MAX_SUSPEND_ABORT_LEN - str_idx);
 		}
 		str_idx += strscpy(wake_reason + str_idx, ws_names->name[bit],
 				   MAX_SUSPEND_ABORT_LEN - str_idx);
-		if (bit == 7) {	/* MAILBOX_AOC2AP */
+		if ((wakeup_stat_id == 0 && bit == WS_BIT_MAILBOX_AOC2AP) ||
+		    (wakeup_stat_id == 1 && bit == WS2_BIT_MAILBOX_AOCA322AP)) {
 			aoc_id = __raw_readl(pm_info->mbox_aoc + SHARED_SR0);
 			str_idx += scnprintf(wake_reason + str_idx,
 					     MAX_SUSPEND_ABORT_LEN - str_idx,
-					     "%d", aoc_id);
+					     "x%X", aoc_id);
+		} else if (wakeup_stat_id == 1 && bit == WS2_BIT_MAILBOX_AOCF12AP &&
+				!IS_ERR(pm_info->mbox_aocf1)) {
+			aoc_id = __raw_readl(pm_info->mbox_aocf1 + SHARED_SR0);
+			str_idx += scnprintf(wake_reason + str_idx,
+					     MAX_SUSPEND_ABORT_LEN - str_idx,
+					     "x%X", aoc_id);
 		}
 	}
 #ifdef CONFIG_SUSPEND
@@ -150,14 +170,15 @@ static void exynos_show_wakeup_reason_detail(unsigned int wakeup_stat)
 		if (!wss)
 			continue;
 
-		exynos_show_wakeup_reason_sysint(wss, &pm_info->ws_names[i]);
+		exynos_show_wakeup_reason_sysint(wss, &pm_info->ws_names[i], i);
 	}
 }
 
 static void exynos_show_wakeup_reason(bool sleep_abort)
 {
-	unsigned int wakeup_stat;
+	unsigned int wakeup_stat, eint_far;
 	int i, size;
+	unsigned int is_eint_far = 0;
 
 	if (sleep_abort) {
 		pr_info("%s early wakeup! Dumping pending registers...\n", EXYNOS_PM_PREFIX);
@@ -167,8 +188,11 @@ static void exynos_show_wakeup_reason(bool sleep_abort)
 			pr_info("0x%x\n", __raw_readl(EXYNOS_EINT_PEND(pm_info->eint_base, i)));
 
 		pr_info("EINT_FAR_PEND:\n");
-		for (i = 0, size = 8; i < pm_info->num_eint_far; i += size)
-			pr_info("0x%x\n", __raw_readl(EXYNOS_EINT_PEND(pm_info->eint_far_base, i)));
+		for (i = 0, size = 8; i < pm_info->num_eint_far; i += size) {
+			eint_far = __raw_readl(EXYNOS_EINT_PEND(pm_info->eint_far_base, i));
+			pr_info("0x%x\n", eint_far);
+			is_eint_far |= eint_far;
+		}
 
 		if (pm_info->gic_base) {
 			pr_info("GIC_PEND:\n");
@@ -178,6 +202,14 @@ static void exynos_show_wakeup_reason(bool sleep_abort)
 		}
 
 		pr_info("%s done.\n", EXYNOS_PM_PREFIX);
+#ifdef CONFIG_SUSPEND
+		/**
+		 * Skip logging if there is a pending wakeup from EINT_FAR. Otherwise,
+		 * the sleep abort reason will overwrite the irq wakeup reason.
+		 */
+		if (!is_eint_far)
+			log_abnormal_wakeup_reason("sleep abort (by tf-a or acpm)");
+#endif
 		return;
 	}
 
@@ -506,6 +538,12 @@ static int exynos_pm_drvinit(struct platform_device *pdev)
 	pm_info->mbox_aoc = devm_ioremap_resource(dev, res);
 	if (IS_ERR(pm_info->mbox_aoc))
 		return PTR_ERR(pm_info->mbox_aoc);
+
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 4);
+	pm_info->mbox_aocf1 = devm_ioremap_resource(dev, res);
+	if (IS_ERR(pm_info->mbox_aocf1)) {
+		dev_warn(dev, "drvinit: unabled to get the mapped address of mbox_aocf1\n");
+	}
 
 	ret = of_property_read_u32(np, "num-eint", &pm_info->num_eint);
 	if (ret) {

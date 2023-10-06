@@ -1,0 +1,9 @@
+# ABI monitoring is not enabled on this branch and this list is not maintained,
+# but only here so that one can run:
+#
+#     bazel run --config=fast \
+#         //private/google-modules/soc/gs:slider_abi_update_symbol_list
+#
+# without having to create this file. That's useful to quickly check which
+# symbols are used by the vendor modules.
+[abi_symbol_list]

@@ -76,7 +76,7 @@ static void ufshcd_get_exclusive_access(struct ufs_hba *hba)
 
 	down_write(&hba->clk_scaling_lock);
 
-	ufshcd_hold(hba, false);
+	ufshcd_hold(hba);
 	spin_lock_irqsave(hba->host->host_lock, flags);
 	start = ktime_get();
 	do {

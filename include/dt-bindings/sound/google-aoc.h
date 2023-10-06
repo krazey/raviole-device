@@ -40,7 +40,8 @@
 #define IDX_HAPTIC_NoHOST_RX	0x20000011
 #define IDX_US_RX		0x13
 #define IDX_INCALL_PB2_RX       0x14
-#define IDX_IMSV_RX              0x15
+#define IDX_IMSV_RX             0x15
+#define IDX_CAP_INJ_RX          0x16
 
 #define IDX_EP1_TX		0x40000000
 #define IDX_EP2_TX		0x40000001
@@ -58,4 +59,5 @@
 #define IDX_INCALL_CAP2_TX	0x4000000f
 #define IDX_HIFI_TX	        0x40000010
 #define IDX_ANDROID_AEC_TX	0x40000012
+#define IDX_HOTWORD_TAP_TX	0x40000017
 #endif /* __DT_GOOGLE_AOC_H */

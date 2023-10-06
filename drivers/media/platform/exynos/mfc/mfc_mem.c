@@ -21,31 +21,41 @@ struct vb2_mem_ops *mfc_mem_ops(void)
 }
 
 int mfc_mem_get_user_shared_handle(struct mfc_ctx *ctx,
-	struct mfc_user_shared_handle *handle)
+	struct mfc_user_shared_handle *handle, char *name)
 {
 	struct iosys_map map;
 	int ret = 0;
 
 	handle->dma_buf = dma_buf_get(handle->fd);
 	if (IS_ERR(handle->dma_buf)) {
-		mfc_ctx_err("Failed to import fd\n");
+		mfc_ctx_err("[MEMINFO][SH][%s] Failed to import fd\n", name);
 		ret = PTR_ERR(handle->dma_buf);
 		goto import_dma_fail;
 	}
 
+	if (handle->dma_buf->size < handle->data_size) {
+		mfc_ctx_err("[MEMINFO][SH][%s] User-provided dma_buf size(%ld) is smaller than required size(%ld)\n",
+				name, handle->dma_buf->size, handle->data_size);
+		ret = -EINVAL;
+		goto dma_buf_size_fail;
+	}
+
 	ret = dma_buf_vmap(handle->dma_buf, &map);
 	if (ret) {
-		mfc_ctx_err("Failed to get kernel virtual address\n");
+		mfc_ctx_err("[MEMINFO][SH][%s] Failed to get kernel virtual address\n", name);
 		goto map_kernel_fail;
 	}
 	handle->vaddr = map.vaddr;
+
+	mfc_debug(2, "[MEMINFO][SH][%s] shared handle fd: %d, vaddr: %pK, buf size: %zu, data size: %zu\n",
+			name, handle->fd, handle->vaddr, handle->dma_buf->size, handle->data_size);
 
 	return 0;
 
 map_kernel_fail:
 	handle->vaddr = NULL;
+dma_buf_size_fail:
 	dma_buf_put(handle->dma_buf);
-
 import_dma_fail:
 	handle->dma_buf = NULL;
 	handle->fd = -1;
@@ -62,6 +72,7 @@ void mfc_mem_cleanup_user_shared_handle(struct mfc_ctx *ctx,
 	if (handle->dma_buf)
 		dma_buf_put(handle->dma_buf);
 
+	handle->data_size = 0;
 	handle->dma_buf = NULL;
 	handle->vaddr = NULL;
 	handle->fd = -1;
@@ -328,7 +339,7 @@ void mfc_put_iovmm(struct mfc_ctx *ctx, struct dpb_table *dpb, int num_planes, i
 
 	for (i = 0; i < num_planes; i++) {
 #if IS_ENABLED(CONFIG_MFC_USE_DMA_SKIP_LAZY_UNMAP)
-		if (dev->skip_lazy_unmap || ctx->skip_lazy_unmap) {
+		if (dpb[index].attach[i] && (dev->skip_lazy_unmap || ctx->skip_lazy_unmap)) {
 			dpb[index].attach[i]->dma_map_attrs |= DMA_ATTR_SKIP_LAZY_UNMAP;
 			mfc_debug(4, "[LAZY_UNMAP] skip for dst plane[%d]\n", i);
 		}
@@ -361,6 +372,7 @@ void mfc_put_iovmm(struct mfc_ctx *ctx, struct dpb_table *dpb, int num_planes, i
 			index, dpb[index].addr[0], dpb[index].mapcnt);
 		mfc_ctx_err("%s", dev->dev_crash_info);
 		call_dop(dev, dump_and_stop_debug_mode, dev);
+		dpb[index].mapcnt = 0;
 	}
 }
 

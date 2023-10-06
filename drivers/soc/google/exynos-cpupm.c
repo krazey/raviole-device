@@ -1402,6 +1402,7 @@ static const struct dev_pm_ops cpupm_pm_ops = {
 static int exynos_cpupm_probe(struct platform_device *pdev)
 {
 	int ret, cpu;
+	struct device *dev_root;
 
 	ret = extern_idle_ip_init(pdev->dev.of_node);
 	if (ret)
@@ -1412,9 +1413,13 @@ static int exynos_cpupm_probe(struct platform_device *pdev)
 		pr_warn("Failed to create sysfs for CPUPM\n");
 
 	/* Link CPUPM sysfs to /sys/devices/system/cpu/cpupm */
-	if (sysfs_create_link(&cpu_subsys.dev_root->kobj,
-			      &pdev->dev.kobj, "cpupm"))
-		pr_err("Failed to link CPUPM sysfs to cpu\n");
+	dev_root = bus_get_dev_root(&cpu_subsys);
+	if (dev_root) {
+		if (sysfs_create_link(&dev_root->kobj,
+				      &pdev->dev.kobj, "cpupm"))
+			pr_err("Failed to link CPUPM sysfs to cpu\n");
+		put_device(dev_root);
+	}
 
 	ret = exynos_cpuidle_state_init();
 	if (ret)

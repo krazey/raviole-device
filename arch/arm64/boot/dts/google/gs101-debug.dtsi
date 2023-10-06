@@ -84,7 +84,7 @@
 	keydebug {
 		compatible = "keydebug";
 		key_down_delay = <6000>;
-		keys_down = <116>;
+		keys_down = <116 115>;
 		dbg_fn_delay = <2000>;
 	};
 
@@ -99,6 +99,11 @@
 		reg = <0x0 0x02038000 0x00001000>;
 		reg-names = "ns_sram_base";
 		offset = <0x880>;
+	};
+
+	pixel-suspend-diag {
+		compatible = "google,pixel-suspend-diag";
+		memory-region = <&suspend_diag_log_reserved>;
 	};
 
 	gs101-itmon {

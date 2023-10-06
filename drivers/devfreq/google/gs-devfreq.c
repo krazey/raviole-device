@@ -99,14 +99,26 @@ static int exynos_devfreq_dm_call(struct device *parent,
 				  unsigned long *target_freq, u32 flags)
 {
 	int err = 0;
-	struct platform_device *pdev = container_of(parent, struct platform_device, dev);
-	struct exynos_devfreq_data *data = platform_get_drvdata(pdev);
-	unsigned long str_freq = data->suspend_freq;
+	struct platform_device *pdev;
+	struct exynos_devfreq_data *data;
+	unsigned long str_freq;
 	int dm_type;
 	unsigned long exynos_pm_qos_max;
-	struct devfreq *devfreq = data->devfreq;
-	struct devfreq_simple_interactive_data *gov_data = devfreq->data;
+	struct devfreq *devfreq;
+	struct devfreq_simple_interactive_data *gov_data;
 	struct dev_pm_opp *max_opp;
+
+	pdev = container_of(parent, struct platform_device, dev);
+	if (!pdev)
+		return -ENODEV;
+
+	data = platform_get_drvdata(pdev);
+	if  (!data || data->devfreq_disabled)
+		return -EPROBE_DEFER;
+
+	str_freq = data->suspend_freq;
+	devfreq = data->devfreq;
+	gov_data = devfreq->data;
 
 	err = find_exynos_devfreq_dm_type(devfreq->dev.parent, &dm_type);
 	if (err)
@@ -1963,14 +1975,15 @@ static int exynos_devfreq_suspend(struct device *dev)
 			return -EINVAL;
 		}
 #endif
-		data->suspend_flag = true;
 		ret = update_devfreq(data->devfreq);
-		if (ret && ret != -EAGAIN) {
+		if (ret) {
 			dev_err(&data->devfreq->dev,
 				"devfreq failed with (%d) error\n", ret);
 			mutex_unlock(&data->devfreq->lock);
-			return NOTIFY_BAD;
+			dev->power.must_resume = true;
+			return -EINVAL;
 		}
+		data->suspend_flag = true;
 		mutex_unlock(&data->devfreq->lock);
 	}
 #endif
@@ -1986,8 +1999,7 @@ static int exynos_devfreq_suspend(struct device *dev)
 	dev_dbg(data->dev, "Suspend frequency is %u\n",
 		exynos_devfreq_get_freq(data->dev, &get_freq, data->clk, data) ?
 		0 : get_freq);
-
-	return ret;
+	return ret; // 0
 }
 
 static int exynos_devfreq_resume(struct device *dev)
@@ -2009,10 +2021,17 @@ static int exynos_devfreq_resume(struct device *dev)
 		exynos_devfreq_get_freq(data->dev, &cur_freq, data->clk, data) ?
 		0 : cur_freq);
 
+#if IS_ENABLED(CONFIG_EXYNOS_ALT_DVFS)
+	ret = exynos_devfreq_um_init(data);
+	if (ret)
+		dev_err(data->dev, "failed to restart um\n");
+#endif
+
 #if IS_ENABLED(CONFIG_EXYNOS_DVFS_MANAGER)
 	if (data->use_acpm) {
 		mutex_lock(&data->devfreq->lock);
-		//send flag
+		data->suspend_flag = false;
+		//send flag (retry?)
 #if IS_ENABLED(CONFIG_GS_ACPM)
 		ret = acpm_ipc_request_channel(dev->of_node, NULL, &ch_num,
 					       &size);
@@ -2039,9 +2058,8 @@ static int exynos_devfreq_resume(struct device *dev)
 			return -EINVAL;
 		}
 #endif
-		data->suspend_flag = false;
 		ret = update_devfreq(data->devfreq);
-		if (ret && ret != -EAGAIN) {
+		if (ret) {
 			dev_err(&data->devfreq->dev,
 				"devfreq failed with (%d) error\n", ret);
 			mutex_unlock(&data->devfreq->lock);
@@ -2054,11 +2072,6 @@ static int exynos_devfreq_resume(struct device *dev)
 		exynos_pm_qos_update_request(&data->default_pm_qos_min,
 					     data->default_qos);
 
-#if IS_ENABLED(CONFIG_EXYNOS_ALT_DVFS)
-	ret = exynos_devfreq_um_init(data);
-	if (ret)
-		dev_err(data->dev, "failed to restart um\n");
-#endif
 
 	return ret;
 }

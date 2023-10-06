@@ -1,7 +1,11 @@
-#! /bin/sh
+#! /bin/sh -u
 # SPDX-License-Identifier: Apache-2.0
 #
-# (c) 2020, Google
+# (c) 2020,2023, Google
+
+# set BUG=xxx in the environment to autoamtically add a
+#   Bug: xxx
+# tag to each (merge) commit message
 progname="${0##*/}"
 
 [ "USAGE: repo_sync_rebase_prune
@@ -23,7 +27,7 @@ repo_sync_rebase_prune() {
   return 0
 }
 
-repo_sync_rebase_prune || exit
+#repo_sync_rebase_prune || exit
 
 [ "USAGE: do_merge <directory> <repo> <branch>
 
@@ -34,6 +38,8 @@ AUTHOR_NAME="`git config user.name`"
 AUTHOR_EMAIL="`git config user.email`"
 
 do_merge() {
+  local orev
+
   dir=${1}
   shift
   from_repo=${1}
@@ -42,8 +48,9 @@ do_merge() {
   shift
   (
     cd ${dir} || exit 1
-    branch=`git branch -r 2>&1 | sed -n 's/ *m\/.* -> //p'`
-    [ -n "${branch}" ] || branch=partner/android-gs-pixel-mainline
+    #branch=`git branch -r 2>&1 | sed -n 's/ *m\/.* -> //p'`
+    #[ -n "${branch}" ] || branch=partner/android-gs-pixel-mainline
+    branch=partner/android14-gs-pixel-6.1
     repo start ${BRANCH} . || exit 1
     commits="`git cherry -v ${branch} ${from_repo}/${from_branch} |
                 sed -n 's/^[+] //p'`"
@@ -59,10 +66,20 @@ do_merge() {
             sort -u |
             grep -v '^$' |
             sed 's/.*/Bug: &/'`"
+
+    orev=$(git rev-parse HEAD)
     git fetch ${from_repo} ${from_branch} && \
     git merge --no-ff --commit --signoff --log=100 ${from_repo}/${from_branch} --m "Merge ${from_repo}/${from_branch} into ${branch}
 ${@}
-"
+" || exit 1
+    # add the Bug: tag only if the merge wasn't a noop
+    if [ "${orev}" != "$(git rev-parse HEAD)" ] \
+        && [ -n "${BUG:-}" ] ; then
+      git show -s --format=%B HEAD \
+      | git -c trailer.where=before interpret-trailers --trailer "Bug: ${BUG}" \
+      | git commit --amend -F - || exit 1
+    fi
+    echo
   ) ||
     echo Failed merge of ${dir} >&2
 }
@@ -73,16 +90,11 @@ find private/google-modules -name .git |
   while read gitdir; do
     dir=${gitdir%/.git}
     case ${dir} in
-      */aoc) ;&
-      */edgetpu/abrolhos) ;&
-      */gpu)
-        do_merge ${dir} partner android13-gs-pixel-5.10-gs101-tm-qpr1
-        ;;
       */soc/gs)
         # Note: this project doesn't have an android13 upstream branch
         ;;
       *)
-        do_merge ${dir} partner android13-gs-pixel-5.10-tm-qpr1
+        do_merge ${dir} partner android13-gs-pixel-5.10-udc
         ;;
     esac ||
       echo ERROR: merge ${dir} failed

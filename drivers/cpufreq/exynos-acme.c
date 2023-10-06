@@ -32,6 +32,7 @@
 #include <trace/events/power.h>
 
 #include "exynos-acme.h"
+
 /*
  * list head of cpufreq domain
  */
@@ -285,9 +286,8 @@ static int exynos_cpufreq_verify(struct cpufreq_policy_data *new_policy)
 				 domain->max_freq_qos);
 
 	ret = cpufreq_frequency_table_verify(new_policy, domain->freq_table);
-	if (!ret) {
+	if (!ret)
 		arch_update_thermal_pressure(&domain->cpus, new_policy->max);
-	}
 	return ret;
 }
 
@@ -533,8 +533,54 @@ static ssize_t freq_qos_max_store(struct device *dev,
 	return count;
 }
 
+static ssize_t min_freq_qos_list_show(struct device *dev,
+			     struct device_attribute *attr, char *buf)
+{
+	ssize_t len = 0;
+	int total_requests = 0;
+	struct exynos_cpufreq_domain *domain;
+	struct plist_node *min_freq_pos;
+
+	list_for_each_entry(domain, &domains, list) {
+		total_requests = 0;
+		list_for_each_entry(min_freq_pos,
+				    &domain->min_qos_req.qos->min_freq.list.node_list, node_list) {
+			total_requests += 1;
+			len += sysfs_emit_at(buf, len, "cpu%d: total_requests: %d,"
+					     " min_freq_qos: %d\n",
+					     cpumask_first(&domain->cpus),
+					     total_requests, min_freq_pos->prio);
+		}
+	}
+	return len;
+}
+
+static ssize_t max_freq_qos_list_show(struct device *dev,
+				      struct device_attribute *attr, char *buf)
+{
+	ssize_t len = 0;
+	int total_requests = 0;
+	struct exynos_cpufreq_domain *domain;
+	struct plist_node *max_freq_pos;
+
+	list_for_each_entry(domain, &domains, list) {
+		total_requests = 0;
+		list_for_each_entry(max_freq_pos,
+				    &domain->max_qos_req.qos->max_freq.list.node_list, node_list) {
+			total_requests += 1;
+			len += sysfs_emit_at(buf, len, "cpu%d: total_requests: %d,"
+					     " max_freq_qos: %d\n",
+					     cpumask_first(&domain->cpus),
+					     total_requests, max_freq_pos->prio);
+		}
+	}
+	return len;
+}
+
 static DEVICE_ATTR_RW(freq_qos_max);
 static DEVICE_ATTR_RW(freq_qos_min);
+static DEVICE_ATTR_RO(min_freq_qos_list);
+static DEVICE_ATTR_RO(max_freq_qos_list);
 
 /*********************************************************************
  *                       CPUFREQ DEV FOPS                            *
@@ -730,7 +776,6 @@ static int dm_scaler(int dm_type, void *devdata, unsigned int target_freq,
 		return -ENODEV;
 	}
 
-
 	target_index = cpufreq_frequency_table_target(policy, target_freq, relation);
 	target_freq = policy->freq_table[target_index].frequency;
 	ret = __exynos_cpufreq_target(policy, target_freq);
@@ -874,6 +919,19 @@ static void freq_qos_release(struct work_struct *work)
 }
 
 static int
+init_user_freq_qos(struct exynos_cpufreq_domain *domain, struct cpufreq_policy *policy)
+{
+	int ret = freq_qos_add_request(&policy->constraints, &domain->user_min_qos_req,
+				       FREQ_QOS_MIN, domain->min_freq);
+	if (ret < 0)
+		return ret;
+
+	ret = freq_qos_add_request(&policy->constraints, &domain->user_max_qos_req,
+				   FREQ_QOS_MAX, domain->soft_max_freq);
+	return ret;
+}
+
+static int
 init_freq_qos(struct exynos_cpufreq_domain *domain, struct cpufreq_policy *policy)
 {
 	unsigned int boot_qos, val;
@@ -886,16 +944,6 @@ init_freq_qos(struct exynos_cpufreq_domain *domain, struct cpufreq_policy *polic
 		return ret;
 
 	ret = freq_qos_add_request(&policy->constraints, &domain->max_qos_req,
-				   FREQ_QOS_MAX, domain->max_freq);
-	if (ret < 0)
-		return ret;
-
-	ret = freq_qos_add_request(&policy->constraints, &domain->user_min_qos_req,
-				   FREQ_QOS_MIN, domain->min_freq);
-	if (ret < 0)
-		return ret;
-
-	ret = freq_qos_add_request(&policy->constraints, &domain->user_max_qos_req,
 				   FREQ_QOS_MAX, domain->max_freq);
 	if (ret < 0)
 		return ret;
@@ -1018,14 +1066,18 @@ static int init_domain(struct exynos_cpufreq_domain *domain,
 	 * to bigger one.
 	 */
 	domain->max_freq = cal_dfs_get_max_freq(domain->cal_id);
+	domain->soft_max_freq = domain->max_freq;
 	domain->min_freq = cal_dfs_get_min_freq(domain->cal_id);
 
 	if (!of_property_read_u32(dn, "max-freq", &val))
-		domain->max_freq = min(domain->max_freq, val);
+		domain->max_freq = val;
 	if (!of_property_read_u32(dn, "min-freq", &val))
 		domain->min_freq = max(domain->min_freq, val);
 	if (!of_property_read_u32(dn, "resume-freq", &val))
 		resume_freq = max(domain->min_freq, val);
+	if (!of_property_read_u32(dn, "soft-max-freq", &val))
+		domain->soft_max_freq = min(domain->max_freq, val);
+	domain->soft_max_freq = max(domain->soft_max_freq, domain->min_freq);
 
 	domain->max_freq_qos = domain->max_freq;
 	domain->min_freq_qos = domain->min_freq;
@@ -1160,7 +1212,7 @@ static int init_domain(struct exynos_cpufreq_domain *domain,
 					    cal_dfs_get_resume_freq(domain->cal_id);
 	domain->old = get_freq(domain);
 	if (domain->old < domain->min_freq || domain->max_freq < domain->old) {
-		WARN(1, "Out-of-range freq(%dkhz) returned for domain%d in init time\n",
+		pr_info("Out-of-range freq(%dkhz) returned for domain%d in init time\n",
 		     domain->old, domain->id);
 		domain->old = domain->boot_freq;
 	}
@@ -1244,14 +1296,34 @@ static int exynos_cpufreq_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+	ret = sysfs_create_file(&pdev->dev.kobj, &dev_attr_min_freq_qos_list.attr);
+	if (ret) {
+		pr_err("failed to create min_freq_qos_list node\n");
+		return ret;
+	}
+
+	ret = sysfs_create_file(&pdev->dev.kobj, &dev_attr_max_freq_qos_list.attr);
+	if (ret) {
+		pr_err("failed to create max_freq_qos_list node\n");
+		return ret;
+	}
+
 	list_for_each_entry(domain, &domains, list) {
 		struct cpufreq_policy *policy;
 
-		enable_domain(domain);
-
 		policy = cpufreq_cpu_get_raw(cpumask_first(&domain->cpus));
-		if (!policy)
-			continue;
+		if (!policy) {
+			pr_err("failed to find domain policy!\n");
+			return -ENODEV;
+		}
+
+		ret = init_user_freq_qos(domain, policy);
+		if (ret < 0) {
+			pr_err("Failed to set max user qos vote!\n");
+			return ret;
+		}
+
+		enable_domain(domain);
 
 #if IS_ENABLED(CONFIG_EXYNOS_CPU_THERMAL)
 		exynos_cpufreq_cooling_register(domain->dn, policy);

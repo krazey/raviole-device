@@ -24,9 +24,6 @@
 
 		samsung,tzmp;
 
-		/* for F/W buffer */
-		memory-region = <&mfc_fw_rmem>;
-
 		/* MFC version */
 		/* ip_ver is set in gs101-a0.dts and gs101-b0.dts */
 
@@ -60,6 +57,11 @@
 		mv_search_mode = <1 0x201118>;
 		enc_idr_flag = <1 0x210614>;
 		min_quality_mode = <1 0x210629>;
+		hevc_pic_output_flag = <1 0x221108>;
+		/* Use metadata interface */
+		metadata_interface = <1 0x200910>;
+		/* Support HDR10+ full data */
+		hdr10_plus_full = <1 0x200910>;
 
 		/* AV1 Decoder */
 		support_av1_dec = <0>;
@@ -74,6 +76,8 @@
 		stride_align = <64>;
 		/* Decoder stride calculation type (new: 1, old: 0) */
 		stride_type = <1>;
+		/* Encoder 8K entropy mode (0: CABAC fix, 1: selectable) */
+		support_8K_cavlc = <1>;
 
 		/* Formats */
 		support_10bit = <1>;
@@ -186,6 +190,9 @@
 
 		/* need control for mfc idle clock */
 		idle_clk_ctrl = <0>;
+
+		/* Encoder RGB CSC formula by VUI from F/W */
+		enc_rgb_csc_by_fw = <1>;
 
 		/* Sub nodes for MFC core */
 		#address-cells = <2>;

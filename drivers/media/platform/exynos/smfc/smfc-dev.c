@@ -848,20 +848,6 @@ err_clk:
 }
 
 #if IS_ENABLED(CONFIG_EXYNOS_PM_QOS) || IS_ENABLED(CONFIG_EXYNOS_PM_QOS_MODULE)
-static void g2d_pm_qos_add_request(struct device *dev, struct smfc_dev *smfc)
-{
-	if (of_property_read_u32(dev->of_node, "smfc,int_qos_minlock",
-				 (u32 *)&smfc->qosreq_int_level))
-		return;
-
-	if (smfc->qosreq_int_level > 0) {
-		exynos_pm_qos_add_request(&smfc->qosreq_int, PM_QOS_DEVICE_THROUGHPUT, 0);
-		dev_info(dev, "INT Min.Lock Freq. = %d\n", smfc->qosreq_int_level);
-	} else {
-		smfc->qosreq_int_level = 0;
-	}
-}
-
 static void g2d_pm_qos_remove_request(struct smfc_dev *smfc)
 {
 	if (smfc->qosreq_int_level > 0)
@@ -870,6 +856,9 @@ static void g2d_pm_qos_remove_request(struct smfc_dev *smfc)
 
 static void g2d_pm_qos_update_request(struct smfc_dev *smfc)
 {
+	if (!exynos_pm_qos_request_active(&smfc->qosreq_int))
+		exynos_pm_qos_add_request(&smfc->qosreq_int, PM_QOS_DEVICE_THROUGHPUT, 0);
+
 	if (smfc->qosreq_int_level > 0)
 		exynos_pm_qos_update_request(&smfc->qosreq_int, smfc->qosreq_int_level);
 }
@@ -912,7 +901,8 @@ static const struct smfc_device_data smfc_8890_data = {
 			| V4L2_CAP_EXYNOS_JPEG_HWFC
 			| V4L2_CAP_EXYNOS_JPEG_NO_STREAMBASE_ALIGN
 			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN
-			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION,
+			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION
+			| V4L2_CAP_STREAMING,
 	.burstlenth_bits = 4, /* 16 bytes: 1 burst */
 };
 
@@ -920,7 +910,8 @@ static const struct smfc_device_data smfc_7870_data = {
 	.device_caps = V4L2_CAP_EXYNOS_JPEG_B2B_COMPRESSION
 			| V4L2_CAP_EXYNOS_JPEG_NO_STREAMBASE_ALIGN
 			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN
-			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION,
+			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION
+			| V4L2_CAP_STREAMING,
 	.burstlenth_bits = 4, /* 16 bytes: 1 burst */
 };
 
@@ -929,13 +920,15 @@ static const struct smfc_device_data smfc_7420_data = {
 			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN
 			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION
 			| V4L2_CAP_EXYNOS_JPEG_DOWNSCALING
-			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION_CROP,
+			| V4L2_CAP_EXYNOS_JPEG_DECOMPRESSION_CROP
+			| V4L2_CAP_STREAMING,
 	.burstlenth_bits = 5, /* 32 bytes: 2 bursts */
 };
 
 static const struct smfc_device_data smfc_3475_data = {
 	.device_caps = V4L2_CAP_EXYNOS_JPEG_NO_STREAMBASE_ALIGN
-			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN,
+			| V4L2_CAP_EXYNOS_JPEG_NO_IMAGEBASE_ALIGN
+			| V4L2_CAP_STREAMING,
 	.burstlenth_bits = 5, /* 32 bytes: 2 bursts */
 };
 
@@ -978,7 +971,7 @@ static int exynos_smfc_probe(struct platform_device *pdev)
 
 	smfc->dev = &pdev->dev;
 
-	dma_set_mask(&pdev->dev, DMA_BIT_MASK(36));
+	dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
 
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	smfc->reg = devm_ioremap_resource(&pdev->dev, res);
@@ -1014,7 +1007,9 @@ static int exynos_smfc_probe(struct platform_device *pdev)
 
 	pm_runtime_enable(&pdev->dev);
 
-	g2d_pm_qos_add_request(&pdev->dev, smfc);
+	if (of_property_read_u32(pdev->dev.of_node, "smfc,int_qos_minlock",
+				 (u32 *)&smfc->qosreq_int_level))
+		smfc->qosreq_int_level = 0;
 
 	platform_set_drvdata(pdev, smfc);
 
@@ -1032,15 +1027,14 @@ static int exynos_smfc_probe(struct platform_device *pdev)
 
 	spin_lock_init(&smfc->flag_lock);
 
-	dev_info(&pdev->dev, "Probed H/W Version: %02x.%02x.%04x\n",
+	dev_info(&pdev->dev, "Probed H/W Version: %02x.%02x.%04x int_level=%d\n",
 		 (smfc->hwver >> 24) & 0xFF, (smfc->hwver >> 16) & 0xFF,
-		 smfc->hwver & 0xFFFF);
+		 smfc->hwver & 0xFFFF, smfc->qosreq_int_level);
 	return 0;
 
 err_hwver:
 	smfc_deinit_v4l2(&pdev->dev, smfc);
 err_v4l2:
-	g2d_pm_qos_remove_request(smfc);
 	return ret;
 }
 
@@ -1153,6 +1147,7 @@ static struct platform_driver exynos_smfc_driver = {
 };
 
 module_platform_driver(exynos_smfc_driver);
+MODULE_SOFTDEP("pre: exynos_devfreq");
 
 MODULE_AUTHOR("Cho KyongHo <pullip.cho@samsung.com>");
 MODULE_DESCRIPTION("Exynos Still MFC(JPEG) V4L2 Driver");

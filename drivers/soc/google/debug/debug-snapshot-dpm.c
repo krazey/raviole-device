@@ -17,6 +17,10 @@
 
 #include <asm/stacktrace.h>
 
+#ifdef CONFIG_DEBUG_SNAPSHOT_VENDOR_HOOKS
+#include <trace/hooks/fault.h>
+#include <trace/hooks/traps.h>
+#endif
 #include <soc/google/debug-snapshot.h>
 #include "debug-snapshot-local.h"
 
@@ -44,9 +48,9 @@ bool dbg_snapshot_get_enabled_debug_kinfo(void)
 }
 EXPORT_SYMBOL(dbg_snapshot_get_enabled_debug_kinfo);
 
-void dbg_snapshot_do_dpm(struct pt_regs *regs)
+#ifdef CONFIG_DEBUG_SNAPSHOT_VENDOR_HOOKS
+static void dbg_snapshot_do_dpm(struct pt_regs *regs, unsigned int esr)
 {
-	unsigned int esr = read_sysreg(esr_el1);
 	unsigned int val = 0;
 	unsigned int policy = GO_DEFAULT_ID;
 
@@ -101,7 +105,92 @@ void dbg_snapshot_do_dpm(struct pt_regs *regs)
 		dbg_snapshot_do_dpm_policy(policy, dpm_policy[policy]);
 	}
 }
-EXPORT_SYMBOL_GPL(dbg_snapshot_do_dpm);
+
+/* trace/hooks/fault.h */
+static void dbg_snapshot_do_dpm_die_kernel_fault(void *data, const char *msg,
+						 unsigned long addr,
+						 unsigned int esr,
+						 struct pt_regs *regs)
+{
+	dbg_snapshot_do_dpm(regs, esr);
+}
+
+static void dbg_snapshot_do_dpm_do_sea(void *data, unsigned long addr,
+				       unsigned int esr, struct pt_regs *regs)
+{
+	dbg_snapshot_do_dpm(regs, esr);
+}
+
+static void dbg_snapshot_do_dpm_do_mem_abort(void *data, unsigned long addr,
+					     unsigned int esr,
+					     struct pt_regs *regs)
+{
+	dbg_snapshot_do_dpm(regs, esr);
+}
+
+static void dbg_snapshot_do_dpm_do_sp_pc_abort(void *data, unsigned long addr,
+					       unsigned int esr,
+					       struct pt_regs *regs)
+{
+	dbg_snapshot_do_dpm(regs, esr);
+}
+
+/* trace/hooks/traps.h */
+static void dbg_snapshot_do_dpm_do_undefinstr(void *data, struct pt_regs *regs)
+{
+	unsigned int esr = read_sysreg(esr_el1);
+
+	dbg_snapshot_do_dpm(regs, esr);
+}
+
+static void dbg_snapshot_do_dpm_do_serror(void *data, struct pt_regs *regs, unsigned int esr)
+{
+	dbg_snapshot_do_dpm(regs, esr);
+}
+
+static void register_dbg_snapshot_do_dpm_vendor_hooks(void)
+{
+	static bool hook_registered;
+
+	if (hook_registered)
+		return;
+
+	/* trace/hooks/fault.h */
+	if (register_trace_android_rvh_die_kernel_fault(dbg_snapshot_do_dpm_die_kernel_fault
+						       , NULL)) {
+		pr_err("dpm: register die_kernel_fault hook failed\n");
+		return;
+	}
+
+	if (register_trace_android_rvh_do_sea(dbg_snapshot_do_dpm_do_sea, NULL)) {
+		pr_err("dpm: register do_sea hook failed\n");
+		return;
+	}
+
+	if (register_trace_android_rvh_do_mem_abort(dbg_snapshot_do_dpm_do_mem_abort, NULL)) {
+		pr_err("dpm: register do_mem_abort hook failed\n");
+		return;
+	}
+
+	if (register_trace_android_rvh_do_sp_pc_abort(dbg_snapshot_do_dpm_do_sp_pc_abort, NULL)) {
+		pr_err("dpm: register do_sp_pc_abort hook failed\n");
+		return;
+	}
+
+	/* trace/hooks/traps.h */
+	if (register_trace_android_rvh_do_undefinstr(dbg_snapshot_do_dpm_do_undefinstr, NULL)) {
+		pr_err("dpm: register do_undefinstr failed\n");
+		return;
+	}
+
+	if (register_trace_android_rvh_arm64_serror_panic(dbg_snapshot_do_dpm_do_serror, NULL)) {
+		pr_err("dpm: register arm64_serror_panic hook failed\n");
+		return;
+	}
+
+	hook_registered = true;
+}
+#endif /* CONFIG_DEBUG_SNAPSHOT_VENDOR_HOOKS */
 
 static void dbg_snapshot_dt_scan_dpm_feature(struct device_node *node)
 {
@@ -286,4 +375,8 @@ void dbg_snapshot_init_dpm(void)
 
 	if (dbg_snapshot_get_dpm_none_dump_mode() > 0)
 		dss_dpm.dump_mode_none = 1;
+
+#ifdef CONFIG_DEBUG_SNAPSHOT_VENDOR_HOOKS
+	register_dbg_snapshot_do_dpm_vendor_hooks();
+#endif
 }
