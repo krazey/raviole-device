@@ -26,7 +26,6 @@
 #include <asm/sysreg.h>
 
 
-#define PT_SYSCTL_ENTRY 4
 #define PT_COMMAND_SIZE 128
 #define PT_COMMAND_SIZE_STR "128"
 
@@ -92,7 +91,7 @@ struct pt_driver { /* one per driver */
 	struct device_node *node; /* driver node */
 	void *data; /* driver private data */
 	struct ctl_table_header *sysctl_header;
-	struct ctl_table sysctl_table[PT_SYSCTL_ENTRY];
+	struct ctl_table sysctl_table[2];
 };
 
 struct pt_global {
@@ -109,7 +108,7 @@ struct {
 	spinlock_t sl;
 	char sysctl_command[PT_COMMAND_SIZE];
 	char sysctl_node_name[PT_COMMAND_SIZE];
-	struct ctl_table sysctl_table[PT_SYSCTL_ENTRY];
+	struct ctl_table sysctl_table[3];
 	u32 timestamp;
 	u32 size;
 	int enabled;
@@ -500,7 +499,7 @@ static int pt_handle_sysctl_register(struct pt_handle *handle)
 	size_t handle_name_len, tmp_dir_path_len;
 	int id, ret, bytes_written;
 
-	sysctl_table = kcalloc(handle->id_cnt + 1, sizeof(*sysctl_table),
+	sysctl_table = kcalloc(handle->id_cnt, sizeof(*sysctl_table),
 			       GFP_KERNEL);
 	if (!sysctl_table)
 		return -ENOMEM;
