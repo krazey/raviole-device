@@ -535,7 +535,8 @@ static int pt_handle_sysctl_register(struct pt_handle *handle)
 		sysctl_table[id].proc_handler = proc_dointvec;
 	}
 
-	handle->sysctl_header = register_sysctl(tmp_dir_path, sysctl_table);
+	handle->sysctl_header = register_sysctl_sz(tmp_dir_path, sysctl_table,
+						   handle->id_cnt);
 	if (handle->sysctl_header == NULL) {
 		ret = -ENOENT;
 		goto exit_free_tmp_dir_path;
@@ -1287,7 +1288,8 @@ static int __init pt_init(void)
 	sysctl_table[2].maxlen = sizeof(pt_internal_data.size);
 	sysctl_table[2].mode = 0440;
 	sysctl_table[2].proc_handler = proc_dointvec;
-	pt_internal_data.sysctl_header = register_sysctl("/dev/pt", sysctl_table);
+	pt_internal_data.sysctl_header = register_sysctl("/dev/pt",
+							 pt_internal_data.sysctl_table);
 	if (IS_ERR(pt_internal_data.sysctl_header))
 		pt_internal_data.sysctl_header = NULL;
 	pt_internal_data.resize_thread = kthread_run(pt_resize_thread, NULL,
