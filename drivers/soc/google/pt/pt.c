@@ -499,13 +499,11 @@ static int pt_handle_sysctl_register(struct pt_handle *handle)
 	char *tmp_dir_path;
 	size_t handle_name_len, tmp_dir_path_len;
 	int id, ret, bytes_written;
-	int entry_cnt = handle->id_cnt + 1;
 
-	sysctl_table = kmalloc_array(entry_cnt, sizeof(*sysctl_table),
-					GFP_KERNEL);
+	sysctl_table = kcalloc(handle->id_cnt + 1, sizeof(*sysctl_table),
+			       GFP_KERNEL);
 	if (!sysctl_table)
 		return -ENOMEM;
-	memset(sysctl_table, 0, sizeof(*sysctl_table) * entry_cnt);
 
 	handle_name_len = strnlen(handle->node->name, PT_HANDLE_NAME_MAX_SIZE);
 	tmp_dir_path_len = PT_BASE_PATH_SIZE + handle_name_len;
