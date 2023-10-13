@@ -1289,8 +1289,6 @@ static int __init pt_init(void)
 	sysctl_table[2].proc_handler = proc_dointvec;
 	pt_internal_data.sysctl_header = register_sysctl("/dev/pt",
 							 pt_internal_data.sysctl_table);
-	if (IS_ERR(pt_internal_data.sysctl_header))
-		pt_internal_data.sysctl_header = NULL;
 	pt_internal_data.resize_thread = kthread_run(pt_resize_thread, NULL,
 							"PT_resize");
 	return 0;
