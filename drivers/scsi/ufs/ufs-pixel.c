@@ -701,29 +701,23 @@ static void pixel_ufs_send_command(void *data, struct ufs_hba *hba,
 	pixel_ufs_trace_upiu_cmd(hba, lrbp, true);
 }
 
-static inline int ufshcd_get_tr_ocs(struct ufshcd_lrb *lrbp)
+static inline enum utp_ocs ufshcd_get_tr_ocs(struct ufshcd_lrb *lrbp)
 {
-	return le32_to_cpu(lrbp->utr_descriptor_ptr->header.dword_2) & MASK_OCS;
+	return lrbp->utr_descriptor_ptr->header.ocs & MASK_OCS;
 }
 
 static inline int ufshcd_get_req_rsp(struct utp_upiu_rsp *ucd_rsp_ptr)
 {
-	return be32_to_cpu(ucd_rsp_ptr->header.dword_0) >> 24;
-}
-
-static inline int ufshcd_get_rsp_upiu_result(struct utp_upiu_rsp *ucd_rsp_ptr)
-{
-	return be32_to_cpu(ucd_rsp_ptr->header.dword_1) & MASK_RSP_UPIU_RESULT;
+	return ucd_rsp_ptr->header.transaction_code;
 }
 
 static void pixel_ufs_compl_command(void *data, struct ufs_hba *hba,
 					struct ufshcd_lrb *lrbp)
 {
-	int result = 0;
 	int scsi_status;
 	u8 response_code, opcode;
 	u8 *asc, *sense_buffer;
-	int ocs;
+	enum utp_ocs ocs;
 	struct request *rq;
 
 	pixel_ufs_update_io_stats(hba, lrbp, false);
@@ -740,8 +734,8 @@ static void pixel_ufs_compl_command(void *data, struct ufs_hba *hba,
 
 	ocs = ufshcd_get_tr_ocs(lrbp);
 	if (hba->quirks & UFSHCD_QUIRK_BROKEN_OCS_FATAL_ERROR) {
-		if (be32_to_cpu(lrbp->ucd_rsp_ptr->header.dword_1) &
-					MASK_RSP_UPIU_RESULT)
+		if (lrbp->ucd_rsp_ptr->header.response ||
++		    lrbp->ucd_rsp_ptr->header.status)
 			ocs = OCS_SUCCESS;
 	}
 	if (ocs != OCS_SUCCESS)
@@ -750,8 +744,7 @@ static void pixel_ufs_compl_command(void *data, struct ufs_hba *hba,
 	if (ufshcd_get_req_rsp(lrbp->ucd_rsp_ptr) != UPIU_TRANSACTION_RESPONSE)
 		return;
 
-	result = ufshcd_get_rsp_upiu_result(lrbp->ucd_rsp_ptr);
-	scsi_status = result & MASK_SCSI_STATUS;
+	scsi_status = lrbp->ucd_rsp_ptr->header.status;
 	if (scsi_status != SAM_STAT_CHECK_CONDITION)
 		return;
 
