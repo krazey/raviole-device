@@ -2000,12 +2000,6 @@ static void exynos_serial_set_termios(struct uart_port *port,
 static const char *exynos_serial_type(struct uart_port *port)
 {
 	switch (port->type) {
-	case PORT_S3C2410:
-		return "S3C2410";
-	case PORT_S3C2440:
-		return "S3C2440";
-	case PORT_S3C2412:
-		return "S3C2412";
 	case PORT_S3C6400:
 		return "S3C6400/10";
 	default:
@@ -2246,8 +2240,6 @@ static void exynos_serial_resetport(struct uart_port *port,
 	unsigned int ucon_mask;
 
 	ucon_mask = info->clksel_mask;
-	if (info->type == PORT_S3C2440)
-		ucon_mask |= S3C2440_UCON0_DIVMASK;
 
 	ucon &= ucon_mask;
 	if (ourport->dbg_mode & UART_LOOPBACK_MODE) {
