@@ -561,10 +561,7 @@ static int gs_get_trend(struct thermal_zone_device *tz,
 {
 	struct gs_tmu_data *data = tz->devdata;
 
-	if (!tz)
-		return 0;
-
-	if (!trip)
+	if (!data || !trip)
 		return -EINVAL;
 
 	if (data->use_pi_thermal) {
