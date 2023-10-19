@@ -555,24 +555,22 @@ static int gs_get_temp(struct thermal_zone_device *tz, int *temp)
 	return 0;
 }
 
-static int gs_get_trend(struct thermal_zone_device *tz, int trip_id,
-			   enum thermal_trend *trend)
+static int gs_get_trend(struct thermal_zone_device *tz,
+			struct thermal_trip *trip,
+			enum thermal_trend *trend)
 {
 	struct gs_tmu_data *data = tz->devdata;
-	struct thermal_trip trip;
-	int ret;
 
 	if (!tz)
 		return 0;
 
-	ret = __thermal_zone_get_trip(tz, trip_id, &trip);
-	if (ret < 0)
-		return ret;
+	if (!trip)
+		return -EINVAL;
 
 	if (data->use_pi_thermal) {
 		*trend = THERMAL_TREND_STABLE;
 	} else {
-		if (tz->temperature >= trip.temperature)
+		if (tz->temperature >= trip->temperature)
 			*trend = THERMAL_TREND_RAISING;
 		else
 			*trend = THERMAL_TREND_DROPPING;
