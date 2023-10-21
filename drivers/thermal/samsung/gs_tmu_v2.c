@@ -716,8 +716,8 @@ static void allow_maximum_power(struct gs_tmu_data *data)
 	struct thermal_zone_device *tz = data->tzd;
 	int control_temp = data->pi_param->trip_control_temp;
 
+	lockdep_assert_held(&tz->lock);
 	mutex_unlock(&data->lock);
-	mutex_lock(&tz->lock);
 	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
 		if (instance->trip != control_temp ||
 		    (!cdev_is_power_actor(instance->cdev)))
@@ -736,7 +736,6 @@ static void allow_maximum_power(struct gs_tmu_data *data)
 		thermal_cdev_update(instance->cdev);
 	}
 
-	mutex_unlock(&tz->lock);
 	mutex_lock(&data->lock);
 }
 
@@ -820,8 +819,8 @@ static int gs_pi_controller(struct gs_tmu_data *data, int control_temp)
 	unsigned long state;
 
 	// TODO: refactor locking
+	lockdep_assert_held(&tz->lock);
 	mutex_unlock(&data->lock);
-	mutex_lock(&tz->lock);
 	list_for_each_entry(instance, &tz->thermal_instances, tz_node) {
 		if (instance->trip == params->trip_control_temp &&
 		    cdev_is_power_actor(instance->cdev)) {
@@ -830,7 +829,6 @@ static int gs_pi_controller(struct gs_tmu_data *data, int control_temp)
 			break;
 		}
 	}
-	mutex_unlock(&tz->lock);
 	mutex_lock(&data->lock);
 
 	if (!found_actor)
@@ -852,13 +850,11 @@ static int gs_pi_controller(struct gs_tmu_data *data, int control_temp)
 
 	// TODO: refactor locking
 	mutex_unlock(&data->lock);
-	mutex_lock(&tz->lock);
 	instance->target = state;
 	mutex_lock(&cdev->lock);
 	cdev->updated = false;
 	mutex_unlock(&cdev->lock);
 	thermal_cdev_update(cdev);
-	mutex_unlock(&tz->lock);
 	mutex_lock(&data->lock);
 	data->max_cdev = state;
 
@@ -882,6 +878,7 @@ static void gs_pi_thermal(struct gs_tmu_data *data)
 
 	if (tz) {
 		if (READ_ONCE(tz->mode) == THERMAL_DEVICE_DISABLED) {
+			mutex_lock(&tz->lock);
 			mutex_lock(&data->lock);
 			reset_pi_params(data);
 			allow_maximum_power(data);
@@ -892,9 +889,10 @@ static void gs_pi_thermal(struct gs_tmu_data *data)
 
 	thermal_zone_device_update(tz, THERMAL_EVENT_UNSPECIFIED);
 
+	mutex_lock(&tz->lock);
 	mutex_lock(&data->lock);
 
-	ret = thermal_zone_get_trip(tz, params->trip_switch_on, &trip);
+	ret = __thermal_zone_get_trip(tz, params->trip_switch_on, &trip);
 	if (!ret && tz->temperature < trip.temperature) {
 		reset_pi_params(data);
 		allow_maximum_power(data);
@@ -904,7 +902,7 @@ static void gs_pi_thermal(struct gs_tmu_data *data)
 
 	params->switched_on = true;
 
-	ret = thermal_zone_get_trip(tz, params->trip_control_temp, &trip);
+	ret = __thermal_zone_get_trip(tz, params->trip_control_temp, &trip);
 	if (ret) {
 		pr_warn("Failed to get trip %d: %d\n",
 			params->trip_control_temp, ret);
@@ -929,6 +927,7 @@ polling:
 		start_pi_polling(data, delay);
 
 	mutex_unlock(&data->lock);
+	mutex_unlock(&tz->lock);
 }
 
 static void gs_pi_polling(struct kthread_work *work)
