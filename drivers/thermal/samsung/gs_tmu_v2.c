@@ -399,12 +399,13 @@ static int gs_tmu_initialize(struct platform_device *pdev)
 	unsigned char hysteresis[8] = {0, };
 	unsigned char inten = 0;
 
+	mutex_lock(&tz->lock);
 	mutex_lock(&data->lock);
 
 	for (i = (thermal_zone_get_num_trips(tz) - 1); i >= 0; i--) {
 		struct thermal_trip trip;
 
-		ret = thermal_zone_get_trip(tz, i, &trip);
+		ret = __thermal_zone_get_trip(tz, i, &trip);
 		if (ret) {
 			dev_err(&pdev->dev, "Failed to get trip %d\n", i);
 			goto out;
@@ -437,6 +438,7 @@ static int gs_tmu_initialize(struct platform_device *pdev)
 
 out:
 	mutex_unlock(&data->lock);
+	mutex_unlock(&tz->lock);
 
 	return ret;
 }
