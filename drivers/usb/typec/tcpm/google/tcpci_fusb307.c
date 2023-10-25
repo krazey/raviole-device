@@ -850,7 +850,7 @@ static struct i2c_driver fusb307b_i2c_driver = {
 		.name = "fusb307b",
 		.of_match_table = of_match_ptr(fusb307b_of_match),
 	},
-	.probe_new = fusb307b_probe,
+	.probe = fusb307b_probe,
 	.remove = fusb307b_remove,
 	.id_table = fusb307b_id,
 };

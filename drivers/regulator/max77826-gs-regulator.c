@@ -653,7 +653,7 @@ static struct i2c_driver max77826_i2c_driver = {
 		.owner = THIS_MODULE,
 		.of_match_table = max77826_match_table,
 	},
-	.probe_new    = max77826_i2c_probe,
+	.probe    = max77826_i2c_probe,
 	.remove   = max77826_i2c_remove,
 	.id_table = max77826_i2c_id,
 };

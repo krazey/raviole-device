@@ -787,7 +787,7 @@ static struct i2c_driver slg51000_i2c_driver = {
 		.of_match_table = of_match_ptr(slg51000_of_match),
 #endif /* CONFIG_OF */
 	},
-	.probe_new = slg51000_i2c_probe,
+	.probe = slg51000_i2c_probe,
 	.remove = slg51000_i2c_remove,
 	.id_table = slg51000_i2c_id,
 };

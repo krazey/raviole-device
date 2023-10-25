@@ -459,7 +459,7 @@ static struct i2c_driver s2mpg11_i2c_driver = {
 #endif /* CONFIG_OF */
 		   .suppress_bind_attrs = true,
 		    },
-	.probe_new = s2mpg11_i2c_probe,
+	.probe = s2mpg11_i2c_probe,
 	.remove = s2mpg11_i2c_remove,
 	.id_table = s2mpg11_i2c_id,
 };

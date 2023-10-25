@@ -78,7 +78,7 @@ static struct i2c_driver slg46826_i2c_driver = {
 		.name = "slg46826",
 		.of_match_table = of_match_ptr(slg46826_of_match),
 	},
-	.probe_new = slg46826_probe,
+	.probe = slg46826_probe,
 	.id_table = slg46826_id,
 };
 module_i2c_driver(slg46826_i2c_driver);
