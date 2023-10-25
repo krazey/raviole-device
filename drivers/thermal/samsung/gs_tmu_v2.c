@@ -558,7 +558,7 @@ static int gs_get_temp(struct thermal_zone_device *tz, int *temp)
 }
 
 static int gs_get_trend(struct thermal_zone_device *tz,
-			struct thermal_trip *trip,
+			const struct thermal_trip *trip,
 			enum thermal_trend *trend)
 {
 	struct gs_tmu_data *data = tz->devdata;
